@@ -5,11 +5,11 @@ var projectRoot = path.resolve(__dirname, '../');
 var loaders = [
 	{
 		test: /\.vue$/,
-		loader: 'vue'
+		loader: 'vue-loader',
 	},
 	{
 		test: /\.js$/,
-		loader: 'babel',
+		loader: 'babel-loader',
 		include: projectRoot,
 		exclude: /node_modules/
 	},
@@ -32,8 +32,7 @@ module.exports = {
 	devtool: "source-map",
 	
 	entry: {
-		full: path.resolve("dev", "full", "main.js"),
-		mselect: path.resolve("dev", "multiselect", "main.js")
+		example: path.resolve("dev", "example", "main.js")
 	},
 
 	output: {
@@ -52,16 +51,6 @@ module.exports = {
     ],
 
 	module: {
-		loaders
+		rules:loaders
 	},
-
-	resolve: {
-		packageAlias: "browser"
-	},
-
-	vue: {
-		autoprefixer: {
-			browsers: ["last 2 versions"]
-		}
-	}
 };
