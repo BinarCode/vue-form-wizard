@@ -1,0 +1,25 @@
+{
+  "name": "vue-tab-wizard",
+  "version": "1.0.0",
+  "description": "A vue based tab wizard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cristijora/vue-tab-wizard.git"
+  },
+  "keywords": [
+    "vue"
+  ],
+  "author": "Cristi Jora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cristijora/vue-tab-wizard/issues"
+  },
+  "homepage": "https://github.com/cristijora/vue-tab-wizard#readme",
+  "devDependencies": {
+    "vue": "^2.2.6"
+  }
+}
