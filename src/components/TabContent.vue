@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show">
+  <div v-if="show" class="tab-container">
     <slot>
     </slot>
   </div>
@@ -24,4 +24,8 @@
     }
   }
 </script>
-
+<style>
+  .tab-container{
+    margin-top:20px;
+  }
+</style>

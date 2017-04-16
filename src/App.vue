@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div class="col-xs-8 col-xs-offset-2">
+
     <tab-wizard>
       <tab-content title="Personal details">
         My first tab content

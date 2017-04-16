@@ -1,24 +1,34 @@
 <template>
-  <div>
-    <div class="header text-center">
-      <h4 class="title">{{title}}</h4>
-      <p class="category">{{subtitle}}</p>
+  <div class="vue-tab-wizard" data-color="orange">
+    <div class="wizard-header">
+      <slot name="title" class="wizard-title">
+        <h4 class="wizard-title">{{title}}</h4>
+        <p class="category">{{subtitle}}</p>
+      </slot>
     </div>
-    <div class="content">
-      <div>
-        <ul class="nav nav-pills">
-          <li v-for="(tab, index) in tabs" :class="tab.active ? 'active' : ''">
-            <a href="" @click.prevent="navigateToTab(index)">{{tab.title}}</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <slot>
-          </slot>
-        </div>
+    <div class="wizard-navigation">
+      <div class="progress-with-circle">
+        <div class="progress-bar" role="progressbar"
+             :style="progressStyle"></div>
+      </div>
+      <ul class="nav nav-pills">
+        <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
+          <a href="" @click.prevent="navigateToTab(index)">
+            <div class="icon-circle" :class="{checked:isChecked(index)}">
+              <i class="ti-user"></i>
+            </div>
+            {{tab.title}}
+          </a>
+        </li>
+      </ul>
+      <div class="tab-content">
+        <slot>
+        </slot>
       </div>
     </div>
+
     <div class="card-footer">
-      <button v-if="displayPrevButton" type="button" class="btn btn-default btn-fill btn-wd btn-back pull-left"
+      <button v-if="displayPrevButton" type="button" class="btn btn-previous btn-default btn-wd"
               @click="prevTab">
         {{backButtonText}}
       </button>
@@ -70,9 +80,25 @@
       },
       displayPrevButton () {
         return this.activeTabIndex !== 0
+      },
+      stepPercentage () {
+        return 1 / (this.tabCount * 2) * 100
+      },
+      progressStyle () {
+        let percentage = 0
+        if (this.activeTabIndex > 0) {
+          let stepsToAdd = (this.activeTabIndex % 2 === 0) ? 3 : 2
+          percentage = this.stepPercentage * (this.activeTabIndex + stepsToAdd)
+        } else {
+          percentage = this.stepPercentage
+        }
+        return `width: ${percentage}%;`
       }
     },
     methods: {
+      isChecked (index) {
+        return index <= this.maxStep
+      },
       navigateToTab (index) {
         if (index <= this.maxStep && this.beforeTabChange(this.activeTabIndex)) {
           this.changeTab(this.activeTabIndex, index)
@@ -149,17 +175,8 @@
         }
       }
     }
-}
+  }
 </script>
-<style>
-  .card-wizard .nav-pills {
-    display: flex;
-  }
-
-  .card-wizard .nav-pills li,
-  .card-wizard .nav-pills a {
-    display: flex;
-    justify-content: center;
-    flex: 1;
-  }
+<style lang="scss">
+  @import "./../assets/wizard";
 </style>
