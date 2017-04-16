@@ -15,7 +15,7 @@
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
           <a href="" @click.prevent="navigateToTab(index)">
             <div class="icon-circle" :class="{checked:isChecked(index)}">
-              <i class="ti-user"></i>
+              <i v-if="tab.icon" :class="tab.icon"></i>
             </div>
             {{tab.title}}
           </a>
@@ -32,7 +32,7 @@
               @click="prevTab">
         {{backButtonText}}
       </button>
-      <button v-if="isLastStep" type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right" @click="nextTab">
+      <button v-if="isLastStep" type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right" @click="finish">
         {{finishButtonText}}
       </button>
       <button v-else type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right" @click="nextTab">
@@ -158,6 +158,9 @@
           this.activeTabIndex--
           this.isLastStep = false
         }
+      },
+      finish () {
+        this.$emit('on-complete')
       }
     },
     mounted () {

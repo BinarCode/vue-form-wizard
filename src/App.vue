@@ -1,14 +1,16 @@
 <template>
   <div class="col-xs-8 col-xs-offset-2">
-
-    <tab-wizard>
-      <tab-content title="Personal details">
+    <tab-wizard @on-complete="onComplete">
+      <tab-content title="Personal details"
+                   icon="ti-user">
         My first tab content
       </tab-content>
-      <tab-content title="Additional Info">
+      <tab-content title="Additional Info"
+                   icon="ti-settings">
         My second tab content
       </tab-content>
-      <tab-content title="Last step">
+      <tab-content title="Last step"
+                   icon="ti-check">
         Yuhuuu! This seems pretty damn simple
       </tab-content>
     </tab-wizard>
@@ -18,6 +20,11 @@
 <script>
 
   export default {
-    name: 'app'
+    name: 'app',
+    methods: {
+      onComplete () {
+        alert('Yay!')
+      }
+    }
   }
 </script>

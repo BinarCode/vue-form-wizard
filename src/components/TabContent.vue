@@ -12,6 +12,10 @@
         type: String,
         default: ''
       },
+      icon: {
+        type: String,
+        default: ''
+      },
       beforeChange: {
         type: Function
       }
