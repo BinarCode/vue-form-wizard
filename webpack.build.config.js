@@ -1,34 +1,63 @@
 var webpack = require("webpack");
-var version = require("./package.json").version;
-var banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
+var path = require("path");
+// var version = require("./package.json").version;
+// var banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var StatsPlugin = require("stats-webpack-plugin");
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+var cssLoader = {
+  loader: "css-loader",
+  options: {
+    minimize: true
+  }
+};
+var sassLoader = {
+  loader: "sass-loader",
+  options: {
+    minimize: true
+  }
+};
 
 var loaders = [
 	{
-		"test": /\.js?$/,
-		"exclude": /node_modules/,
-		"loader": "babel"
+		test: /\.js?$/,
+		exclude: /node_modules/,
+		loader: "babel-loader"
 	},
+  {
+    test: /\.css$/,
+    loader: 'css-loader'
+  },
+  {
+    test: /\.scss$/,
+    loaders: ['css-loader', 'sass-loader']
+  },
 	{
-		"test": /\.vue?$/,
-		"loader": "vue"
+		test: /\.vue?$/,
+		loader: "vue-loader",
+   /* options:{
+		  loaders:{
+        scss: 'css-loader!sass-loader'
+      }
+    }*/
+    options:{
+      loaders: {
+        css: ExtractTextPlugin.extract({use:[cssLoader]}),
+        postcss: ExtractTextPlugin.extract({use:[cssLoader]}),
+        scss: ExtractTextPlugin.extract({use:[cssLoader,sassLoader]}),
+      }
+    }
 	}
 ];
-var cssFileName;
-if (process.env.FULL_BUNDLE) {
-	cssFileName = "vfg.css";
-} else {
-	cssFileName = "vfg-core.css";
-}
 
 module.exports = [
 	{
 		entry: "./src/index.js",
 		output: {
-			path: "./dist",
-			filename: "vfg.js",
-			library: "VueFormGenerator",
+			path: path.resolve(__dirname, './dist'),
+			filename: "vue-tab-wizard.js",
+			library: "VueTabWizard",
 			libraryTarget: "umd"
 		},
 
@@ -43,32 +72,19 @@ module.exports = [
 					warnings: false
 				}
 			}),
-			new webpack.optimize.DedupePlugin(),
-			new webpack.BannerPlugin(banner, {
+		/*	new webpack.BannerPlugin(banner, {
 				raw: true
-			}),
-			new ExtractTextPlugin(cssFileName, { allChunks: true }),
-			new StatsPlugin("../stats.json", {
+			}),*/
+			new ExtractTextPlugin({filename:"vue-tab-wizard.min.css",  allChunks: true, fallback:"style-loader" }),
+			new StatsPlugin( {filename:"./stats.json",
 				chunkModules: true
 				//exclude: [/node_modules[\\\/]react/]
-			})
+			}),
 		],
 
 		module: {
-			loaders
+			rules:loaders
 		},
 
-		vue: {
-			loaders: {
-				css: ExtractTextPlugin.extract("css"),
-				postcss: ExtractTextPlugin.extract("css"),
-				sass: ExtractTextPlugin.extract("css!sass"),
-			}
-		},
-
-		resolve: {
-			packageAlias: "browser"
-		}
 	}
-
 ];
