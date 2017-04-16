@@ -40,7 +40,7 @@
       <template>
         <span @click="prevTab" v-if="displayPrevButton">
           <slot name="prev">
-            <button  type="button" class="btn btn-default btn-wd">
+            <button type="button" class="btn btn-default btn-wd">
               {{backButtonText}}
             </button>
           </slot>
@@ -94,14 +94,24 @@
         type: String,
         default: 'Finish'
       },
+      /***
+       * Applies to text, border and circle
+       */
       color: {
         type: String,
         default: '#e74c3c'
       },
+      /**
+       * Name of the transition when transition between steps
+       * */
       transition: {
         type: String,
         default: ''
       },
+      /***
+       *
+       * Index of the initial tab to display
+       */
       startIndex: {
         type: Number,
         default: 0

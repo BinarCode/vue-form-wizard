@@ -2,7 +2,6 @@
   <div class="col-xs-8 col-xs-offset-2">
     <tab-wizard @on-complete="onComplete"
                 class="card"
-                :startIndex="2"
                 color="#27ae60">
       <tab-content title="Personal details"
                    icon="ti-user">
