@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-tab-wizard" data-color="orange">
+  <div class="vue-tab-wizard">
     <div class="wizard-header">
       <slot name="title" class="wizard-title">
         <h4 class="wizard-title">{{title}}</h4>
@@ -8,16 +8,25 @@
     </div>
     <div class="wizard-navigation">
       <div class="progress-with-circle">
-        <div class="progress-bar" role="progressbar"
-             :style="progressStyle"></div>
+        <div class="progress-bar"
+             :style="progressBarStyle"></div>
       </div>
       <ul class="nav nav-pills">
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
           <a href="" @click.prevent="navigateToTab(index)">
-            <div class="icon-circle" :class="{checked:isChecked(index)}">
-              <i v-if="tab.icon" :class="tab.icon"></i>
+            <div class="icon-circle" :class="{checked:isChecked(index)}"
+                 :style="isChecked(index)? stepCheckedStyle : {}">
+              <transition :name="transition" mode="out-in">
+                <div v-if="tab.active" class="icon-container" :style="tab.active ? iconActiveStyle: {}">
+                  <i v-if="tab.icon" :class="tab.icon"></i>
+                </div>
+                <i v-if="!tab.active && tab.icon" :class="tab.icon"></i>
+              </transition>
             </div>
-            {{tab.title}}
+            <span class="stepTitle" :style="tab.active ? stepTitleStyle : {}">
+              {{tab.title}}
+            </span>
+
           </a>
         </li>
       </ul>
@@ -28,16 +37,36 @@
     </div>
 
     <div class="card-footer">
-      <button v-if="displayPrevButton" type="button" class="btn btn-previous btn-default btn-wd"
-              @click="prevTab">
-        {{backButtonText}}
-      </button>
-      <button v-if="isLastStep" type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right" @click="finish">
-        {{finishButtonText}}
-      </button>
-      <button v-else type="button" class="btn btn-info btn-fill btn-wd btn-next pull-right" @click="nextTab">
-        {{nextButtonText}}
-      </button>
+      <template>
+        <span @click="prevTab" v-if="displayPrevButton">
+          <slot name="prev">
+            <button  type="button" class="btn btn-default btn-wd">
+              {{backButtonText}}
+            </button>
+          </slot>
+        </span>
+      </template>
+
+      <template>
+         <span @click="finish" class="pull-right" v-if="isLastStep">
+           <slot name="finish">
+             <button type="button" class="btn btn-fill btn-wd btn-next pull-right">
+              {{finishButtonText}}
+            </button>
+          </slot>
+        </span>
+      </template>
+
+      <template>
+        <span @click="nextTab" class="pull-right" v-if="!isLastStep">
+         <slot name="next">
+           <button type="button" class="btn btn-fill btn-wd btn-next">
+            {{nextButtonText}}
+           </button>
+         </slot>
+       </span>
+      </template>
+
       <div class="clearfix"></div>
     </div>
   </div>
@@ -64,6 +93,18 @@
       finishButtonText: {
         type: String,
         default: 'Finish'
+      },
+      color: {
+        type: String,
+        default: '#e74c3c'
+      },
+      transition: {
+        type: String,
+        default: ''
+      },
+      startIndex: {
+        type: Number,
+        default: 0
       }
     },
     data () {
@@ -84,7 +125,30 @@
       stepPercentage () {
         return 1 / (this.tabCount * 2) * 100
       },
-      progressStyle () {
+      progressBarStyle () {
+        return {
+          backgroundColor: this.color,
+          width: `${this.progress}%`,
+          color: this.color
+        }
+      },
+      iconActiveStyle () {
+        return {
+          backgroundColor: this.color,
+          borderRadius: '40%'
+        }
+      },
+      stepCheckedStyle () {
+        return {
+          borderColor: this.color
+        }
+      },
+      stepTitleStyle () {
+        return {
+          color: this.color
+        }
+      },
+      progress () {
         let percentage = 0
         if (this.activeTabIndex > 0) {
           let stepsToAdd = (this.activeTabIndex % 2 === 0) ? 3 : 2
@@ -92,7 +156,7 @@
         } else {
           percentage = this.stepPercentage
         }
-        return `width: ${percentage}%;`
+        return percentage
       }
     },
     methods: {
@@ -170,6 +234,12 @@
         firstTab.show = true
         firstTab.active = true
       }
+      if (this.startIndex < this.tabs.length) {
+        this.activeTabIndex = this.startIndex
+        this.maxStep = this.startIndex
+      } else {
+        console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
+      }
     },
     watch: {
       activeTabIndex: function (newVal, oldVal) {
@@ -182,4 +252,13 @@
 </script>
 <style lang="scss">
   @import "./../assets/wizard";
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .15s
+  }
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */
+  {
+    opacity: 0
+  }
 </style>

@@ -26,20 +26,6 @@
         position: relative;
         top: -32px;
         z-index: 100;
-
-        &:after{
-            content: '';
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: inline-block;
-            position: absolute;
-            right: -1px;
-            top: -4px;
-            transform: scale(0);
-            transition: .2s all linear;
-        }
-
         &:hover,
         &:focus{
             background-color: transparent;
@@ -49,36 +35,19 @@
         }
     }
 
-    > li.active > a{
-
-        &:after{
-            content: '';
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: inline-block;
-            position: absolute;
-            right: 5px;
-            top: -2px;
-            @include scale(1);
-            @include transition(.2s, linear);
-        }
-
-
-    }
-
     > li.active > a,
     > li.active > a:hover,
     > li.active > a:focus {
         background-color: transparent;
-        font-size: 15px;
         @include transition-font-size(.2s, linear);
 
 
         [class*="ti-"]{
             color: $white-color;
             font-size: 24px;
-            top: 21px;
+            display:flex;
+            align-items:center;
+            justify-content: center;
             @include transition(.2s, linear);
         }
     }

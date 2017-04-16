@@ -1,6 +1,9 @@
 <template>
   <div class="col-xs-8 col-xs-offset-2">
-    <tab-wizard @on-complete="onComplete">
+    <tab-wizard @on-complete="onComplete"
+                class="card"
+                :startIndex="2"
+                color="#27ae60">
       <tab-content title="Personal details"
                    icon="ti-user">
         My first tab content
@@ -8,11 +11,23 @@
       <tab-content title="Additional Info"
                    icon="ti-settings">
         My second tab content
+        My second tab content
+        My second tab content
+        My second tab content
+        My second tab content
+        My second tab content
       </tab-content>
       <tab-content title="Last step"
                    icon="ti-check">
         Yuhuuu! This seems pretty damn simple
       </tab-content>
+
+      <button slot="prev" class="btn btn-default">
+        Go back
+      </button>
+      <button slot="next" class="btn btn-default">
+        Go to next step
+      </button>
     </tab-wizard>
   </div>
 </template>
@@ -28,3 +43,30 @@
     }
   }
 </script>
+<style lang="scss">
+  $border-radius-extreme:        6px !default;
+  $white-color: white;
+  $gray-input-bg:              #F3F2EE !default;
+  $card-black-color:          #252422 !default;
+
+  body {
+    margin-top:20px;
+    background-color:#ecf0f1;
+  }
+
+  .card-footer{
+    padding:0px 20px;
+  }
+
+  .card{
+    border-radius: $border-radius-extreme;
+    box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
+    background-color: $white-color;
+    color: $card-black-color;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+</style>
