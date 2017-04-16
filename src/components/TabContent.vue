@@ -28,8 +28,3 @@
     }
   }
 </script>
-<style>
-  .tab-container{
-    margin-top:20px;
-  }
-</style>
