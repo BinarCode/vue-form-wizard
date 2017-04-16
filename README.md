@@ -26,3 +26,67 @@ Note: For now vue-tab-wizard requires bootstrap to look as it should. Also vue-t
    </tab-content>
 </tab-wizard>
 ```
+
+# Props
+## Tab Wizard props
+```js
+props: {
+  title: {
+    type: String,
+    default: 'Awesome Wizard'
+  },
+  subtitle: {
+    type: String,
+    default: 'Split a complicated flow in multiple steps'
+  },
+  nextButtonText: {
+    type: String,
+    default: 'Next'
+  },
+  backButtonText: {
+    type: String,
+    default: 'Back'
+  },
+  finishButtonText: {
+    type: String,
+    default: 'Finish'
+  },
+  color: {
+    type: String,
+    default: '#e74c3c' //circle, border and text color
+  },
+  transition: {
+    type: String,
+    default: '' //name of the transition when transition between steps 
+  },
+  startIndex: {
+    type: Number,
+    default: 0 //the index of the initial tab that you want to be active
+  }
+}
+```
+
+## Tab content props
+```js
+props: {
+  title: {
+    type: String,
+    default: ''
+  },
+  icon: {
+    type: String,
+    default: '' //name of the icon. Supports themify icons only for now
+  },
+  beforeChange: {
+    type: Function  //function to execute before changing tabs. Has to return true or false. If returns false, tab change is restricted
+  }
+}
+```
+
+# Slots
+* **Default** - Used for tab-contents
+* **title** - Upper title section including sub-title
+* **prev** - Previous button content (no need to worry about handling the button functionality)
+* **next** - Next button content
+* **finish** - Finish button content
+
