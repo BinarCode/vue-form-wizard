@@ -4,12 +4,9 @@ A dynamic tab wizard to split your forms easier
 Vue-tab-wizard is a vue based component which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
-Vue-tab-wizard is **bootstrap dependent** for now and won't work without the css from bootstrap (working on making it bootstrap free)
-
 # Demo
 Refer to this [fiddle](https://jsfiddle.net/CristiJ/bt5dhqtf/40/)
-
-Note: For now vue-tab-wizard requires bootstrap to look as it should. Also vue-tab-wizard works with themify-icons (WIP)
+Vue-tab-wizard is **bootstrap dependent** for now and won't work without the css from bootstrap (working on making it bootstrap free). Also vue-tab-wizard works with themify-icons only (WIP)
 
 # Usage
 ```html
