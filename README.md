@@ -5,7 +5,7 @@ Vue-tab-wizard is a vue based component which simplifies tab wizard management a
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
 # Demo
-Refer to this [fiddle](https://jsfiddle.net/CristiJ/bt5dhqtf/8/)
+Refer to this [fiddle](https://jsfiddle.net/CristiJ/bt5dhqtf/40/)
 
 Note: For now vue-tab-wizard requires bootstrap to look as it should. Also vue-tab-wizard works with themify-icons (WIP)
 
