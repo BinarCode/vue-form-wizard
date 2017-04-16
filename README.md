@@ -51,17 +51,26 @@ props: {
     type: String,
     default: 'Finish'
   },
+  /***
+  * Applies to text, border and circle
+  */
   color: {
     type: String,
     default: '#e74c3c' //circle, border and text color
   },
+  /**
+  * name of the transition when transition between steps
+  */
   transition: {
     type: String,
     default: '' //name of the transition when transition between steps 
   },
+  /***
+  * Index of the initial tab to display
+  */
   startIndex: {
     type: Number,
-    default: 0 //the index of the initial tab that you want to be active
+    default: 0
   }
 }
 ```
@@ -73,12 +82,20 @@ props: {
     type: String,
     default: ''
   },
+  /***
+   * Icon name for the upper circle corresponding to the tab
+   * Supports themify icons only for now.
+   */
   icon: {
     type: String,
-    default: '' //name of the icon. Supports themify icons only for now
+    default: ''
   },
+  /***
+   * Function to execute before tab switch. Return value must be boolean
+   * If the return result is false, tab switch is restricted
+   */
   beforeChange: {
-    type: Function  //function to execute before changing tabs. Has to return true or false. If returns false, tab change is restricted
+    type: Function
   }
 }
 ```
