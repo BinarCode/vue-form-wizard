@@ -9,10 +9,10 @@ Refer to this [fiddle](https://jsfiddle.net/CristiJ/bt5dhqtf/59/)
 Other demos: 
 * [Squared steps](https://jsfiddle.net/CristiJ/bt5dhqtf/62/)
 * [Tabbed steps](https://jsfiddle.net/CristiJ/bt5dhqtf/63/)
-* Start at any step [Step index](https://jsfiddle.net/CristiJ/bt5dhqtf/79/) .Note: start-index is zero-based and the count starts at 0
+* [Step index](https://jsfiddle.net/CristiJ/bt5dhqtf/79/) Start at any step. Note: start-index is zero-based and the count starts at 0
 * [Custom button and title text](https://jsfiddle.net/CristiJ/bt5dhqtf/69/)
 * [Custom title slot](https://jsfiddle.net/CristiJ/bt5dhqtf/74/)
-* You can even replace stuff you don't like [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/)
+* [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/) Replace stuff you don't like
 
 # Usage
 ```html
