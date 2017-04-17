@@ -5,16 +5,16 @@ Vue-form-wizard is a vue based component with **no external depenendcies** which
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
 # Demos
-Basic [demo](https://jsfiddle.net/bt5dhqtf/88/)
+Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
 
 Other demos:
-* [Squared steps](https://jsfiddle.net/bt5dhqtf/89/)
-* [Tabbed steps](https://jsfiddle.net/bt5dhqtf/90/)
-* [Step index](https://jsfiddle.net/bt5dhqtf/91/) Start at any step. Note: start-index is zero-based and the count starts at 0
-* [Custom button and title text](https://jsfiddle.net/bt5dhqtf/92/)
-* [Custom title slot](https://jsfiddle.net/bt5dhqtf/93/)
-* [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/94/) Replace stuff you don't like
-* [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/95/)
+* [Squared steps](https://jsfiddle.net/bt5dhqtf/98/)
+* [Tabbed steps](https://jsfiddle.net/bt5dhqtf/99/)
+* [Step index](https://jsfiddle.net/bt5dhqtf/100/) Start at any step. Note: start-index is zero-based and the count starts at 0
+* [Custom button and title text](https://jsfiddle.net/bt5dhqtf/101/)
+* [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
+* [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
+* [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
 
 # Usage
 
