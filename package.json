@@ -1,6 +1,6 @@
 {
   "name": "vue-form-wizard",
-  "version": "1.0.3",
+  "version": "0.1.0",
   "description": "A vue based tab/form wizard",
   "main": "dist/vue-tab-wizard.js",
   "homepage": "https://github.com/cristijora/vue-form-wizard",
@@ -12,6 +12,17 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "form",
+    "wizard",
+    "tab"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cristijora/vue-form-wizard"
   },
   "devDependencies": {
     "vue": "^2.2.2",
