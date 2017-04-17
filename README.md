@@ -1,12 +1,19 @@
 # WIP vue-tab-wizard
 A dynamic tab wizard to split your forms easier
 
-Vue-tab-wizard is a vue based component which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
+Vue-tab-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
-# Demo
-Refer to this [fiddle](https://jsfiddle.net/CristiJ/bt5dhqtf/40/)
-Vue-tab-wizard is **bootstrap dependent** for now and won't work without the css from bootstrap (working on making it bootstrap free). Also vue-tab-wizard works with themify-icons only (WIP)
+# Demos
+Basic [demo](https://jsfiddle.net/CristiJ/bt5dhqtf/80/)
+
+Other demos: 
+* [Squared steps](https://jsfiddle.net/CristiJ/bt5dhqtf/62/)
+* [Tabbed steps](https://jsfiddle.net/CristiJ/bt5dhqtf/63/)
+* [Step index](https://jsfiddle.net/CristiJ/bt5dhqtf/79/) Start at any step. Note: start-index is zero-based and the count starts at 0
+* [Custom button and title text](https://jsfiddle.net/CristiJ/bt5dhqtf/69/)
+* [Custom title slot](https://jsfiddle.net/CristiJ/bt5dhqtf/74/)
+* [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/) Replace stuff you don't like
 
 # Usage
 ```html
@@ -53,6 +60,13 @@ props: {
   color: {
     type: String,
     default: '#e74c3c' //circle, border and text color
+  },
+  /**
+  * Can take one of the following values: 'circle|square|tab`
+  */
+  shape: {
+    type: String,
+    default: 'circle' 
   },
   /**
   * name of the transition when transition between steps
@@ -102,4 +116,3 @@ props: {
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
 * **finish** - Finish button content
-
