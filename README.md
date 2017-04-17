@@ -16,7 +16,7 @@ Other demos:
 * [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/) Replace stuff you don't like
 
 # Usage
-```vue
+```jsx
 //global registration
 import 'vue-tab-wizard'
 import 'vue-tab-wizard/dist/vue-tab-wizard.min.css'
