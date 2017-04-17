@@ -1,0 +1,21 @@
+@import "bs_variables";
+@import "mixins";
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+// Bar of progress
+.vue-tab-wizard .progress-bar {
+  float: left;
+  width: 0%;
+  height: 100%;
+  font-size: $font-size-small;
+  line-height: $line-height-computed;
+  color: $progress-bar-color;
+  text-align: center;
+  background-color: $progress-bar-bg;
+  @include box-shadow(inset 0 -1px 0 rgba(0,0,0,.15));
+  @include transition(width .6s ease);
+}

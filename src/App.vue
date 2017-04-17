@@ -1,19 +1,14 @@
 <template>
-  <div class="col-xs-8 col-xs-offset-2">
+  <div>
     <tab-wizard @on-complete="onComplete"
-                class="card"
-                color="#27ae60">
+                shape="circle"
+                class="card">
       <tab-content title="Personal details"
                    icon="ti-user">
         My first tab content
       </tab-content>
       <tab-content title="Additional Info"
                    icon="ti-settings">
-        My second tab content
-        My second tab content
-        My second tab content
-        My second tab content
-        My second tab content
         My second tab content
       </tab-content>
       <tab-content title="Last step"

@@ -14,13 +14,15 @@
       <ul class="nav nav-pills">
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
           <a href="" @click.prevent="navigateToTab(index)">
-            <div class="icon-circle" :class="{checked:isChecked(index)}"
+            <div class="icon-circle" :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
                  :style="isChecked(index)? stepCheckedStyle : {}">
               <transition :name="transition" mode="out-in">
-                <div v-if="tab.active" class="icon-container" :style="tab.active ? iconActiveStyle: {}">
-                  <i v-if="tab.icon" :class="tab.icon"></i>
+                <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}" :style="tab.active ? iconActiveStyle: {}">
+                  <i v-if="tab.icon" :class="tab.icon" class="icon"></i>
+                  <i v-else class="icon">{{index+1}}</i>
                 </div>
-                <i v-if="!tab.active && tab.icon" :class="tab.icon"></i>
+                <i v-if="!tab.active && tab.icon" :class="tab.icon" class="icon"></i>
+                <i v-if="!tab.active && !tab.icon" class="icon">{{index+1}}</i>
               </transition>
             </div>
             <span class="stepTitle" :style="tab.active ? stepTitleStyle : {}">
@@ -50,7 +52,7 @@
       <template>
          <span @click="finish" class="pull-right" v-if="isLastStep">
            <slot name="finish">
-             <button type="button" class="btn btn-fill btn-wd btn-next pull-right">
+             <button type="button" class="btn btn-fill btn-wd btn-next">
               {{finishButtonText}}
             </button>
           </slot>
@@ -101,6 +103,10 @@
         type: String,
         default: '#e74c3c'
       },
+      shape: {
+        type: String,
+        default: 'circle'
+      },
       /**
        * Name of the transition when transition between steps
        * */
@@ -144,8 +150,7 @@
       },
       iconActiveStyle () {
         return {
-          backgroundColor: this.color,
-          borderRadius: '40%'
+          backgroundColor: this.color
         }
       },
       stepCheckedStyle () {
@@ -157,6 +162,12 @@
         return {
           color: this.color
         }
+      },
+      isStepSquare () {
+        return this.shape === 'square'
+      },
+      isTabShape () {
+        return this.shape === 'tab'
       },
       progress () {
         let percentage = 0

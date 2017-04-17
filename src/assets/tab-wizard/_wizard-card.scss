@@ -12,13 +12,27 @@
         display:flex;
         justify-content: center;
         align-content: center;
-        top: -2px;
-       .icon-container{
+        &.square_shape{
+          border-radius: 0;
+        }
+        &.tab_shape{
+          width:100%;
+          min-width:100px;
+          height:40px;
+          border:none;
+          background-color: $gray-input-bg;
+          border-radius:0;
+        }
+      .icon-container{
          display:flex;
          justify-content: center;
          flex:1;
+         border-radius: 40%;
+         &.square_shape,&.tab_shape{
+           border-radius:0;
+         }
        }
-        [class*="ti-"]{
+        .icon{
           display:flex;
           align-items: center;
           justify-content: center;
@@ -26,7 +40,7 @@
     }
 
     .tab-content{
-        min-height: 200px;
+        min-height: 100px;
         padding: 30px 20px 10px;
     }
 

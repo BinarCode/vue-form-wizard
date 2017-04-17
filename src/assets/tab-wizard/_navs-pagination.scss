@@ -1,7 +1,7 @@
 
-.nav-pills {
+.vue-tab-wizard .nav-pills {
+    margin-top:0;
     position: relative;
-    top: 40px;
     text-align: center;
     display:flex;
     flex-wrap:wrap;
@@ -18,13 +18,13 @@
         margin-left: 0;
     }
     > li > a {
+        display:flex;
+        flex-direction: column;
         padding: 0;
-        max-width: 78px;
         margin: 0 auto;
         color: $form-placeholder-color;
-        border-radius: 50%;
         position: relative;
-        top: -32px;
+        top: 3px;
         z-index: 100;
         &:hover,
         &:focus{
@@ -42,7 +42,7 @@
         @include transition-font-size(.2s, linear);
 
 
-        [class*="ti-"]{
+        .icon{
             color: $white-color;
             font-size: 24px;
             display:flex;
