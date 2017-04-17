@@ -127,6 +127,7 @@
       return {
         activeTabIndex: 0,
         isLastStep: false,
+        currentPercentage: 0,
         maxStep: 0,
         tabs: []
       }
@@ -271,6 +272,9 @@
     }
   }
 </script>
+<style>
+  @import "./../assets/tab-wizard/bootstrap.min.css";
+</style>
 <style lang="scss">
   @import "./../assets/wizard";
 
