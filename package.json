@@ -1,8 +1,8 @@
 {
   "name": "vue-tab-wizard",
-  "version": "1.0.0",
-  "description": "A vue based tab wizard",
-  "main": "dev/index.js",
+  "version": "0.1.0",
+  "description": "A vue based tab/form wizard",
+  "main": "dist/vue-tab-wizard.js",
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",

@@ -7,7 +7,7 @@ wasting time on details. Just forget about id's, external scripts and jQuery dep
 # Demos
 Basic [demo](https://jsfiddle.net/CristiJ/bt5dhqtf/80/)
 
-Other demos: 
+Other demos:
 * [Squared steps](https://jsfiddle.net/CristiJ/bt5dhqtf/62/)
 * [Tabbed steps](https://jsfiddle.net/CristiJ/bt5dhqtf/63/)
 * [Step index](https://jsfiddle.net/CristiJ/bt5dhqtf/79/) Start at any step. Note: start-index is zero-based and the count starts at 0
@@ -16,7 +16,21 @@ Other demos:
 * [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/) Replace stuff you don't like
 
 # Usage
-```html
+```vue
+//global registration
+import 'vue-tab-wizard'
+import 'vue-tab-wizard/dist/vue-tab-wizard.min.css'
+Vue.use(VueTabWizard)
+
+//local registration
+import {TabWizard, TabContent} from 'vue-tab-wizard'
+import 'vue-tab-wizard/dist/vue-tab-wizard.min.css'
+//component code
+components: {
+  TabWizard,
+  TabContent
+}
+
 <tab-wizard>
   <tab-content title="Personal details">
     My first tab content
@@ -66,14 +80,14 @@ props: {
   */
   shape: {
     type: String,
-    default: 'circle' 
+    default: 'circle'
   },
   /**
   * name of the transition when transition between steps
   */
   transition: {
     type: String,
-    default: '' //name of the transition when transition between steps 
+    default: '' //name of the transition when transition between steps
   },
   /***
   * Index of the initial tab to display
