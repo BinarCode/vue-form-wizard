@@ -4,8 +4,9 @@ A dynamic tab wizard to split your forms easier
 Vue-tab-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
-# Demo
-Refer to this [fiddle](https://jsfiddle.net/CristiJ/bt5dhqtf/59/)
+# Demos
+Basic [demo](https://jsfiddle.net/CristiJ/bt5dhqtf/80/)
+
 Other demos: 
 * [Squared steps](https://jsfiddle.net/CristiJ/bt5dhqtf/62/)
 * [Tabbed steps](https://jsfiddle.net/CristiJ/bt5dhqtf/63/)
@@ -115,4 +116,3 @@ props: {
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
 * **finish** - Finish button content
-
