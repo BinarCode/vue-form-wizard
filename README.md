@@ -14,6 +14,7 @@ Other demos:
 * [Custom button and title text](https://jsfiddle.net/CristiJ/bt5dhqtf/69/)
 * [Custom title slot](https://jsfiddle.net/CristiJ/bt5dhqtf/74/)
 * [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/) Replace stuff you don't like
+* [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/84/)
 
 # Usage
 
