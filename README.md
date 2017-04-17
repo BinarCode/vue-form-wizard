@@ -16,6 +16,17 @@ Other demos:
 * [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/) Replace stuff you don't like
 
 # Usage
+
+## NPM
+`npm install vue-tab-wizard`
+
+## Or alternatively directly include the javascript
+Download the css and js files from `dist` folder or reference them directly from github (check jsfiddle links)
+```jsx
+<link rel="stylesheet" href="vue-tab-wizard.min.css">
+<script src="vue-tab-wizard.js"></script>
+```
+## Component registration
 ```jsx
 //global registration
 import 'vue-tab-wizard'
@@ -30,7 +41,10 @@ components: {
   TabWizard,
   TabContent
 }
+```
+## Template usage
 
+```jsx
 <tab-wizard>
   <tab-content title="Personal details">
     My first tab content
