@@ -1,7 +1,7 @@
-# vue-tab-wizard
-A dynamic tab wizard to split your forms easier
+# vue-form-wizard
+A dynamic form wizard to split your forms easier
 
-Vue-tab-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
+Vue-form-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
 # Demos
@@ -19,34 +19,34 @@ Other demos:
 # Usage
 
 ## NPM
-`npm install vue-tab-wizard`
+`npm install vue-form-wizard`
 
 ## Or alternatively directly include the javascript
 Download the css and js files from `dist` folder or reference them directly from github (check jsfiddle links)
 ```html
-<link rel="stylesheet" href="vue-tab-wizard.min.css">
-<script src="vue-tab-wizard.js"></script>
+<link rel="stylesheet" href="vue-form-wizard.min.css">
+<script src="vue-form-wizard.js"></script>
 ```
 ## Component registration
 ```js
 //global registration
-import 'vue-tab-wizard'
-import 'vue-tab-wizard/dist/vue-tab-wizard.min.css'
+import 'vue-form-wizard'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 Vue.use(VueTabWizard)
 
 //local registration
-import {TabWizard, TabContent} from 'vue-tab-wizard'
-import 'vue-tab-wizard/dist/vue-tab-wizard.min.css'
+import {FormWizard, TabContent} from 'vue-form-wizard'
+import 'vue-formwizard/dist/vue-form-wizard.min.css'
 //component code
 components: {
-  TabWizard,
+  FormWizard,
   TabContent
 }
 ```
 ## Template usage
 
 ```html
-<tab-wizard>
+<form-wizard>
   <tab-content title="Personal details">
     My first tab content
   </tab-content>
@@ -56,11 +56,11 @@ components: {
    <tab-content title="Last step">
      Yuhuuu! This seems pretty damn simple
    </tab-content>
-</tab-wizard>
+</form-wizard>
 ```
 
 # Props
-## Tab Wizard props
+## Form Wizard props
 ```js
 props: {
   title: {

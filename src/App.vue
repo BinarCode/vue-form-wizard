@@ -1,6 +1,6 @@
 <template>
   <div>
-    <tab-wizard @on-complete="onComplete"
+    <form-wizard @on-complete="onComplete"
                 shape="circle"
                 color="#e74c3c"
                 class="card">
@@ -17,7 +17,7 @@
         Yuhuuu! This seems pretty damn simple
       </tab-content>
 
-    </tab-wizard>
+    </form-wizard>
   </div>
 </template>
 

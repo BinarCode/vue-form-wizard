@@ -2,8 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App.vue'
-import TabWizard from './index'
-Vue.use(TabWizard)
+import FormWizard from './index'
+Vue.use(FormWizard)
 
 Vue.config.productionTip = false
 

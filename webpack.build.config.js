@@ -56,8 +56,8 @@ module.exports = [
 		entry: "./src/index.js",
 		output: {
 			path: path.resolve(__dirname, './dist'),
-			filename: "vue-tab-wizard.js",
-			library: "VueTabWizard",
+			filename: "vue-form-wizard.js",
+			library: "VueFormWizard",
 			libraryTarget: "umd"
 		},
 
@@ -75,7 +75,7 @@ module.exports = [
 		/*	new webpack.BannerPlugin(banner, {
 				raw: true
 			}),*/
-			new ExtractTextPlugin({filename:"vue-tab-wizard.min.css",  allChunks: true, fallback:"style-loader" }),
+			new ExtractTextPlugin({filename:"vue-form-wizard.min.css",  allChunks: true, fallback:"style-loader" }),
 			new StatsPlugin( {filename:"./stats.json",
 				chunkModules: true
 				//exclude: [/node_modules[\\\/]react/]
