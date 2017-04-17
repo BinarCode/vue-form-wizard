@@ -5,16 +5,16 @@ Vue-form-wizard is a vue based component with **no external depenendcies** which
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
 # Demos
-Basic [demo](https://jsfiddle.net/CristiJ/bt5dhqtf/80/)
+Basic [demo](https://jsfiddle.net/bt5dhqtf/88/)
 
 Other demos:
-* [Squared steps](https://jsfiddle.net/CristiJ/bt5dhqtf/62/)
-* [Tabbed steps](https://jsfiddle.net/CristiJ/bt5dhqtf/63/)
-* [Step index](https://jsfiddle.net/CristiJ/bt5dhqtf/79/) Start at any step. Note: start-index is zero-based and the count starts at 0
-* [Custom button and title text](https://jsfiddle.net/CristiJ/bt5dhqtf/69/)
-* [Custom title slot](https://jsfiddle.net/CristiJ/bt5dhqtf/74/)
-* [Customized buttons with slots](https://jsfiddle.net/CristiJ/bt5dhqtf/76/) Replace stuff you don't like
-* [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/84/)
+* [Squared steps](https://jsfiddle.net/bt5dhqtf/89/)
+* [Tabbed steps](https://jsfiddle.net/bt5dhqtf/90/)
+* [Step index](https://jsfiddle.net/bt5dhqtf/91/) Start at any step. Note: start-index is zero-based and the count starts at 0
+* [Custom button and title text](https://jsfiddle.net/bt5dhqtf/92/)
+* [Custom title slot](https://jsfiddle.net/bt5dhqtf/93/)
+* [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/94/) Replace stuff you don't like
+* [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/95/)
 
 # Usage
 
