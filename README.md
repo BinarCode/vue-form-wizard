@@ -22,12 +22,12 @@ Other demos:
 
 ## Or alternatively directly include the javascript
 Download the css and js files from `dist` folder or reference them directly from github (check jsfiddle links)
-```jsx
+```html
 <link rel="stylesheet" href="vue-tab-wizard.min.css">
 <script src="vue-tab-wizard.js"></script>
 ```
 ## Component registration
-```jsx
+```js
 //global registration
 import 'vue-tab-wizard'
 import 'vue-tab-wizard/dist/vue-tab-wizard.min.css'
@@ -44,7 +44,7 @@ components: {
 ```
 ## Template usage
 
-```jsx
+```html
 <tab-wizard>
   <tab-content title="Personal details">
     My first tab content
