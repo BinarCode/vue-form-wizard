@@ -2,6 +2,7 @@
   <div>
     <tab-wizard @on-complete="onComplete"
                 shape="circle"
+                color="#e74c3c"
                 class="card">
       <tab-content title="Personal details"
                    icon="ti-user">
@@ -16,12 +17,6 @@
         Yuhuuu! This seems pretty damn simple
       </tab-content>
 
-      <button slot="prev" class="btn btn-default">
-        Go back
-      </button>
-      <button slot="next" class="btn btn-default">
-        Go to next step
-      </button>
     </tab-wizard>
   </div>
 </template>

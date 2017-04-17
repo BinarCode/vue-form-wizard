@@ -42,7 +42,7 @@
       <template>
         <span @click="prevTab" v-if="displayPrevButton">
           <slot name="prev">
-            <button type="button" class="btn btn-default btn-wd">
+            <button type="button" class="btn btn-default btn-wd"  :style="fillButtonStyle">
               {{backButtonText}}
             </button>
           </slot>
@@ -52,7 +52,7 @@
       <template>
          <span @click="finish" class="pull-right" v-if="isLastStep">
            <slot name="finish">
-             <button type="button" class="btn btn-fill btn-wd btn-next">
+             <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle">
               {{finishButtonText}}
             </button>
           </slot>
@@ -62,7 +62,7 @@
       <template>
         <span @click="nextTab" class="pull-right" v-if="!isLastStep">
          <slot name="next">
-           <button type="button" class="btn btn-fill btn-wd btn-next">
+           <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle">
             {{nextButtonText}}
            </button>
          </slot>
@@ -169,6 +169,13 @@
       },
       isTabShape () {
         return this.shape === 'tab'
+      },
+      fillButtonStyle () {
+        return {
+          backgroundColor: this.color,
+          borderColor: this.color,
+          color: 'white'
+        }
       },
       progress () {
         let percentage = 0
