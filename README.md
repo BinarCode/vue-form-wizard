@@ -1,4 +1,4 @@
-# WIP vue-tab-wizard
+# vue-tab-wizard
 A dynamic tab wizard to split your forms easier
 
 Vue-tab-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
