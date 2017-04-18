@@ -18,6 +18,7 @@ Other demos:
 * [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
 * [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
 * [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
+* [Complete form example](https://jsfiddle.net/bt5dhqtf/150/) integrated with [vue-form-generator](https://github.com/icebob/vue-form-generator)
 
 # Usage
 
