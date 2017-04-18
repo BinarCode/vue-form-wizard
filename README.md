@@ -2,7 +2,10 @@
 A dynamic form wizard to split your forms easier
 
 Vue-form-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
-wasting time on details. Just forget about id's, external scripts and jQuery dependencies
+wasting time on details. Just forget about id's, external scripts and jQuery dependencies.
+
+Vue-form-wizard is inspired by [creative-tim wizards](https://www.creative-tim.com/bootstrap-themes/wizard) but simplified and 
+more customizable
 
 # Demos
 Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
@@ -15,6 +18,7 @@ Other demos:
 * [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
 * [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
 * [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
+* [Complete form example](https://jsfiddle.net/bt5dhqtf/150/) integrated with [vue-form-generator](https://github.com/icebob/vue-form-generator)
 
 # Usage
 
