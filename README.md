@@ -149,3 +149,15 @@ props: {
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
 * **finish** - Finish button content
+
+## Contribution
+Open an issue or send a Pull request if you feel that something is missing or doesn't work.
+
+## License
+vue-form-wizard is available under the [MIT license](https://tldrlegal.com/license/mit-license).
+
+## Contact
+
+Copyright (C) 2017 Cristi Jora
+
+[![@cristijora](https://img.shields.io/badge/github-cristijora-green.svg)](https://github.com/cristijora)
