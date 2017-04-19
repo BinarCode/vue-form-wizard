@@ -1,6 +1,6 @@
 {
   "name": "vue-form-wizard",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A vue based tab/form wizard",
   "main": "dist/vue-form-wizard.js",
   "homepage": "https://github.com/cristijora/vue-form-wizard",
