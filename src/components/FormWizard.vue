@@ -17,12 +17,13 @@
             <div class="icon-circle" :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
                  :style="isChecked(index)? stepCheckedStyle : {}">
               <transition :name="transition" mode="out-in">
-                <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}" :style="tab.active ? iconActiveStyle: {}">
+                <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
+                     :style="tab.active ? iconActiveStyle: {}">
                   <i v-if="tab.icon" :class="tab.icon" class="icon"></i>
-                  <i v-else class="icon">{{index+1}}</i>
+                  <i v-else class="icon">{{index + 1}}</i>
                 </div>
                 <i v-if="!tab.active && tab.icon" :class="tab.icon" class="icon"></i>
-                <i v-if="!tab.active && !tab.icon" class="icon">{{index+1}}</i>
+                <i v-if="!tab.active && !tab.icon" class="icon">{{index + 1}}</i>
               </transition>
             </div>
             <span class="stepTitle" :style="tab.active ? stepTitleStyle : {}">
@@ -42,7 +43,7 @@
       <template>
         <span @click="prevTab" v-if="displayPrevButton">
           <slot name="prev">
-            <button type="button" class="btn btn-default btn-wd"  :style="fillButtonStyle">
+            <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle">
               {{backButtonText}}
             </button>
           </slot>
@@ -218,7 +219,13 @@
         }
         this.activeTabIndex = newIndex
         this.checkStep()
+        this.tryChangeRoute(newTab)
         return true
+      },
+      tryChangeRoute (tab) {
+        if (this.$router && tab.route) {
+          this.$router.push(tab.route)
+        }
       },
       checkStep () {
         if (this.activeTabIndex === this.tabCount - 1) {
@@ -263,10 +270,12 @@
         let firstTab = this.tabs[this.activeTabIndex]
         firstTab.show = true
         firstTab.active = true
+        this.tryChangeRoute(firstTab)
       }
       if (this.startIndex < this.tabs.length) {
         this.activeTabIndex = this.startIndex
         this.maxStep = this.startIndex
+        this.tryChangeRoute(this.tabs[this.startIndex])
       } else {
         console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
       }

@@ -5,18 +5,18 @@
                 color="#e74c3c"
                 class="card">
       <tab-content title="Personal details"
+                   route="first"
                    icon="ti-user">
-        My first tab content
       </tab-content>
       <tab-content title="Additional Info"
+                   route="second"
                    icon="ti-settings">
-        My second tab content
       </tab-content>
       <tab-content title="Last step"
+                   route="third"
                    icon="ti-check">
-        Yuhuuu! This seems pretty damn simple
       </tab-content>
-
+      <router-view></router-view>
     </form-wizard>
   </div>
 </template>
