@@ -19,6 +19,7 @@ Other demos:
 * [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
 * [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
 * [Complete form example](https://jsfiddle.net/bt5dhqtf/150/) integrated with [vue-form-generator](https://github.com/icebob/vue-form-generator)
+* [Vue router integration](https://jsfiddle.net/CristiJ/bt5dhqtf/252/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
 
 # Usage
 
@@ -139,6 +140,12 @@ props: {
    */
   beforeChange: {
     type: Function
+  },
+  /***
+  * Used to handle routing with vue-router. Refer to [router.push](https://router.vuejs.org/en/essentials/navigation.html) for a valid prop in this case
+  */
+  route: {
+    type: [String, Object]
   }
 }
 ```
