@@ -1,20 +1,36 @@
 <template>
   <div>
     <form-wizard @on-complete="onComplete"
-                shape="circle"
-                color="#e74c3c"
-                class="card">
+                 shape="circle"
+                 color="#e74c3c"
+                 class="card">
       <tab-content title="Personal details"
+                   :before-change="validate"
                    icon="ti-user">
         My first tab content
+
+
+
+
+
       </tab-content>
       <tab-content title="Additional Info"
                    icon="ti-settings">
         My second tab content
+
+
+
+
+
       </tab-content>
       <tab-content title="Last step"
                    icon="ti-check">
         Yuhuuu! This seems pretty damn simple
+
+
+
+
+
       </tab-content>
 
     </form-wizard>
@@ -28,26 +44,33 @@
     methods: {
       onComplete () {
         alert('Yay!')
+      },
+      validate () {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(true)
+          }, 1000)
+        })
       }
     }
   }
 </script>
 <style lang="scss">
-  $border-radius-extreme:        6px !default;
+  $border-radius-extreme: 6px !default;
   $white-color: white;
-  $gray-input-bg:              #F3F2EE !default;
-  $card-black-color:          #252422 !default;
+  $gray-input-bg: #F3F2EE !default;
+  $card-black-color: #252422 !default;
 
   body {
-    margin-top:20px;
-    background-color:#ecf0f1;
+    margin-top: 20px;
+    background-color: #ecf0f1;
   }
 
-  .card-footer{
-    padding:0px 20px;
+  .card-footer {
+    padding: 0px 20px;
   }
 
-  .card{
+  .card {
     border-radius: $border-radius-extreme;
     box-shadow: 0 2px 2px rgba(204, 197, 185, 0.5);
     background-color: $white-color;

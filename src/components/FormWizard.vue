@@ -17,12 +17,13 @@
             <div class="icon-circle" :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
                  :style="isChecked(index)? stepCheckedStyle : {}">
               <transition :name="transition" mode="out-in">
-                <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}" :style="tab.active ? iconActiveStyle: {}">
+                <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
+                     :style="tab.active ? iconActiveStyle: {}">
                   <i v-if="tab.icon" :class="tab.icon" class="icon"></i>
-                  <i v-else class="icon">{{index+1}}</i>
+                  <i v-else class="icon">{{index + 1}}</i>
                 </div>
                 <i v-if="!tab.active && tab.icon" :class="tab.icon" class="icon"></i>
-                <i v-if="!tab.active && !tab.icon" class="icon">{{index+1}}</i>
+                <i v-if="!tab.active && !tab.icon" class="icon">{{index + 1}}</i>
               </transition>
             </div>
             <span class="stepTitle" :style="tab.active ? stepTitleStyle : {}">
@@ -42,7 +43,7 @@
       <template>
         <span @click="prevTab" v-if="displayPrevButton">
           <slot name="prev">
-            <button type="button" class="btn btn-default btn-wd"  :style="fillButtonStyle">
+            <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle">
               {{backButtonText}}
             </button>
           </slot>
@@ -194,16 +195,24 @@
         return index <= this.maxStep
       },
       navigateToTab (index) {
-        if (index <= this.maxStep && this.beforeTabChange(this.activeTabIndex)) {
-          this.changeTab(this.activeTabIndex, index)
+        if (index <= this.maxStep) {
+          this.beforeTabChange(this.activeTabIndex).then((res) => {
+            res && this.changeTab(this.activeTabIndex, index)
+          })
         }
       },
       beforeTabChange (index) {
         let oldTab = this.tabs[index]
         if (oldTab && oldTab.beforeChange !== undefined) {
-          return oldTab.beforeChange()
+          let tabChangeRes = oldTab.beforeChange()
+          if (tabChangeRes.then && typeof tabChangeRes.then === 'function') {
+            return tabChangeRes
+          } else {
+            return Promise.resolve(tabChangeRes)
+          }
+        } else {
+          return Promise.resolve(true)
         }
-        return true
       },
       changeTab (oldIndex, newIndex) {
         let oldTab = this.tabs[oldIndex]
@@ -234,24 +243,26 @@
       },
 
       nextTab () {
-        if (!this.beforeTabChange(this.activeTabIndex)) return
-
-        if (this.activeTabIndex < this.tabCount - 1) {
-          this.activeTabIndex++
-          this.increaseMaxStep()
-          this.checkStep()
-        } else {
-          this.isLastStep = true
-          this.$emit('finished')
-        }
+        this.beforeTabChange(this.activeTabIndex).then((res) => {
+          if (res) {
+            if (this.activeTabIndex < this.tabCount - 1) {
+              this.activeTabIndex++
+              this.increaseMaxStep()
+              this.checkStep()
+            } else {
+              this.isLastStep = true
+              this.$emit('finished')
+            }
+          }
+        })
       },
       prevTab () {
-        if (!this.beforeTabChange(this.activeTabIndex)) return
-
-        if (this.activeTabIndex > 0) {
-          this.activeTabIndex--
-          this.isLastStep = false
-        }
+        this.beforeTabChange(this.activeTabIndex).then((res) => {
+          if (res && this.activeTabIndex > 0) {
+            this.activeTabIndex--
+            this.isLastStep = false
+          }
+        })
       },
       finish () {
         this.$emit('on-complete')
@@ -273,9 +284,11 @@
     },
     watch: {
       activeTabIndex: function (newVal, oldVal) {
-        if (this.beforeTabChange(oldVal)) {
-          this.changeTab(oldVal, newVal)
-        }
+        this.beforeTabChange(oldVal).then((res) => {
+          if (res) {
+            this.changeTab(oldVal, newVal)
+          }
+        })
       }
     }
   }
