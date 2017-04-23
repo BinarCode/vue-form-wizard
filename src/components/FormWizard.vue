@@ -213,8 +213,11 @@
           this.setLoading(true)
           promiseFn.then((res) => {
             this.setLoading(false)
-            if (res) {
+            if (res === true) {
               callback()
+              this.$emit('validated', true, this.activeTabIndex)
+            } else {
+              this.$emit('validated', false, this.activeTabIndex)
             }
           }).catch(() => {
             this.setLoading(false)
@@ -222,7 +225,10 @@
           // we have a simple function
         } else {
           if (promiseFn) {
+            this.$emit('validated', true, this.activeTabIndex)
             callback()
+          } else {
+            this.$emit('validated', false, this.activeTabIndex)
           }
         }
       },
@@ -242,11 +248,9 @@
         let oldTab = this.tabs[oldIndex]
         let newTab = this.tabs[newIndex]
         if (oldTab) {
-          oldTab.show = false
           oldTab.active = false
         }
         if (newTab) {
-          newTab.show = true
           newTab.active = true
         }
         this.activeTabIndex = newIndex
@@ -280,7 +284,7 @@
       prevTab () {
         let cb = () => {
           if (this.activeTabIndex > 0) {
-            this.activeTabIndex--
+            this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
             this.isLastStep = false
           }
         }
@@ -292,24 +296,17 @@
     },
     mounted () {
       this.tabs = this.$children.filter((comp) => comp.$options.name === 'tab-content')
-      if (this.tabs.length > 0) {
+      if (this.tabs.length > 0 && this.startIndex === 0) {
         let firstTab = this.tabs[this.activeTabIndex]
-        firstTab.show = true
         firstTab.active = true
       }
       if (this.startIndex < this.tabs.length) {
+        let tabToActivate = this.tabs[this.startIndex]
         this.activeTabIndex = this.startIndex
+        tabToActivate.active = true
         this.maxStep = this.startIndex
       } else {
         console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
-      }
-    },
-    watch: {
-      activeTabIndex: function (newVal, oldVal) {
-        let cb = () => {
-          this.changeTab(oldVal, newVal)
-        }
-        this.beforeTabChange(oldVal, cb)
       }
     }
   }

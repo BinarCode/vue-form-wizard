@@ -3,6 +3,7 @@
     <form-wizard @on-complete="onComplete"
                  shape="circle"
                  color="#e74c3c"
+                 @on-loading="setLoading"
                  class="card">
       <tab-content title="Personal details"
                    :before-change="validateAsync"
@@ -18,7 +19,7 @@
                    icon="ti-check">
         Yuhuuu! This seems pretty damn simple
       </tab-content>
-
+      <div class="loader" v-if="loadingWizard"></div>
     </form-wizard>
   </div>
 </template>
@@ -27,9 +28,17 @@
 
   export default {
     name: 'app',
+    data () {
+      return {
+        loadingWizard: false
+      }
+    },
     methods: {
       onComplete () {
         alert('Yay!')
+      },
+      setLoading (value) {
+        this.loadingWizard = value
       },
       validateAsync () {
         return new Promise((resolve, reject) => {
@@ -44,6 +53,9 @@
     }
   }
 </script>
+<style>
+  @import "loader.css";
+</style>
 <style lang="scss">
   $border-radius-extreme: 6px !default;
   $white-color: white;
