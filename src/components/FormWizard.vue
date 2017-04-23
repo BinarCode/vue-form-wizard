@@ -43,7 +43,7 @@
       <template>
         <span @click="prevTab" v-if="displayPrevButton">
           <slot name="prev">
-            <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle">
+            <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle" :disabled="loading">
               {{backButtonText}}
             </button>
           </slot>
@@ -63,7 +63,7 @@
       <template>
         <span @click="nextTab" class="pull-right" v-if="!isLastStep">
          <slot name="next">
-           <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle">
+           <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle" :disabled="loading">
             {{nextButtonText}}
            </button>
          </slot>
@@ -130,6 +130,7 @@
         isLastStep: false,
         currentPercentage: 0,
         maxStep: 0,
+        loading: false,
         tabs: []
       }
     },
@@ -196,22 +197,45 @@
       },
       navigateToTab (index) {
         if (index <= this.maxStep) {
-          this.beforeTabChange(this.activeTabIndex).then((res) => {
-            res && this.changeTab(this.activeTabIndex, index)
-          })
+          let cb = () => {
+            this.changeTab(this.activeTabIndex, index)
+          }
+          this.beforeTabChange(this.activeTabIndex, cb)
         }
       },
-      beforeTabChange (index) {
+      setLoading (value) {
+        this.loading = value
+        this.$emit('on-loading', value)
+      },
+      validateTabChangePromise (promiseFn, callback) {
+        // we have a promise
+        if (promiseFn.then && typeof promiseFn.then === 'function') {
+          this.setLoading(true)
+          promiseFn.then((res) => {
+            this.setLoading(false)
+            if (res) {
+              callback()
+            }
+          }).catch(() => {
+            this.setLoading(false)
+          })
+          // we have a simple function
+        } else {
+          if (promiseFn) {
+            callback()
+          }
+        }
+      },
+      beforeTabChange (index, callback) {
+        if (this.loading) {
+          return
+        }
         let oldTab = this.tabs[index]
         if (oldTab && oldTab.beforeChange !== undefined) {
           let tabChangeRes = oldTab.beforeChange()
-          if (tabChangeRes.then && typeof tabChangeRes.then === 'function') {
-            return tabChangeRes
-          } else {
-            return Promise.resolve(tabChangeRes)
-          }
+          this.validateTabChangePromise(tabChangeRes, callback)
         } else {
-          return Promise.resolve(true)
+          callback()
         }
       },
       changeTab (oldIndex, newIndex) {
@@ -241,28 +265,26 @@
           this.maxStep = this.activeTabIndex
         }
       },
-
       nextTab () {
-        this.beforeTabChange(this.activeTabIndex).then((res) => {
-          if (res) {
-            if (this.activeTabIndex < this.tabCount - 1) {
-              this.activeTabIndex++
-              this.increaseMaxStep()
-              this.checkStep()
-            } else {
-              this.isLastStep = true
-              this.$emit('finished')
-            }
+        let cb = () => {
+          if (this.activeTabIndex < this.tabCount - 1) {
+            this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
+            this.increaseMaxStep()
+          } else {
+            this.isLastStep = true
+            this.$emit('finished')
           }
-        })
+        }
+        this.beforeTabChange(this.activeTabIndex, cb)
       },
       prevTab () {
-        this.beforeTabChange(this.activeTabIndex).then((res) => {
-          if (res && this.activeTabIndex > 0) {
+        let cb = () => {
+          if (this.activeTabIndex > 0) {
             this.activeTabIndex--
             this.isLastStep = false
           }
-        })
+        }
+        this.beforeTabChange(this.activeTabIndex, cb)
       },
       finish () {
         this.$emit('on-complete')
@@ -284,11 +306,10 @@
     },
     watch: {
       activeTabIndex: function (newVal, oldVal) {
-        this.beforeTabChange(oldVal).then((res) => {
-          if (res) {
-            this.changeTab(oldVal, newVal)
-          }
-        })
+        let cb = () => {
+          this.changeTab(oldVal, newVal)
+        }
+        this.beforeTabChange(oldVal, cb)
       }
     }
   }

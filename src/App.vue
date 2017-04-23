@@ -5,32 +5,18 @@
                  color="#e74c3c"
                  class="card">
       <tab-content title="Personal details"
-                   :before-change="validate"
+                   :before-change="validateAsync"
                    icon="ti-user">
         My first tab content
-
-
-
-
-
       </tab-content>
       <tab-content title="Additional Info"
+                   :before-change="validate"
                    icon="ti-settings">
         My second tab content
-
-
-
-
-
       </tab-content>
       <tab-content title="Last step"
                    icon="ti-check">
         Yuhuuu! This seems pretty damn simple
-
-
-
-
-
       </tab-content>
 
     </form-wizard>
@@ -45,12 +31,15 @@
       onComplete () {
         alert('Yay!')
       },
-      validate () {
+      validateAsync () {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
             resolve(true)
           }, 1000)
         })
+      },
+      validate () {
+        return true
       }
     }
   }
