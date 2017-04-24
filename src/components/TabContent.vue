@@ -1,5 +1,5 @@
 <template>
-  <div v-show="show" class="tab-container">
+  <div v-if="active" class="tab-container">
     <slot>
     </slot>
   </div>
@@ -26,14 +26,10 @@
        */
       beforeChange: {
         type: Function
-      },
-      route: {
-        type: [String, Object]
       }
     },
     data () {
       return {
-        show: false,
         active: false
       }
     }

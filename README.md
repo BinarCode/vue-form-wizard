@@ -2,10 +2,7 @@
 A dynamic form wizard to split your forms easier
 
 Vue-form-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
-wasting time on details. Just forget about id's, external scripts and jQuery dependencies.
-
-Vue-form-wizard is inspired by [creative-tim wizards](https://www.creative-tim.com/bootstrap-themes/wizard) but simplified and 
-more customizable
+wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
 # Demos
 Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
@@ -18,8 +15,6 @@ Other demos:
 * [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
 * [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
 * [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
-* [Complete form example](https://jsfiddle.net/bt5dhqtf/150/) integrated with [vue-form-generator](https://github.com/icebob/vue-form-generator)
-* [Vue router integration](https://jsfiddle.net/CristiJ/bt5dhqtf/252/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
 
 # Usage
 
@@ -37,7 +32,7 @@ Download the css and js files from `dist` folder or reference them directly from
 //global registration
 import 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-Vue.use(VueFormWizard)
+Vue.use(VueTabWizard)
 
 //local registration
 import {FormWizard, TabContent} from 'vue-form-wizard'
@@ -140,12 +135,6 @@ props: {
    */
   beforeChange: {
     type: Function
-  },
-  /***
-  * Used to handle routing with vue-router. Refer to [router.push](https://router.vuejs.org/en/essentials/navigation.html) for a valid prop in this case
-  */
-  route: {
-    type: [String, Object]
   }
 }
 ```
@@ -156,15 +145,3 @@ props: {
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
 * **finish** - Finish button content
-
-## Contribution
-Open an issue or send a Pull request if you feel that something is missing or doesn't work.
-
-## License
-vue-form-wizard is available under the [MIT license](https://tldrlegal.com/license/mit-license).
-
-## Contact
-
-Copyright (C) 2017 Cristi Jora
-
-[![@cristijora](https://img.shields.io/badge/github-cristijora-green.svg)](https://github.com/cristijora)

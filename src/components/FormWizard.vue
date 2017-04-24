@@ -43,7 +43,7 @@
       <template>
         <span @click="prevTab" v-if="displayPrevButton">
           <slot name="prev">
-            <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle">
+            <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle" :disabled="loading">
               {{backButtonText}}
             </button>
           </slot>
@@ -63,7 +63,7 @@
       <template>
         <span @click="nextTab" class="pull-right" v-if="!isLastStep">
          <slot name="next">
-           <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle">
+           <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle" :disabled="loading">
             {{nextButtonText}}
            </button>
          </slot>
@@ -130,6 +130,7 @@
         isLastStep: false,
         currentPercentage: 0,
         maxStep: 0,
+        loading: false,
         tabs: []
       }
     },
@@ -195,37 +196,64 @@
         return index <= this.maxStep
       },
       navigateToTab (index) {
-        if (index <= this.maxStep && this.beforeTabChange(this.activeTabIndex)) {
-          this.changeTab(this.activeTabIndex, index)
+        if (index <= this.maxStep) {
+          let cb = () => {
+            this.changeTab(this.activeTabIndex, index)
+          }
+          this.beforeTabChange(this.activeTabIndex, cb)
         }
       },
-      beforeTabChange (index) {
+      setLoading (value) {
+        this.loading = value
+        this.$emit('on-loading', value)
+      },
+      validateBeforeChange (promiseFn, callback) {
+        // we have a promise
+        if (promiseFn.then && typeof promiseFn.then === 'function') {
+          this.setLoading(true)
+          promiseFn.then((res) => {
+            this.setLoading(false)
+            let validationResult = res === true
+            this.executeBeforeChange(validationResult, callback)
+          }).catch(() => {
+            this.setLoading(false)
+          })
+          // we have a simple function
+        } else {
+          let validationResult = promiseFn === true
+          this.executeBeforeChange(validationResult, callback)
+        }
+      },
+      executeBeforeChange (validationResult, callback) {
+        this.$emit('on-validate', validationResult, this.activeTabIndex)
+        if (validationResult) {
+          callback()
+        }
+      },
+      beforeTabChange (index, callback) {
+        if (this.loading) {
+          return
+        }
         let oldTab = this.tabs[index]
         if (oldTab && oldTab.beforeChange !== undefined) {
-          return oldTab.beforeChange()
+          let tabChangeRes = oldTab.beforeChange()
+          this.validateBeforeChange(tabChangeRes, callback)
+        } else {
+          callback()
         }
-        return true
       },
       changeTab (oldIndex, newIndex) {
         let oldTab = this.tabs[oldIndex]
         let newTab = this.tabs[newIndex]
         if (oldTab) {
-          oldTab.show = false
           oldTab.active = false
         }
         if (newTab) {
-          newTab.show = true
           newTab.active = true
         }
         this.activeTabIndex = newIndex
         this.checkStep()
-        this.tryChangeRoute(newTab)
         return true
-      },
-      tryChangeRoute (tab) {
-        if (this.$router && tab.route) {
-          this.$router.push(tab.route)
-        }
       },
       checkStep () {
         if (this.activeTabIndex === this.tabCount - 1) {
@@ -239,58 +267,53 @@
           this.maxStep = this.activeTabIndex
         }
       },
-
       nextTab () {
-        if (!this.beforeTabChange(this.activeTabIndex)) return
-
-        if (this.activeTabIndex < this.tabCount - 1) {
-          this.activeTabIndex++
-          this.increaseMaxStep()
-          this.checkStep()
-        } else {
-          this.isLastStep = true
-          this.$emit('finished')
+        let cb = () => {
+          if (this.activeTabIndex < this.tabCount - 1) {
+            this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
+            this.increaseMaxStep()
+          } else {
+            this.isLastStep = true
+            this.$emit('finished')
+          }
         }
+        this.beforeTabChange(this.activeTabIndex, cb)
       },
       prevTab () {
-        if (!this.beforeTabChange(this.activeTabIndex)) return
-
-        if (this.activeTabIndex > 0) {
-          this.activeTabIndex--
-          this.isLastStep = false
+        let cb = () => {
+          if (this.activeTabIndex > 0) {
+            this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
+            this.isLastStep = false
+          }
         }
+        this.beforeTabChange(this.activeTabIndex, cb)
       },
       finish () {
-        this.$emit('on-complete')
+        let cb = () => {
+          this.$emit('on-complete')
+        }
+        this.beforeTabChange(this.activeTabIndex, cb)
       }
     },
     mounted () {
       this.tabs = this.$children.filter((comp) => comp.$options.name === 'tab-content')
-      if (this.tabs.length > 0) {
+      if (this.tabs.length > 0 && this.startIndex === 0) {
         let firstTab = this.tabs[this.activeTabIndex]
-        firstTab.show = true
         firstTab.active = true
-        this.tryChangeRoute(firstTab)
       }
       if (this.startIndex < this.tabs.length) {
+        let tabToActivate = this.tabs[this.startIndex]
         this.activeTabIndex = this.startIndex
+        tabToActivate.active = true
         this.maxStep = this.startIndex
-        this.tryChangeRoute(this.tabs[this.startIndex])
       } else {
         console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
-      }
-    },
-    watch: {
-      activeTabIndex: function (newVal, oldVal) {
-        if (this.beforeTabChange(oldVal)) {
-          this.changeTab(oldVal, newVal)
-        }
       }
     }
   }
 </script>
 <style>
-  @import "../assets/form-wizard/bootstrap.min.css";
+  @import "./../assets/tab-wizard/bootstrap.min.css";
 </style>
 <style lang="scss">
   @import "./../assets/wizard";
