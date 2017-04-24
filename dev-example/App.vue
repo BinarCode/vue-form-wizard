@@ -16,6 +16,7 @@
         My second tab content
       </tab-content>
       <tab-content title="Last step"
+                   :before-change="validateAsync"
                    icon="ti-check">
         Yuhuuu! This seems pretty damn simple
       </tab-content>

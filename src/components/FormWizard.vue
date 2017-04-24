@@ -207,29 +207,27 @@
         this.loading = value
         this.$emit('on-loading', value)
       },
-      validateTabChangePromise (promiseFn, callback) {
+      validateBeforeChange (promiseFn, callback) {
         // we have a promise
         if (promiseFn.then && typeof promiseFn.then === 'function') {
           this.setLoading(true)
           promiseFn.then((res) => {
             this.setLoading(false)
-            if (res === true) {
-              callback()
-              this.$emit('validated', true, this.activeTabIndex)
-            } else {
-              this.$emit('validated', false, this.activeTabIndex)
-            }
+            let validationResult = res === true
+            this.executeBeforeChange(validationResult, callback)
           }).catch(() => {
             this.setLoading(false)
           })
           // we have a simple function
         } else {
-          if (promiseFn) {
-            this.$emit('validated', true, this.activeTabIndex)
-            callback()
-          } else {
-            this.$emit('validated', false, this.activeTabIndex)
-          }
+          let validationResult = promiseFn === true
+          this.executeBeforeChange(validationResult, callback)
+        }
+      },
+      executeBeforeChange (validationResult, callback) {
+        this.$emit('on-validate', validationResult, this.activeTabIndex)
+        if (validationResult) {
+          callback()
         }
       },
       beforeTabChange (index, callback) {
@@ -239,7 +237,7 @@
         let oldTab = this.tabs[index]
         if (oldTab && oldTab.beforeChange !== undefined) {
           let tabChangeRes = oldTab.beforeChange()
-          this.validateTabChangePromise(tabChangeRes, callback)
+          this.validateBeforeChange(tabChangeRes, callback)
         } else {
           callback()
         }
@@ -291,7 +289,10 @@
         this.beforeTabChange(this.activeTabIndex, cb)
       },
       finish () {
-        this.$emit('on-complete')
+        let cb = () => {
+          this.$emit('on-complete')
+        }
+        this.beforeTabChange(this.activeTabIndex, cb)
       }
     },
     mounted () {
