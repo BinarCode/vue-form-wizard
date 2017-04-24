@@ -25,7 +25,6 @@
     "url": "https://github.com/cristijora/vue-form-wizard"
   },
   "devDependencies": {
-    "vue": "^2.2.2",
     "autoprefixer": "^6.7.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
@@ -84,7 +83,9 @@
     "sinon-chai": "^2.8.0",
     "stats-webpack-plugin": "^0.6.0",
     "url-loader": "^0.5.8",
+    "vue": "^2.2.2",
     "vue-loader": "^11.1.4",
+    "vue-router": "^2.5.1",
     "vue-style-loader": "^2.0.0",
     "vue-template-compiler": "^2.2.4",
     "webpack": "^2.2.1",

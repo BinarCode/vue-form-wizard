@@ -253,7 +253,13 @@
         }
         this.activeTabIndex = newIndex
         this.checkStep()
+        this.tryChangeRoute(newTab)
         return true
+      },
+      tryChangeRoute (tab) {
+        if (this.$router && tab.route) {
+          this.$router.push(tab.route)
+        }
       },
       checkStep () {
         if (this.activeTabIndex === this.tabCount - 1) {
@@ -300,12 +306,14 @@
       if (this.tabs.length > 0 && this.startIndex === 0) {
         let firstTab = this.tabs[this.activeTabIndex]
         firstTab.active = true
+        this.tryChangeRoute(firstTab)
       }
       if (this.startIndex < this.tabs.length) {
         let tabToActivate = this.tabs[this.startIndex]
         this.activeTabIndex = this.startIndex
         tabToActivate.active = true
         this.maxStep = this.startIndex
+        this.tryChangeRoute(this.tabs[this.startIndex])
       } else {
         console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
       }

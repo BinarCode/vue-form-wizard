@@ -7,19 +7,22 @@
                  class="card">
       <tab-content title="Personal details"
                    :before-change="validateAsync"
+                   route="/first"
                    icon="ti-user">
-        My first tab content
       </tab-content>
       <tab-content title="Additional Info"
                    :before-change="validate"
+                   route="/second"
                    icon="ti-settings">
-        My second tab content
       </tab-content>
       <tab-content title="Last step"
                    :before-change="validateAsync"
+                   route="/third"
                    icon="ti-check">
-        Yuhuuu! This seems pretty damn simple
       </tab-content>
+      <transition name="fade" mode="out-in">
+        <router-view></router-view>
+      </transition>
       <div class="loader" v-if="loadingWizard"></div>
     </form-wizard>
   </div>

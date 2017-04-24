@@ -26,6 +26,9 @@
        */
       beforeChange: {
         type: Function
+      },
+      route: {
+        type: [String, Object]
       }
     },
     data () {
