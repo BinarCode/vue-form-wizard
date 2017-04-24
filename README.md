@@ -15,7 +15,8 @@ Other demos:
 * [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
 * [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
 * [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
-* [Vue router integration](https://jsfiddle.net/CristiJ/bt5dhqtf/252/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
+* [Vue router integration](https://jsfiddle.net/bt5dhqtf/267/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
+* [Async validation](https://jsfiddle.net/bt5dhqtf/272/) `before-change` prop can accept a promise that is resolved with `true` which will execute the promise before switching to another step/tab
 
 # Usage
 
@@ -139,7 +140,13 @@ props: {
   }
 }
 ```
+## Events
+Vue-form-wizard emits certain events when certain actions happen inside the component. The events can be noticed in some of the demos and especially in the [async validation demo](https://jsfiddle.net/bt5dhqtf/272/)
+* **on-complete** Called when the finish button is clicked and the `before-change` for the last step (if present) was executed. No params are sent together with this event. `this.$emit('on-complete')`
+* **on-loading** Called whenever an async `before-change` is executed. This event is emitted before executing `before-change` and after finishing execution of `before-change` method. `on-loading` is emitted together with a Boolean value. `this.$emit('on-loading', value)`
+* **on-validate** Called whenever the execution of a `before-change` method is completed. The event sends along a Boolean which represents the validation result as well as an int with te tab index. `this.$emit('on-validate', validationResult, this.activeTabIndex)`
 
+```
 # Slots
 * **Default** - Used for tab-contents
 * **title** - Upper title section including sub-title
