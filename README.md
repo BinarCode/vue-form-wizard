@@ -146,7 +146,6 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 * **on-loading** Called whenever an async `before-change` is executed. This event is emitted before executing `before-change` and after finishing execution of `before-change` method. `on-loading` is emitted together with a Boolean value. `this.$emit('on-loading', value)`
 * **on-validate** Called whenever the execution of a `before-change` method is completed. The event sends along a Boolean which represents the validation result as well as an int with te tab index. `this.$emit('on-validate', validationResult, this.activeTabIndex)`
 
-```
 # Slots
 * **Default** - Used for tab-contents
 * **title** - Upper title section including sub-title
