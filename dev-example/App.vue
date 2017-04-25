@@ -2,7 +2,7 @@
   <div>
     <form-wizard @on-complete="onComplete"
                  shape="circle"
-                 color="#e74c3c"
+                 color="#000000"
                  @on-loading="setLoading"
                  class="card">
       <tab-content title="Personal details"
@@ -47,7 +47,12 @@
       validateAsync () {
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            resolve(true)
+            var firstcb = document.getElementById("firstcb");
+            if(firstcb.checked) {
+              resolve(true)
+            } else {
+              reject('checkbox is required')
+            }
           }, 1000)
         })
       },

@@ -4,7 +4,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import FormWizard from '../src/index'
-const First = { template: '<div>First page</div>' }
+const First = { template: '<div>Required checkbox: <input checked type="checkbox" id="firstcb"></div>' }
 const Second = { template: '<div>Second page</div>' }
 const Third = { template: '<div>Third page</div>' }
 

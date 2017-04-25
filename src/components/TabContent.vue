@@ -1,5 +1,8 @@
 <template>
   <div v-if="active" class="tab-container">
+    <div v-if="validationError">
+     {{ validationError }}
+    </div>
     <slot>
     </slot>
   </div>
@@ -33,7 +36,8 @@
     },
     data () {
       return {
-        active: false
+        active: false,
+        validationError: null
       }
     }
   }

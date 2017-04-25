@@ -14,7 +14,7 @@
       <ul class="nav nav-pills">
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
           <a href="" @click.prevent="navigateToTab(index)">
-            <div class="icon-circle" :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
+            <div class="icon-circle" :class="{'is-error':tab.validationError, checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
                  :style="isChecked(index)? stepCheckedStyle : {}">
               <transition :name="transition" mode="out-in">
                 <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
@@ -207,7 +207,13 @@
         this.loading = value
         this.$emit('on-loading', value)
       },
+      setValidationError (error) {
+        this.tabs[this.activeTabIndex].validationError = error
+        this.$emit('on-error', error)
+      },
       validateBeforeChange (promiseFn, callback) {
+        // reset validationError if any
+        this.setValidationError(null)
         // we have a promise
         if (promiseFn.then && typeof promiseFn.then === 'function') {
           this.setLoading(true)
@@ -215,8 +221,9 @@
             this.setLoading(false)
             let validationResult = res === true
             this.executeBeforeChange(validationResult, callback)
-          }).catch(() => {
+          }).catch((error) => {
             this.setLoading(false)
+            this.setValidationError(error)
           })
           // we have a simple function
         } else {
