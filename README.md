@@ -16,7 +16,7 @@ Other demos:
 * [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
 * [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
 * [Vue router integration](https://jsfiddle.net/bt5dhqtf/267/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
-* [Async validation](https://jsfiddle.net/bt5dhqtf/272/) `before-change` prop can accept a promise that is resolved with `true` which will execute the promise before switching to another step/tab
+* [Async validation](https://jsfiddle.net/bt5dhqtf/272/) `before-change` prop can accept a promise that is resolved with `true` which will execute the promise before switching to another step/tab (NOTE: This feature is not present in the npm package yet)
 
 # Usage
 
