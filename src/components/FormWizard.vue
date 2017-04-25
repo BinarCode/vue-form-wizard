@@ -14,7 +14,7 @@
       <ul class="nav nav-pills">
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
           <a href="" @click.prevent="navigateToTab(index)">
-            <div class="icon-circle" :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
+            <div class="icon-circle" :class="{'is-error':tab.validationError, checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
                  :style="isChecked(index)? stepCheckedStyle : {}">
               <transition :name="transition" mode="out-in">
                 <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
@@ -207,7 +207,13 @@
         this.loading = value
         this.$emit('on-loading', value)
       },
+      setValidationError (error) {
+        this.tabs[this.activeTabIndex].validationError = error
+        this.$emit('on-error', error)
+      },
       validateBeforeChange (promiseFn, callback) {
+        // reset validationError if any
+        this.setValidationError(null)
         // we have a promise
         if (promiseFn.then && typeof promiseFn.then === 'function') {
           this.setLoading(true)
@@ -215,8 +221,9 @@
             this.setLoading(false)
             let validationResult = res === true
             this.executeBeforeChange(validationResult, callback)
-          }).catch(() => {
+          }).catch((error) => {
             this.setLoading(false)
+            this.setValidationError(error)
           })
           // we have a simple function
         } else {
@@ -253,7 +260,13 @@
         }
         this.activeTabIndex = newIndex
         this.checkStep()
+        this.tryChangeRoute(newTab)
         return true
+      },
+      tryChangeRoute (tab) {
+        if (this.$router && tab.route) {
+          this.$router.push(tab.route)
+        }
       },
       checkStep () {
         if (this.activeTabIndex === this.tabCount - 1) {
@@ -300,12 +313,14 @@
       if (this.tabs.length > 0 && this.startIndex === 0) {
         let firstTab = this.tabs[this.activeTabIndex]
         firstTab.active = true
+        this.tryChangeRoute(firstTab)
       }
       if (this.startIndex < this.tabs.length) {
         let tabToActivate = this.tabs[this.startIndex]
         this.activeTabIndex = this.startIndex
         tabToActivate.active = true
         this.maxStep = this.startIndex
+        this.tryChangeRoute(this.tabs[this.startIndex])
       } else {
         console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
       }

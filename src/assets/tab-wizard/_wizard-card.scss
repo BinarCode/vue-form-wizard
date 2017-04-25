@@ -1,5 +1,13 @@
 .vue-tab-wizard{
     padding-bottom:20px;
+    
+    .is-error {
+        border-color: $danger-color!important;
+        .icon-container {
+            background: $danger-states-color!important;
+        }
+    } 
+ 
     .icon-circle{
         font-size: 18px;
         border: 3px solid $gray-input-bg;

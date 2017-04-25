@@ -1,5 +1,8 @@
 <template>
   <div v-if="active" class="tab-container">
+    <div v-if="validationError">
+     {{ validationError }}
+    </div>
     <slot>
     </slot>
   </div>
@@ -26,11 +29,15 @@
        */
       beforeChange: {
         type: Function
+      },
+      route: {
+        type: [String, Object]
       }
     },
     data () {
       return {
-        active: false
+        active: false,
+        validationError: null
       }
     }
   }
