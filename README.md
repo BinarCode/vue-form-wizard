@@ -93,6 +93,13 @@ props: {
     type: String,
     default: '#e74c3c' //circle, border and text color
   },
+  /***
+  *  Is set to current step and text when beforeChange function fails 
+  */
+  errorColor: {
+    type: String,
+    default: '#8b0000'
+  },
   /**
   * Can take one of the following values: 'circle|square|tab`
   */

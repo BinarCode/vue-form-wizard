@@ -1,13 +1,14 @@
 <template>
   <div>
     <form-wizard @on-complete="onComplete"
-                 shape="circle"
-                 color="#e74c3c"
+                 shape="square"
+                 color="gray"
                  @on-loading="setLoading"
-                 class="card">
+                 @on-error="setError"
+                 class="card" ref="wizard">
       <tab-content title="Personal details"
-                   :before-change="validateAsync"
                    route="/first"
+                   :before-change="validateAsync"
                    icon="ti-user">
       </tab-content>
       <tab-content title="Additional Info"
@@ -16,7 +17,6 @@
                    icon="ti-settings">
       </tab-content>
       <tab-content title="Last step"
-                   :before-change="validateAsync"
                    route="/third"
                    icon="ti-check">
       </tab-content>
@@ -24,6 +24,9 @@
         <router-view></router-view>
       </transition>
       <div class="loader" v-if="loadingWizard"></div>
+      <div v-if="error">
+        {{error}}
+      </div>
     </form-wizard>
   </div>
 </template>
@@ -34,7 +37,9 @@
     name: 'app',
     data () {
       return {
-        loadingWizard: false
+        loadingWizard: false,
+        error: null,
+        count: 0
       }
     },
     methods: {
@@ -44,10 +49,19 @@
       setLoading (value) {
         this.loadingWizard = value
       },
+      setError (error) {
+        this.error = error
+      },
       validateAsync () {
+        //simulating an error for the first time and a success for the second time
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            resolve(true)
+            if (this.count < 1) {
+              this.count ++
+              reject('Some custom error')
+            } else {
+              resolve(true)
+            }
           }, 1000)
         })
       },

@@ -14,19 +14,25 @@
       <ul class="nav nav-pills">
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
           <a href="" @click.prevent="navigateToTab(index)">
-            <div class="icon-circle" :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
-                 :style="isChecked(index)? stepCheckedStyle : {}">
+            <div class="icon-circle"
+                 :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
+                 :style="[isChecked(index)? stepCheckedStyle : {}, tab.validationError ? errorStyle : {}]">
+
               <transition :name="transition" mode="out-in">
-                <div v-if="tab.active" class="icon-container" :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
-                     :style="tab.active ? iconActiveStyle: {}">
+                <div v-if="tab.active" class="icon-container"
+                     :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
+                     :style="[tab.active ? iconActiveStyle: {}, tab.validationError ? errorStyle : {}]">
                   <i v-if="tab.icon" :class="tab.icon" class="icon"></i>
                   <i v-else class="icon">{{index + 1}}</i>
                 </div>
                 <i v-if="!tab.active && tab.icon" :class="tab.icon" class="icon"></i>
                 <i v-if="!tab.active && !tab.icon" class="icon">{{index + 1}}</i>
               </transition>
+
             </div>
-            <span class="stepTitle" :style="tab.active ? stepTitleStyle : {}">
+            <span class="stepTitle"
+                  :class="{active:tab.active, has_error:tab.validationError}"
+                  :style="tab.active ? stepTitleStyle : {}">
               {{tab.title}}
             </span>
 
@@ -104,6 +110,10 @@
         type: String,
         default: '#e74c3c'
       },
+      errorColor: {
+        type: String,
+        default: '#8b0000'
+      },
       shape: {
         type: String,
         default: 'circle'
@@ -161,9 +171,16 @@
           borderColor: this.color
         }
       },
-      stepTitleStyle () {
+      errorStyle () {
         return {
-          color: this.color
+          borderColor: this.errorColor,
+          backgroundColor: this.errorColor
+        }
+      },
+      stepTitleStyle () {
+        var isError = this.tabs[this.activeTabIndex].validationError
+        return {
+          color: isError ? this.errorColor : this.color
         }
       },
       isStepSquare () {
@@ -207,7 +224,12 @@
         this.loading = value
         this.$emit('on-loading', value)
       },
+      setValidationError (error) {
+        this.tabs[this.activeTabIndex].validationError = error
+        this.$emit('on-error', error)
+      },
       validateBeforeChange (promiseFn, callback) {
+        this.setValidationError(null)
         // we have a promise
         if (promiseFn.then && typeof promiseFn.then === 'function') {
           this.setLoading(true)
@@ -215,8 +237,9 @@
             this.setLoading(false)
             let validationResult = res === true
             this.executeBeforeChange(validationResult, callback)
-          }).catch(() => {
+          }).catch((error) => {
             this.setLoading(false)
+            this.setValidationError(error)
           })
           // we have a simple function
         } else {
@@ -228,6 +251,8 @@
         this.$emit('on-validate', validationResult, this.activeTabIndex)
         if (validationResult) {
           callback()
+        } else {
+          this.tabs[this.activeTabIndex].validationError = 'error'
         }
       },
       beforeTabChange (index, callback) {
@@ -254,6 +279,7 @@
         this.activeTabIndex = newIndex
         this.checkStep()
         this.tryChangeRoute(newTab)
+        this.increaseMaxStep()
         return true
       },
       tryChangeRoute (tab) {
@@ -277,7 +303,6 @@
         let cb = () => {
           if (this.activeTabIndex < this.tabCount - 1) {
             this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
-            this.increaseMaxStep()
           } else {
             this.isLastStep = true
             this.$emit('finished')

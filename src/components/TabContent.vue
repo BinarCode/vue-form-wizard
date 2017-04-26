@@ -33,7 +33,8 @@
     },
     data () {
       return {
-        active: false
+        active: false,
+        validationError: null
       }
     }
   }
