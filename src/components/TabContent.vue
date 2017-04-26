@@ -1,5 +1,5 @@
 <template>
-  <div v-show="show" class="tab-container">
+  <div v-if="active" class="tab-container">
     <slot>
     </slot>
   </div>
@@ -33,7 +33,6 @@
     },
     data () {
       return {
-        show: false,
         active: false
       }
     }

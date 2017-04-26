@@ -8,6 +8,9 @@
 
     padding: $padding-base-vertical $padding-base-horizontal;
 
+    @include btn-styles($default-color, $default-states-color);
+    @include transition($fast-transition-time, linear);
+
     &:hover,
     &:focus{
         outline: 0 !important;
@@ -26,14 +29,57 @@
           margin-right: 0px;
         }
     }
+
+    [class*="ti-"]{
+        vertical-align: middle;
+    }
+
 }
 
+.btn-group .btn + .btn,
+.btn-group .btn + .btn-group,
+.btn-group .btn-group + .btn,
+.btn-group .btn-group + .btn-group{
+    margin-left: -2px;
 
+}
+
+// Apply the mixin to the buttons
+//.btn-default { @include btn-styles($default-color, $default-states-color); }
+.navbar .navbar-nav > li > a.btn.btn-primary, .btn-primary { @include btn-styles($primary-color, $primary-states-color); }
+.navbar .navbar-nav > li > a.btn.btn-info, .btn-info    { @include btn-styles($info-color, $info-states-color); }
+
+.btn{
+     &:disabled,
+     &[disabled],
+     &.disabled,
+     &.btn-disabled{
+        @include opacity(.5);
+    }
+}
 .btn-disabled{
     cursor: default;
+}
+.btn-simple{
+    border: $none;
+    padding: $padding-base-vertical $padding-base-horizontal;
+
 }
 
 .navbar .navbar-nav > li > a.btn.btn-wd,
 .btn-wd{
     min-width: 140px;
+}
+
+.btn-group.select{
+    width: 100%;
+}
+.btn-group.select .btn{
+    text-align: left;
+}
+.btn-group.select .caret{
+    position: absolute;
+    top: 50%;
+    margin-top: -1px;
+    right: 8px;
 }
