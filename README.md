@@ -147,9 +147,17 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 * **on-loading** Called whenever an async `before-change` is executed. This event is emitted before executing `before-change` and after finishing execution of `before-change` method. `on-loading` is emitted together with a Boolean value. `this.$emit('on-loading', value)`
 * **on-validate** Called whenever the execution of a `before-change` method is completed. The event sends along a Boolean which represents the validation result as well as an int with te tab index. `this.$emit('on-validate', validationResult, this.activeTabIndex)`
 
-# Slots
+## Slots
 * **Default** - Used for tab-contents
 * **title** - Upper title section including sub-title
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
 * **finish** - Finish button content
+
+## Contribution
+1. Fork the repo
+2. run `npm install`
+3. `npm run dev` for launching the dev example
+4. After making your changes make sure to pull the changes from the source repo to avoid conflicts
+5. `npm run build` to generate the new js and css bundles 
+6. Commit your changes + the js and css bundles so it's easy to test them right away in fiddles, codepen etc
