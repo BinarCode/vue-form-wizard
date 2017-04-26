@@ -321,7 +321,7 @@
   }
 </script>
 <style>
-  @import "./../assets/tab-wizard/bootstrap.min.css";
+  @import "../assets/form-wizard/bootstrap.min.css";
 </style>
 <style lang="scss">
   @import "./../assets/wizard";
