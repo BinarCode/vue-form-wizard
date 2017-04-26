@@ -161,3 +161,4 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 4. After making your changes make sure to pull the changes from the source repo to avoid conflicts
 5. `npm run build` to generate the new js and css bundles 
 6. Commit your changes + the js and css bundles so it's easy to test them right away in fiddles, codepen etc
+7. Open a Pull Request. For more information refer to [github forking workflow](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
