@@ -33,9 +33,9 @@ Download the css and js files from `dist` folder or reference them directly from
 ## Component registration
 ```js
 //global registration
-import 'vue-form-wizard'
+import VueFormWizard from 'vue-form-wizard'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-Vue.use(VueTabWizard)
+Vue.use(VueFormWizard)
 
 //local registration
 import {FormWizard, TabContent} from 'vue-form-wizard'
