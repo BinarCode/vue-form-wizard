@@ -1,12 +1,12 @@
 @import "bs_variables";
 
-.vue-tab-wizard *{
+.vue-form-wizard *{
   box-sizing: border-box;
 }
-.vue-tab-wizard a{
+.vue-form-wizard a{
   text-decoration: none;
 }
-.vue-tab-wizard .nav {
+.vue-form-wizard .nav {
   margin-bottom: 0;
   padding-left: 0; // Override default ul/ol
   list-style: none;
@@ -40,23 +40,4 @@
       }
     }
   }
-
-  // Open dropdowns
-  .open > a {
-    &,
-    &:hover,
-    &:focus {
-      background-color: $nav-link-hover-bg;
-      border-color: $link-color;
-    }
-  }
-
-  // Prevent IE8 from misplacing imgs
-  //
-  // See https://github.com/h5bp/html5-boilerplate/issues/984#issuecomment-3985989
-  > li > a > img {
-    max-width: none;
-  }
-
-
 }

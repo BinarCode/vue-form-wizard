@@ -1,5 +1,4 @@
-
-.vue-tab-wizard .nav-pills {
+.vue-form-wizard .nav-pills {
     margin-top:0;
     position: relative;
     text-align: center;
@@ -13,9 +12,6 @@
     }
     a{
       display:flex;
-    }
-    > li + li {
-        margin-left: 0;
     }
     > li > a {
         display:flex;

@@ -1,7 +1,7 @@
 @import "bs_variables";
 @import "mixins";
 
-.vue-tab-wizard .btn {
+.vue-form-wizard .btn {
   display: inline-block;
   margin-bottom: 0; // For input.btn
   font-weight: $btn-font-weight;
@@ -13,30 +13,7 @@
   border: 1px solid transparent;
   white-space: nowrap;
   @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
-  @include user-select(none);
-
-  &,
-  &:active,
-  &.active {
-    &:focus,
-    &.focus {
-      @include tab-focus;
-    }
-  }
-
-  &:hover,
-  &:focus,
-  &.focus {
-    color: $btn-default-color;
-    text-decoration: none;
-  }
-
-  &:active,
-  &.active {
-    outline: 0;
-    background-image: none;
-    @include box-shadow(inset 0 3px 5px rgba(0,0,0,.125));
-  }
+  //@include user-select(none);
 
   &.disabled,
   &[disabled],
@@ -46,14 +23,6 @@
     @include box-shadow(none);
   }
 
-  // [converter] extracted a& to a.btn
-
-  a.btn {
-    &.disabled,
-    fieldset[disabled] & {
-      pointer-events: none; // Future-proof disabling of clicks on `<a>` elements
-    }
-  }
 }
 
 

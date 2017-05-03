@@ -1,8 +1,11 @@
-//@import "tab-wizard/bs_button";
-//@import "tab-wizard/bs_nav_pills";
-//@import "tab-wizard/bs_progress_bar";
+//Bootstrap imports just for general styling
+@import "form-wizard/bs_button";
+@import "form-wizard/bs_nav_pills";
+@import "form-wizard/bs_progress_bar";
+
 @import "form-wizard/variables";
 @import "form-wizard/mixins";
+//Form wizard related
 @import "form-wizard/buttons";
 @import "form-wizard/navs-pagination";
 @import "form-wizard/wizard-card";

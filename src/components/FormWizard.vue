@@ -1,7 +1,7 @@
 <template>
-  <div class="vue-tab-wizard">
+  <div class="vue-form-wizard">
     <div class="wizard-header">
-      <slot name="title" class="wizard-title">
+      <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
         <p class="category">{{subtitle}}</p>
       </slot>
@@ -47,7 +47,7 @@
 
     <div class="card-footer">
       <template>
-        <span @click="prevTab" v-if="displayPrevButton">
+        <span @click="prevTab" v-if="displayPrevButton" class="card-footer-left">
           <slot name="prev">
             <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle" :disabled="loading">
               {{backButtonText}}
@@ -57,7 +57,7 @@
       </template>
 
       <template>
-         <span @click="finish" class="pull-right" v-if="isLastStep">
+         <span @click="finish" class="card-footer-right" v-if="isLastStep">
            <slot name="finish">
              <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle">
               {{finishButtonText}}
@@ -67,7 +67,7 @@
       </template>
 
       <template>
-        <span @click="nextTab" class="pull-right" v-if="!isLastStep">
+        <span @click="nextTab" class="card-footer-right" v-if="!isLastStep">
          <slot name="next">
            <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle" :disabled="loading">
             {{nextButtonText}}
@@ -76,7 +76,6 @@
        </span>
       </template>
 
-      <div class="clearfix"></div>
     </div>
   </div>
 </template>
@@ -345,9 +344,6 @@
     }
   }
 </script>
-<style>
-  @import "../assets/form-wizard/bootstrap.min.css";
-</style>
 <style lang="scss">
   @import "./../assets/wizard";
 

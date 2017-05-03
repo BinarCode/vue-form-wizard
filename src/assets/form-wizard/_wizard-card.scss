@@ -1,4 +1,4 @@
-.vue-tab-wizard, .vue-form-wizard {
+.vue-form-wizard {
   padding-bottom: 20px;
   .is_error {
     border-color: $danger-states-color !important;
@@ -90,6 +90,18 @@
         -o-transition: width .3s ease;
         transition: width .3s ease;
       }
+    }
+  }
+
+  .card-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap:wrap;
+    flex-flow: row wrap;
+    .card-footer-left{
+      flex:1;
+      justify-self:flex-start;
     }
   }
 }
