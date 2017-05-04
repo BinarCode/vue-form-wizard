@@ -130,7 +130,10 @@
        */
       startIndex: {
         type: Number,
-        default: 0
+        default: 0,
+        validator: (value) => {
+          return value >= 0
+        }
       }
     },
     data () {
