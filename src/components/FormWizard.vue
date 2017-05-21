@@ -347,7 +347,7 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   @import "./../assets/wizard";
 
   .fade-enter-active, .fade-leave-active {
