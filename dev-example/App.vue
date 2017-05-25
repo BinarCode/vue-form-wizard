@@ -1,7 +1,7 @@
 <template>
   <div>
     <form-wizard @on-complete="onComplete"
-                 shape="square"
+                 shape="circle"
                  color="gray"
                  @on-loading="setLoading"
                  @on-error="setError"

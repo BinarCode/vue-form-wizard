@@ -6,7 +6,7 @@
       background: $danger-states-color !important;
     }
   }
-  .icon-circle {
+  .wizard-icon-circle {
     font-size: 18px;
     border: 3px solid $gray-input-bg;
     border-radius: 50%;
@@ -29,7 +29,7 @@
       background-color: $gray-input-bg;
       border-radius: 0;
     }
-    .icon-container {
+    .wizard-icon-container {
       display: flex;
       justify-content: center;
       flex: 1;
@@ -48,10 +48,6 @@
   .tab-content {
     min-height: 100px;
     padding: 30px 20px 10px;
-  }
-
-  .card-footer {
-    padding: 0 20px;
   }
 
   .wizard-header {
@@ -78,13 +74,13 @@
   }
 
   .wizard-navigation {
-    .progress-with-circle {
+    .wizard-progress-with-circle {
       position: relative;
       top: 40px;
       z-index: 50;
       height: 4px;
 
-      .progress-bar {
+      .wizard-progress-bar {
         box-shadow: none;
         -webkit-transition: width .3s ease;
         -o-transition: width .3s ease;
@@ -93,13 +89,14 @@
     }
   }
 
-  .card-footer{
+  .wizard-card-footer{
+    padding: 0 20px;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
     flex-wrap:wrap;
     flex-flow: row wrap;
-    .card-footer-left{
+    .wizard-footer-left{
       flex:1;
       justify-self:flex-start;
     }

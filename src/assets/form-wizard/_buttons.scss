@@ -1,5 +1,5 @@
-.vue-form-wizard .btn,
-.vue-form-wizard .navbar .navbar-nav > li > a.btn {
+.vue-form-wizard .wizard-btn,
+.vue-form-wizard .navbar .navbar-nav > li > a.wizard-btn {
   box-sizing: border-box;
   border-width: $border-thick;
   background-color: $transparent-bg;
@@ -13,8 +13,8 @@
 }
 
 .vue-form-wizard {
-  .navbar .navbar-nav > li > a.btn.btn-wd,
-  .btn-wd {
+  .navbar .navbar-nav > li > a.wizard-btn.wizard-btn-wd,
+  .wizard-btn-wd {
     min-width: 140px;
   }
 }

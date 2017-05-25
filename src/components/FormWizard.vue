@@ -7,19 +7,19 @@
       </slot>
     </div>
     <div class="wizard-navigation">
-      <div class="progress-with-circle">
-        <div class="progress-bar"
+      <div class="wizard-progress-with-circle">
+        <div class="wizard-progress-bar"
              :style="progressBarStyle"></div>
       </div>
-      <ul class="nav nav-pills">
+      <ul class="wizard-nav wizard-nav-pills">
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
           <a href="" @click.prevent="navigateToTab(index)">
-            <div class="icon-circle"
+            <div class="wizard-icon-circle"
                  :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
                  :style="[isChecked(index)? stepCheckedStyle : {}, tab.validationError ? errorStyle : {}]">
 
               <transition :name="transition" mode="out-in">
-                <div v-if="tab.active" class="icon-container"
+                <div v-if="tab.active" class="wizard-icon-container"
                      :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
                      :style="[tab.active ? iconActiveStyle: {}, tab.validationError ? errorStyle : {}]">
                   <i v-if="tab.icon" :class="tab.icon" class="icon"></i>
@@ -45,11 +45,11 @@
       </div>
     </div>
 
-    <div class="card-footer">
+    <div class="wizard-card-footer">
       <template>
-        <span @click="prevTab" v-if="displayPrevButton" class="card-footer-left">
+        <span @click="prevTab" v-if="displayPrevButton" class="wizard-footer-left">
           <slot name="prev">
-            <button type="button" class="btn btn-default btn-wd" :style="fillButtonStyle" :disabled="loading">
+            <button type="button" class="wizard-btn btn-default wizard-btn-wd" :style="fillButtonStyle" :disabled="loading">
               {{backButtonText}}
             </button>
           </slot>
@@ -57,9 +57,9 @@
       </template>
 
       <template>
-         <span @click="finish" class="card-footer-right" v-if="isLastStep">
+         <span @click="finish" class="wizard-footer-right" v-if="isLastStep">
            <slot name="finish">
-             <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle">
+             <button type="button" class="wizard-btn btn-fill wizard-btn-wd btn-next" :style="fillButtonStyle">
               {{finishButtonText}}
             </button>
           </slot>
@@ -67,9 +67,9 @@
       </template>
 
       <template>
-        <span @click="nextTab" class="card-footer-right" v-if="!isLastStep">
+        <span @click="nextTab" class="wizard-footer-right" v-if="!isLastStep">
          <slot name="next">
-           <button type="button" class="btn btn-fill btn-wd btn-next" :style="fillButtonStyle" :disabled="loading">
+           <button type="button" class="wizard-btn btn-fill wizard-btn-wd btn-next" :style="fillButtonStyle" :disabled="loading">
             {{nextButtonText}}
            </button>
          </slot>

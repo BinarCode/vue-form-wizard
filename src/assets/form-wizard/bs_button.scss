@@ -1,7 +1,7 @@
 @import "bs_variables";
 @import "mixins";
 
-.vue-form-wizard .btn {
+.vue-form-wizard .wizard-btn {
   display: inline-block;
   margin-bottom: 0; // For input.btn
   font-weight: $btn-font-weight;
