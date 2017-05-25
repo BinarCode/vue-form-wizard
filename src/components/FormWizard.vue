@@ -22,11 +22,11 @@
                 <div v-if="tab.active" class="wizard-icon-container"
                      :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
                      :style="[tab.active ? iconActiveStyle: {}, tab.validationError ? errorStyle : {}]">
-                  <i v-if="tab.icon" :class="tab.icon" class="icon"></i>
-                  <i v-else class="icon">{{index + 1}}</i>
+                  <i v-if="tab.icon" :class="tab.icon" class="wizard-icon"></i>
+                  <i v-else class="wizard-icon">{{index + 1}}</i>
                 </div>
-                <i v-if="!tab.active && tab.icon" :class="tab.icon" class="icon"></i>
-                <i v-if="!tab.active && !tab.icon" class="icon">{{index + 1}}</i>
+                <i v-if="!tab.active && tab.icon" :class="tab.icon" class="wizard-icon"></i>
+                <i v-if="!tab.active && !tab.icon" class="wizard-icon">{{index + 1}}</i>
               </transition>
 
             </div>
@@ -39,7 +39,7 @@
           </a>
         </li>
       </ul>
-      <div class="tab-content">
+      <div class="wizard-tab-content">
         <slot>
         </slot>
       </div>
