@@ -87,6 +87,10 @@ props: {
     default: 'Finish'
   },
   /***
+  *  Sets validation (on/off) for back button. By default back button ignores validation
+  */
+  validateOnBack: Boolean,
+  /***
   * Applies to text, border and circle
   */
   color: {
