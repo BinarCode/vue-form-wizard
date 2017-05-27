@@ -1,18 +1,17 @@
 <template>
   <div>
     <form-wizard @on-complete="onComplete"
-                 shape="circle"
+                 shape="square"
                  color="gray"
                  @on-loading="setLoading"
                  @on-error="setError"
                  class="card" ref="wizard">
       <tab-content title="Personal details"
                    route="/first"
-                   :before-change="validateAsync"
                    icon="ti-user">
       </tab-content>
       <tab-content title="Additional Info"
-                   :before-change="validate"
+                   :before-change="validateAsync"
                    route="/second"
                    icon="ti-settings">
       </tab-content>

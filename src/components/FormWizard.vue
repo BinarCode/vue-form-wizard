@@ -49,7 +49,8 @@
       <template>
         <span @click="prevTab" v-if="displayPrevButton" class="wizard-footer-left">
           <slot name="prev">
-            <button type="button" class="wizard-btn btn-default wizard-btn-wd" :style="fillButtonStyle" :disabled="loading">
+            <button type="button" class="wizard-btn btn-default wizard-btn-wd" :style="fillButtonStyle"
+                    :disabled="loading">
               {{backButtonText}}
             </button>
           </slot>
@@ -69,7 +70,8 @@
       <template>
         <span @click="nextTab" class="wizard-footer-right" v-if="!isLastStep">
          <slot name="next">
-           <button type="button" class="wizard-btn btn-fill wizard-btn-wd btn-next" :style="fillButtonStyle" :disabled="loading">
+           <button type="button" class="wizard-btn btn-fill wizard-btn-wd btn-next" :style="fillButtonStyle"
+                   :disabled="loading">
             {{nextButtonText}}
            </button>
          </slot>
@@ -102,6 +104,7 @@
         type: String,
         default: 'Finish'
       },
+      validateOnBack: Boolean,
       /***
        * Applies to text, border and circle
        */
@@ -214,12 +217,16 @@
       isChecked (index) {
         return index <= this.maxStep
       },
-      navigateToTab (index) {
+      navigateToTab (index, validate = true) {
         if (index <= this.maxStep) {
           let cb = () => {
             this.changeTab(this.activeTabIndex, index)
           }
-          this.beforeTabChange(this.activeTabIndex, cb)
+          if (validate) {
+            this.beforeTabChange(this.activeTabIndex, cb)
+          } else {
+            cb()
+          }
         }
       },
       setLoading (value) {
@@ -319,13 +326,32 @@
             this.isLastStep = false
           }
         }
-        this.beforeTabChange(this.activeTabIndex, cb)
+        if (this.validateOnBack) {
+          this.beforeTabChange(this.activeTabIndex, cb)
+        } else {
+          cb()
+        }
       },
       finish () {
         let cb = () => {
           this.$emit('on-complete')
         }
         this.beforeTabChange(this.activeTabIndex, cb)
+      },
+      checkRouteChange (route) {
+        let matchingTabIndex = -1
+        let matchingTab = this.tabs.find((tab, index) => {
+          let match = tab.route === route
+          if (match) {
+            matchingTabIndex = index
+          }
+          return match
+        })
+
+        if (matchingTab && !matchingTab.active) {
+          const shouldValidate = matchingTabIndex > this.activeTabIndex
+          this.navigateToTab(matchingTabIndex, shouldValidate)
+        }
       }
     },
     mounted () {
@@ -343,6 +369,11 @@
         this.tryChangeRoute(this.tabs[this.startIndex])
       } else {
         console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
+      }
+    },
+    watch: {
+      '$route.path': function (newRoute) {
+        this.checkRouteChange(newRoute)
       }
     }
   }
