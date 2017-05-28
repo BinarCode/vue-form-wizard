@@ -3,6 +3,9 @@
   "version": "0.3.0",
   "description": "A vue based tab/form wizard",
   "main": "dist/vue-form-wizard.js",
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/cristijora/vue-form-wizard",
   "scripts": {
     "dev": "node build/dev-server.js",
