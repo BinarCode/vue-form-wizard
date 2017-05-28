@@ -6,7 +6,10 @@ wasting time on details. Just forget about id's, external scripts and jQuery dep
 
 # [Documentation](https://cristijora.github.io/vue-form-wizard/#/)
 
-# Demos
+# Demos & Playground
+In browser [playground](https://cristijora.github.io/vue-form-wizard/#/?id=playground)
+
+## JSFiddle demos:
 Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
 
 Other demos:
