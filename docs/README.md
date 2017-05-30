@@ -26,11 +26,11 @@ There is also a [Playground](?id=playground) where you can test stuff out right 
 ## NPM
 `npm install vue-form-wizard`
 
-## Or alternatively directly include the javascript
+## Direct script include
 Download the css and js files from `dist` folder or reference them directly from github (check jsfiddle links)
 ```html
-<link rel="stylesheet" href="vue-form-wizard.min.css">
-<script src="vue-form-wizard.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.min.css">
+<script src="https://unpkg.com/vue-form-wizard/dist/vue-form-wizard.js"></script>
 ```
 ## Component registration
 ```js
