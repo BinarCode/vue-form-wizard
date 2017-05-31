@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="wizard-card-footer">
+    <div class="wizard-card-footer" v-if="!hideButtons">
       <template>
         <span @click="prevTab" v-if="displayPrevButton" class="wizard-footer-left">
           <slot name="prev">
@@ -103,6 +103,10 @@
       finishButtonText: {
         type: String,
         default: 'Finish'
+      },
+      hideButtons: {
+        type: Boolean,
+        default: false
       },
       validateOnBack: Boolean,
       /***

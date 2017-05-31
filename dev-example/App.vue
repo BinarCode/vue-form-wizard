@@ -1,6 +1,7 @@
 <template>
   <div>
     <form-wizard @on-complete="onComplete"
+                 :hide-buttons="false"
                  shape="square"
                  color="gray"
                  @on-loading="setLoading"
