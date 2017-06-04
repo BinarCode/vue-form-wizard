@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="wizard-card-footer" v-if="!hideButtons">
+    <div class="wizard-card-footer clearfix" v-if="!hideButtons">
       <template>
         <span @click="prevTab" v-if="displayPrevButton" class="wizard-footer-left">
           <slot name="prev">
