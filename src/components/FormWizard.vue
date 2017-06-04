@@ -326,6 +326,7 @@
       prevTab () {
         let cb = () => {
           if (this.activeTabIndex > 0) {
+            this.setValidationError(null)
             this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
             this.isLastStep = false
           }
