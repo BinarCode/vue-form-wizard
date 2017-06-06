@@ -372,6 +372,7 @@
         tabToActivate.active = true
         this.maxStep = this.startIndex
         this.tryChangeRoute(this.tabs[this.startIndex])
+        this.checkStep()
       } else {
         console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
       }
