@@ -233,6 +233,37 @@
           }
         }
       },
+      nextTab () {
+        let cb = () => {
+          if (this.activeTabIndex < this.tabCount - 1) {
+            this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
+          } else {
+            this.isLastStep = true
+            this.$emit('finished')
+          }
+        }
+        this.beforeTabChange(this.activeTabIndex, cb)
+      },
+      prevTab () {
+        let cb = () => {
+          if (this.activeTabIndex > 0) {
+            this.setValidationError(null)
+            this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
+            this.isLastStep = false
+          }
+        }
+        if (this.validateOnBack) {
+          this.beforeTabChange(this.activeTabIndex, cb)
+        } else {
+          cb()
+        }
+      },
+      finish () {
+        let cb = () => {
+          this.$emit('on-complete')
+        }
+        this.beforeTabChange(this.activeTabIndex, cb)
+      },
       setLoading (value) {
         this.loading = value
         this.$emit('on-loading', value)
@@ -312,37 +343,6 @@
           this.maxStep = this.activeTabIndex
         }
       },
-      nextTab () {
-        let cb = () => {
-          if (this.activeTabIndex < this.tabCount - 1) {
-            this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
-          } else {
-            this.isLastStep = true
-            this.$emit('finished')
-          }
-        }
-        this.beforeTabChange(this.activeTabIndex, cb)
-      },
-      prevTab () {
-        let cb = () => {
-          if (this.activeTabIndex > 0) {
-            this.setValidationError(null)
-            this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
-            this.isLastStep = false
-          }
-        }
-        if (this.validateOnBack) {
-          this.beforeTabChange(this.activeTabIndex, cb)
-        } else {
-          cb()
-        }
-      },
-      finish () {
-        let cb = () => {
-          this.$emit('on-complete')
-        }
-        this.beforeTabChange(this.activeTabIndex, cb)
-      },
       checkRouteChange (route) {
         let matchingTabIndex = -1
         let matchingTab = this.tabs.find((tab, index) => {
@@ -357,25 +357,63 @@
           const shouldValidate = matchingTabIndex > this.activeTabIndex
           this.navigateToTab(matchingTabIndex, shouldValidate)
         }
+      },
+      getTabs () {
+        return this.$children.filter((comp) => comp.$options.name === 'tab-content')
+      },
+      activateTab (index) {
+        let tab = this.tabs[index]
+        tab.active = true
+        this.tryChangeRoute(tab)
+      },
+      activateTabAndCheckStep (index) {
+        this.activateTab(index)
+        this.checkStep()
+        this.maxStep = this.startIndex
+        this.activeTabIndex = this.startIndex
+      },
+      initializeTabs () {
+        this.tabs = this.getTabs()
+        if (this.tabs.length > 0 && this.startIndex === 0) {
+          this.activateTab(this.activeTabIndex)
+        }
+        if (this.startIndex < this.tabs.length) {
+          this.activateTabAndCheckStep(this.startIndex)
+        } else {
+          console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
+        }
+      },
+      reinitializeTabs () {
+        let currentTabs = this.getTabs()
+        if (this.tabs.length === 0 || this.tabs.length === currentTabs.length) return
+        this.tabs = currentTabs
+        let oldTabIndex = -1
+        this.tabs.find((tab, index) => {
+          if (tab.active) {
+            oldTabIndex = index
+          }
+          return tab.active
+        })
+        if (oldTabIndex === -1) {
+          oldTabIndex = this.activeTabIndex > 0 ? this.activeTabIndex - 1 : 0
+        }
+
+        this.tabs.forEach((tab) => {
+          tab.active = false
+        })
+        this.activateTab(oldTabIndex)
+        this.maxStep = oldTabIndex
+        this.activeTabIndex = oldTabIndex
       }
     },
     mounted () {
-      this.tabs = this.$children.filter((comp) => comp.$options.name === 'tab-content')
-      if (this.tabs.length > 0 && this.startIndex === 0) {
-        let firstTab = this.tabs[this.activeTabIndex]
-        firstTab.active = true
-        this.tryChangeRoute(firstTab)
-      }
-      if (this.startIndex < this.tabs.length) {
-        let tabToActivate = this.tabs[this.startIndex]
-        this.activeTabIndex = this.startIndex
-        tabToActivate.active = true
-        this.maxStep = this.startIndex
-        this.tryChangeRoute(this.tabs[this.startIndex])
-        this.checkStep()
-      } else {
-        console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
-      }
+      this.initializeTabs()
+    },
+    /***
+     * Used to handle dynamic tab addition from an array since $children is not reactive
+     */
+    updated () {
+      this.reinitializeTabs()
     },
     watch: {
       '$route.path': function (newRoute) {

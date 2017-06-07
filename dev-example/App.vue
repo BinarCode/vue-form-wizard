@@ -1,5 +1,7 @@
 <template>
   <div>
+    <button @click="tabs.shift()">Remove one tab</button>
+    <button @click="tabs.push('testt')">Add one tab</button>
     <form-wizard @on-complete="onComplete"
                  :hide-buttons="false"
                  shape="square"
@@ -7,22 +9,9 @@
                  @on-loading="setLoading"
                  @on-error="setError"
                  class="card" ref="wizard">
-      <tab-content title="Personal details"
-                   route="/first"
-                   icon="ti-user">
+      <tab-content v-for="tab in tabs" :title="tab" :key="tab" icon="ti-settings">
+        {{tab}}
       </tab-content>
-      <tab-content title="Additional Info"
-                   :before-change="validateAsync"
-                   route="/second"
-                   icon="ti-settings">
-      </tab-content>
-      <tab-content title="Last step"
-                   route="/third"
-                   icon="ti-check">
-      </tab-content>
-      <transition name="fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
       <div class="loader" v-if="loadingWizard"></div>
       <div v-if="error">
         {{error}}
@@ -39,7 +28,8 @@
       return {
         loadingWizard: false,
         error: null,
-        count: 0
+        count: 0,
+        tabs: ['test','test2','test3']
       }
     },
     methods: {
