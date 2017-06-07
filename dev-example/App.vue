@@ -9,8 +9,14 @@
                  @on-loading="setLoading"
                  @on-error="setError"
                  class="card" ref="wizard">
-      <tab-content v-for="tab in tabs" :title="tab" :key="tab" icon="ti-settings">
-        {{tab}}
+      <tab-content title="1" icon="ti-settings">
+        First tab
+      </tab-content>
+      <tab-content title="2" icon="ti-settings" :before-change="validateAsync">
+        Second tab
+      </tab-content>
+      <tab-content title="3" icon="ti-settings">
+        Third tab
       </tab-content>
       <div class="loader" v-if="loadingWizard"></div>
       <div v-if="error">

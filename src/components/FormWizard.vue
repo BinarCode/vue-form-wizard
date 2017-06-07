@@ -13,7 +13,7 @@
       </div>
       <ul class="wizard-nav wizard-nav-pills">
         <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
-          <a href="" @click.prevent="navigateToTab(index)">
+          <a href="" @click.prevent="navigateToTab(index, false)">
             <div class="wizard-icon-circle"
                  :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
                  :style="[isChecked(index)? stepCheckedStyle : {}, tab.validationError ? errorStyle : {}]">
@@ -224,6 +224,7 @@
       navigateToTab (index, validate = true) {
         if (index <= this.maxStep) {
           let cb = () => {
+            this.setValidationError(null)
             this.changeTab(this.activeTabIndex, index)
           }
           if (validate) {
