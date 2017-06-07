@@ -9,7 +9,7 @@
                  @on-loading="setLoading"
                  @on-error="setError"
                  class="card" ref="wizard">
-      <tab-content title="1" icon="ti-settings">
+      <tab-content title="1" icon="ti-settings" :before-change="validateAsync">
         First tab
       </tab-content>
       <tab-content title="2" icon="ti-settings" :before-change="validateAsync">
@@ -52,13 +52,13 @@
         //simulating an error for the first time and a success for the second time
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            if (this.count < 1) {
-              this.count ++
+            if (this.count % 2 === 0) {
               reject('Some custom error')
             } else {
               resolve(true)
             }
-          }, 1000)
+            this.count ++
+          }, 100)
         })
       },
       validate () {
