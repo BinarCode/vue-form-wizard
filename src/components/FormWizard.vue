@@ -222,6 +222,7 @@
         return index <= this.maxStep
       },
       navigateToTab (index) {
+        this.$emit('on-change', this.activeTabIndex, index)
         let validate = index > this.activeTabIndex
         if (index <= this.maxStep) {
           let cb = () => {
@@ -236,6 +237,7 @@
         }
       },
       nextTab () {
+        this.$emit('on-change', this.activeTabIndex, this.activeTabIndex + 1)
         let cb = () => {
           if (this.activeTabIndex < this.tabCount - 1) {
             this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
@@ -247,6 +249,7 @@
         this.beforeTabChange(this.activeTabIndex, cb)
       },
       prevTab () {
+        this.$emit('on-change', this.activeTabIndex, this.activeTabIndex - 1)
         let cb = () => {
           if (this.activeTabIndex > 0) {
             this.setValidationError(null)
