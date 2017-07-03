@@ -364,7 +364,11 @@
         }
       },
       getTabs () {
-        return this.$children.filter((comp) => comp.$options.name === 'tab-content')
+        let tabs = this.$slots.default.filter((comp) => comp.componentOptions && comp.componentOptions.tag === 'tab-content')
+          .map(comp => {
+            return comp.componentInstance
+          })
+        return tabs
       },
       activateTab (index) {
         let tab = this.tabs[index]
@@ -388,8 +392,12 @@
           console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
         }
       },
+      /***
+       * Called when tabs are added dynamically from array
+       **/
       reinitializeTabs () {
         let currentTabs = this.getTabs()
+        // The tab count did not change therefore we ignore further checks
         if (this.tabs.length === 0 || this.tabs.length === currentTabs.length) return
         this.tabs = currentTabs
         let oldTabIndex = -1
