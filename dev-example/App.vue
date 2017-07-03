@@ -1,142 +1,79 @@
 <template>
   <div>
-    <button @click="tabs.shift()">Remove one tab</button>
-    <button @click="tabs.push('testt')">Add one tab</button>
+    <button @click="tabs.shift()">Remove one at start</button>
+    <button @click="tabs.push('testt')">Add at the end</button>
+    <button @click="tabs.unshift('new start')">Add one at start</button>
     <form-wizard @on-complete="onComplete"
+                 :hide-buttons="false"
+                 shape="square"
                  color="gray"
-                 error-color="#a94442"
-    >
-      <tab-content title="Personal details"
-                   icon="ti-user" :before-change="validateFirstTab">
-        <vue-form-generator :model="model"
-                            :schema="firstTabSchema"
-                            :options="formOptions"
-                            ref="firstTabForm">
-
-        </vue-form-generator>
-      </tab-content>
-      <tab-content title="Additional Info"
-                   icon="ti-settings" :before-change="validateSecondTab">
-        <vue-form-generator :model="model"
-                            :schema="secondTabSchema"
-                            :options="formOptions"
-                            ref="secondTabForm"
-        >
-        </vue-form-generator>
-
-      </tab-content>
-      <tab-content title="Last step"
-                   icon="ti-check">
-        <h4>Your json is ready!</h4>
-      </tab-content>
+                 @on-loading="setLoading"
+                 @on-error="setError"
+                 class="card" ref="wizard">
+       <tab-content title="Personal details" icon="ti-user">
+         My first tab
+       </tab-content>
+        <tab-content v-for="tab in tabs" :title="tab" :key="tab" icon="ti-settings">
+          {{tab}}
+        </tab-content>
+        <tab-content title="Additional Info"
+                     :before-change="validateAsync"
+                     icon="ti-settings">
+          Additional info
+        </tab-content>
+        <tab-content title="Last step"
+                     icon="ti-check">
+        </tab-content>
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
+        <div class="loader" v-if="loadingWizard"></div>
+        <div v-if="error">
+          {{error}}
+        </div>
     </form-wizard>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import 'bootstrap/dist/css/bootstrap.css'
-  import VueFormGenerator from 'vue-form-generator'
-  Vue.use(VueFormGenerator)
+  import TabContent from "../src/components/TabContent";
+
   export default {
+    components: {TabContent},
     name: 'app',
     data () {
       return {
-        model:{
-          firstName:'',
-          lastName:'',
-          email:'',
-          streetName:'',
-          streetNumber:'',
-          city:'',
-          country:''
-        },
-        formOptions: {
-          validationErrorClass: "has-error",
-          validationSuccessClass: "has-success",
-          validateAfterChanged: true
-        },
-        firstTabSchema:{
-          fields:[{
-            type: "input",
-            inputType: "text",
-            label: "First name",
-            model: "firstName",
-            required:true,
-            validator:VueFormGenerator.validators.string,
-            styleClasses:'col-xs-6'
-          },
-            {
-              type: "input",
-              inputType: "text",
-              label: "Last name",
-              model: "lastName",
-              required:true,
-              validator:VueFormGenerator.validators.string,
-              styleClasses:'col-xs-6'
-            },
-            {
-              type: "input",
-              inputType: "text",
-              label: "Email",
-              model: "email",
-              required:true,
-              validator:VueFormGenerator.validators.email,
-              styleClasses:'col-xs-12'
-            }
-          ]
-        },
-        secondTabSchema:{
-          fields:[
-            {
-              type: "input",
-              inputType: "text",
-              label: "Street name",
-              model: "streetName",
-              required:true,
-              validator:VueFormGenerator.validators.string,
-              styleClasses:'col-xs-9'
-            },
-            {
-              type: "input",
-              inputType: "text",
-              label: "Street number",
-              model: "streetNumber",
-              required:true,
-              validator:VueFormGenerator.validators.string,
-              styleClasses:'col-xs-3'
-            },
-            {
-              type: "input",
-              inputType: "text",
-              label: "City",
-              model: "city",
-              required:true,
-              validator:VueFormGenerator.validators.string,
-              styleClasses:'col-xs-6'
-            },
-            {
-              type: "select",
-              label: "Country",
-              model: "country",
-              required:true,
-              validator:VueFormGenerator.validators.string,
-              values:['United Kingdom','Romania','Germany'],
-              styleClasses:'col-xs-6'
-            },
-          ]
-        }
+        loadingWizard: false,
+        error: null,
+        count: 0,
+        tabs: ['test', 'test2', 'test3']
       }
     },
     methods: {
-      onComplete: function(){
-        alert('Yay. Done!');
+      onComplete () {
+        alert('Yay!')
       },
-      validateFirstTab: function(){
-        return this.$refs.firstTabForm.validate();
+      setLoading (value) {
+        this.loadingWizard = value
       },
-      validateSecondTab: function(){
-        return this.$refs.secondTabForm.validate();
+      setError (error) {
+        this.error = error
+      },
+      validateAsync () {
+        //simulating an error for the first time and a success for the second time
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (this.count % 2 === 0) {
+              reject('Some custom error')
+            } else {
+              resolve(true)
+            }
+            this.count++
+          }, 100)
+        })
+      },
+      validate () {
+        return true
       }
     }
   }
