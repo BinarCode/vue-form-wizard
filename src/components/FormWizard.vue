@@ -83,6 +83,7 @@
 </template>
 <script>
   export default{
+    name: 'form-wizard',
     props: {
       title: {
         type: String,
@@ -218,6 +219,27 @@
       }
     },
     methods: {
+      addTab (item) {
+        const index = this.$slots.default.indexOf(item.$vnode)
+        this.tabs.splice(index, 0, item)
+        // if a step is added before the current one, go to it
+        if (index < this.activeTabIndex + 1) {
+          this.maxStep = index
+          this.changeTab(this.activeTabIndex + 1, index)
+        }
+      },
+      removeTab (item) {
+        const tabs = this.tabs
+        const index = tabs.indexOf(item)
+        if (index > -1) {
+          // Go one step back if the current step is removed
+          if (index === this.activeTabIndex) {
+            this.maxStep = this.activeTabIndex - 1
+            this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
+          }
+          tabs.splice(index, 1)
+        }
+      },
       isChecked (index) {
         return index <= this.maxStep
       },
@@ -382,51 +404,18 @@
         this.activeTabIndex = this.startIndex
       },
       initializeTabs () {
-        this.tabs = this.getTabs()
         if (this.tabs.length > 0 && this.startIndex === 0) {
           this.activateTab(this.activeTabIndex)
         }
         if (this.startIndex < this.tabs.length) {
           this.activateTabAndCheckStep(this.startIndex)
         } else {
-          console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
+          window.console.warn(`Prop startIndex set to ${this.startIndex} is greater than the number of tabs - ${this.tabs.length}. Make sure that the starting index is less than the number of tabs registered`)
         }
-      },
-      /***
-       * Called when tabs are added dynamically from array
-       **/
-      reinitializeTabs () {
-        let currentTabs = this.getTabs()
-        // The tab count did not change therefore we ignore further checks
-        if (this.tabs.length === 0 || this.tabs.length === currentTabs.length) return
-        this.tabs = currentTabs
-        let oldTabIndex = -1
-        this.tabs.find((tab, index) => {
-          if (tab.active) {
-            oldTabIndex = index
-          }
-          return tab.active
-        })
-        if (oldTabIndex === -1) {
-          oldTabIndex = this.activeTabIndex > 0 ? this.activeTabIndex - 1 : 0
-        }
-
-        this.tabs.forEach((tab) => {
-          tab.active = false
-        })
-        this.activateTab(oldTabIndex)
-        this.maxStep = oldTabIndex
-        this.activeTabIndex = oldTabIndex
       }
     },
     mounted () {
       this.initializeTabs()
-    },
-    /***
-     * Used to handle dynamic tab addition from an array since $children is not reactive
-     */
-    updated () {
-      this.reinitializeTabs()
     },
     watch: {
       '$route.path': function (newRoute) {
