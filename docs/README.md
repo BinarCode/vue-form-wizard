@@ -24,7 +24,7 @@ Vue.use(VueFormWizard)
 
 //local registration
 import {FormWizard, TabContent} from 'vue-form-wizard'
-import 'vue-formwizard/dist/vue-form-wizard.min.css'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 //component code
 components: {
   FormWizard,
