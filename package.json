@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
-    "build": "cross-env FULL_BUNDLE=false webpack --progress --config webpack.build.config.js",
+    "build": "cross-env FULL_BUNDLE=false webpack -p --progress --config webpack.build.config.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "unit:watch": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --watch",
     "e2e": "node test/e2e/runner.js",
