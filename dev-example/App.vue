@@ -16,17 +16,6 @@
         <tab-content v-for="tab in tabs" :title="tab" :key="tab" icon="ti-settings">
           {{tab}}
         </tab-content>
-        <tab-content title="Additional Info"
-                     :before-change="validateAsync"
-                     icon="ti-settings">
-          Additional info
-        </tab-content>
-        <tab-content title="Last step"
-                     icon="ti-check">
-        </tab-content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
         <div class="loader" v-if="loadingWizard"></div>
         <div v-if="error">
           {{error}}

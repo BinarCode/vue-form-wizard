@@ -224,6 +224,7 @@
         this.tabs.splice(index, 0, item)
         // if a step is added before the current one, go to it
         if (index < this.activeTabIndex + 1) {
+          console.log('Changing tabs', index, this.activeTabIndex)
           this.maxStep = index
           this.changeTab(this.activeTabIndex + 1, index)
         }
@@ -236,6 +237,10 @@
           if (index === this.activeTabIndex) {
             this.maxStep = this.activeTabIndex - 1
             this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
+          }
+          if (index < this.activeTabIndex) {
+            this.maxStep = this.activeTabIndex - 1
+            this.activeTabIndex = this.activeTabIndex - 1
           }
           tabs.splice(index, 1)
         }
@@ -385,14 +390,13 @@
           this.navigateToTab(matchingTabIndex, shouldValidate)
         }
       },
-      getTabs () {
-        let tabs = this.$slots.default.filter((comp) => comp.componentOptions && comp.componentOptions.tag === 'tab-content')
-          .map(comp => {
-            return comp.componentInstance
-          })
-        return tabs
+      deactivateTabs () {
+        this.tabs.forEach(tab => {
+          tab.active = false
+        })
       },
       activateTab (index) {
+        this.deactivateTabs()
         let tab = this.tabs[index]
         tab.active = true
         this.tryChangeRoute(tab)
