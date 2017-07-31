@@ -46,8 +46,8 @@ components: {
    </tab-content>
 </form-wizard>
 ```
-# Props
-## Form Wizard props
+## Props
+### Form Wizard props
 ```js
 props: {
   title: {
@@ -112,7 +112,7 @@ props: {
 }
 ```
 
-## Tab content props
+### Tab content props
 ```js
 props: {
   title: {
@@ -136,7 +136,7 @@ props: {
   }
 }
 ```
-## Events
+### Events
 Vue-form-wizard emits certain events when certain actions happen inside the component. The events can be noticed in some of the demos and especially in the [async validation demo](https://jsfiddle.net/bt5dhqtf/272/)
 * **on-complete** Called when the finish button is clicked and the `before-change` for the last step (if present) was executed. No params are sent together with this event. `this.$emit('on-complete')`
 * **on-loading** Called whenever an async `before-change` is executed. This event is emitted before executing `before-change` and after finishing execution of `before-change` method. `on-loading` is emitted together with a Boolean value. `this.$emit('on-loading', value)`
