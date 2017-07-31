@@ -86,6 +86,11 @@ One possible usage:
         </wizard-step>
 </template>
 ```
+#### Exposed props for the `step` slot
+ - tab (the tab object which contains the tab-content component corresponding to the step) This object contains several fields such as `active, checked, shape, color` and so on. You can check how these are used [here](https://github.com/cristijora/vue-form-wizard/blob/master/src/components/WizardStep.vue): 
+- index (The index of the step)
+- transition (Transition prop passed from form-wizard)
+
 [Fiddle example](https://jsfiddle.net/bt5dhqtf/705/) You can notice that steps are not longer clickable.
 # Demos
 Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
