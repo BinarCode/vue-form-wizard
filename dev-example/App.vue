@@ -12,7 +12,7 @@
                  class="card" ref="wizard">
       <template slot="step" scope="props">
         <wizard-step :tab="props.tab"
-                     :transition="props.transition"
+                     transition="fade"
                      :key="props.tab.title"
                      :index="props.index">
         </wizard-step>
@@ -103,5 +103,10 @@
     position: relative;
     z-index: 1;
   }
-
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .2s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0
+  }
 </style>

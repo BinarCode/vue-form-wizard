@@ -20,7 +20,6 @@
           <wizard-step :tab="tab"
                        @click.native="navigateToTab(index)"
                        :transition="transition"
-                       :key="tab.title"
                        :index="index">
           </wizard-step>
         </slot>
