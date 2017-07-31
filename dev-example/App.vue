@@ -12,7 +12,6 @@
                  class="card" ref="wizard">
       <template slot="step" scope="props">
         <wizard-step :tab="props.tab"
-                     @click.native="props.navigateToTab(props.index)"
                      :transition="props.transition"
                      :key="props.tab.title"
                      :index="props.index">
