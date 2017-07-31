@@ -34,7 +34,19 @@
     data () {
       return {
         active: false,
-        validationError: null
+        validationError: null,
+        checked: false
+      }
+    },
+    computed: {
+      shape () {
+        return this.$parent.shape
+      },
+      color () {
+        return this.$parent.color
+      },
+      errorColor () {
+        return this.$parent.errorColor
       }
     },
     mounted () {

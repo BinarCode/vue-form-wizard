@@ -12,31 +12,18 @@
              :style="progressBarStyle"></div>
       </div>
       <ul class="wizard-nav wizard-nav-pills">
-        <li v-for="(tab, index) in tabs" :class="{active:tab.active}">
-          <a href="" @click.prevent="navigateToTab(index)">
-            <div class="wizard-icon-circle"
-                 :class="{checked:isChecked(index),square_shape:isStepSquare, tab_shape:isTabShape}"
-                 :style="[isChecked(index)? stepCheckedStyle : {}, tab.validationError ? errorStyle : {}]">
-
-              <transition :name="transition" mode="out-in">
-                <div v-if="tab.active" class="wizard-icon-container"
-                     :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
-                     :style="[tab.active ? iconActiveStyle: {}, tab.validationError ? errorStyle : {}]">
-                  <i v-if="tab.icon" :class="tab.icon" class="wizard-icon"></i>
-                  <i v-else class="wizard-icon">{{index + 1}}</i>
-                </div>
-                <i v-if="!tab.active && tab.icon" :class="tab.icon" class="wizard-icon"></i>
-                <i v-if="!tab.active && !tab.icon" class="wizard-icon">{{index + 1}}</i>
-              </transition>
-
-            </div>
-            <span class="stepTitle"
-                  :class="{active:tab.active, has_error:tab.validationError}"
-                  :style="tab.active ? stepTitleStyle : {}">
-              {{tab.title}}
-            </span>
-          </a>
-        </li>
+        <slot name="step" v-for="(tab, index) in tabs"
+              :tab="tab"
+              :index="index"
+              :navigate-to-tab="navigateToTab"
+              :transition="transition">
+          <wizard-step :tab="tab"
+                       @click.native="navigateToTab(index)"
+                       :transition="transition"
+                       :key="tab.title"
+                       :index="index">
+          </wizard-step>
+        </slot>
       </ul>
       <div class="wizard-tab-content">
         <slot>
@@ -89,10 +76,12 @@
 </template>
 <script>
   import WizardButton from './WizardButton.vue'
+  import WizardStep from './WizardStep.vue'
   export default{
     name: 'form-wizard',
     components: {
-      WizardButton
+      WizardButton,
+      WizardStep
     },
     props: {
       title: {
@@ -181,34 +170,6 @@
           color: this.color
         }
       },
-      iconActiveStyle () {
-        return {
-          backgroundColor: this.color
-        }
-      },
-      stepCheckedStyle () {
-        return {
-          borderColor: this.color
-        }
-      },
-      errorStyle () {
-        return {
-          borderColor: this.errorColor,
-          backgroundColor: this.errorColor
-        }
-      },
-      stepTitleStyle () {
-        var isError = this.tabs[this.activeTabIndex].validationError
-        return {
-          color: isError ? this.errorColor : this.color
-        }
-      },
-      isStepSquare () {
-        return this.shape === 'square'
-      },
-      isTabShape () {
-        return this.shape === 'tab'
-      },
       fillButtonStyle () {
         return {
           backgroundColor: this.color,
@@ -234,7 +195,6 @@
         this.tabs.splice(index, 0, item)
         // if a step is added before the current one, go to it
         if (index < this.activeTabIndex + 1) {
-          console.log('Changing tabs', index, this.activeTabIndex)
           this.maxStep = index
           this.changeTab(this.activeTabIndex + 1, index)
         }
@@ -254,9 +214,6 @@
           }
           tabs.splice(index, 1)
         }
-      },
-      isChecked (index) {
-        return index <= this.maxStep
       },
       navigateToTab (index) {
         this.$emit('on-change', this.activeTabIndex, index)
@@ -363,9 +320,7 @@
           newTab.active = true
         }
         this.activeTabIndex = newIndex
-        this.checkStep()
-        this.tryChangeRoute(newTab)
-        this.increaseMaxStep()
+        this.activateTabAndCheckStep(this.activeTabIndex)
         return true
       },
       tryChangeRoute (tab) {
@@ -409,13 +364,16 @@
         this.deactivateTabs()
         let tab = this.tabs[index]
         tab.active = true
+        tab.checked = true
         this.tryChangeRoute(tab)
       },
       activateTabAndCheckStep (index) {
         this.activateTab(index)
         this.checkStep()
-        this.maxStep = this.startIndex
-        this.activeTabIndex = this.startIndex
+        if (index > this.maxStep) {
+          this.maxStep = index
+        }
+        this.activeTabIndex = index
       },
       initializeTabs () {
         if (this.tabs.length > 0 && this.startIndex === 0) {
@@ -440,13 +398,4 @@
 </script>
 <style lang="scss">
   @import "./../assets/wizard";
-
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .15s
-  }
-
-  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */
-  {
-    opacity: 0
-  }
 </style>
