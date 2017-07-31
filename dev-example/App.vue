@@ -20,6 +20,13 @@
         <div v-if="error">
           {{error}}
         </div>
+      <template slot="footer" scope="props">
+        <div class="wizard-footer-right">
+          <wizard-button :style="props.fillButtonStyle">Cancel</wizard-button>
+          <wizard-button @click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
+        </div>
+
+      </template>
     </form-wizard>
   </div>
 </template>

@@ -35,7 +35,6 @@
                   :style="tab.active ? stepTitleStyle : {}">
               {{tab.title}}
             </span>
-
           </a>
         </li>
       </ul>
@@ -46,44 +45,55 @@
     </div>
 
     <div class="wizard-card-footer clearfix" v-if="!hideButtons">
-      <template>
+      <slot name="footer"
+            :next-tab="nextTab"
+            :prev-tab="prevTab"
+            :active-tab-index="activeTabIndex"
+            :is-last-step="isLastStep"
+            :fill-button-style="fillButtonStyle">
+
+        <template>
         <span @click="prevTab" v-if="displayPrevButton" class="wizard-footer-left">
           <slot name="prev">
-            <button type="button" class="wizard-btn btn-default wizard-btn-wd" :style="fillButtonStyle"
+            <wizard-button :style="fillButtonStyle"
                     :disabled="loading">
               {{backButtonText}}
-            </button>
+            </wizard-button>
           </slot>
         </span>
-      </template>
+        </template>
 
-      <template>
+        <template>
          <span @click="finish" class="wizard-footer-right" v-if="isLastStep">
            <slot name="finish">
-             <button type="button" class="wizard-btn btn-fill wizard-btn-wd btn-next" :style="fillButtonStyle">
+             <wizard-button :style="fillButtonStyle">
               {{finishButtonText}}
-            </button>
+            </wizard-button>
           </slot>
         </span>
-      </template>
+        </template>
 
-      <template>
+        <template>
         <span @click="nextTab" class="wizard-footer-right" v-if="!isLastStep">
          <slot name="next">
-           <button type="button" class="wizard-btn btn-fill wizard-btn-wd btn-next" :style="fillButtonStyle"
+           <wizard-button :style="fillButtonStyle"
                    :disabled="loading">
             {{nextButtonText}}
-           </button>
+           </wizard-button>
          </slot>
        </span>
-      </template>
-
+        </template>
+      </slot>
     </div>
   </div>
 </template>
 <script>
+  import WizardButton from './WizardButton.vue'
   export default{
     name: 'form-wizard',
+    components: {
+      WizardButton
+    },
     props: {
       title: {
         type: String,
