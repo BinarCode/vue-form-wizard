@@ -101,7 +101,6 @@ Other demos:
 * [Step index](https://jsfiddle.net/bt5dhqtf/100/) Start at any step. Note: start-index is zero-based and the count starts at 0
 * [Custom button and title text](https://jsfiddle.net/bt5dhqtf/101/)
 * [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
-* [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
 * [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
 * [Complete form example](https://jsfiddle.net/CristiJ/bt5dhqtf/286/) integrated with [vue-form-generator](https://github.com/icebob/vue-form-generator)
 * [Element UI form integration](https://jsfiddle.net/bt5dhqtf/409/)
@@ -302,7 +301,7 @@ Other demos:
 </script>
 </script>
 
-## Replace buttons and title with Slots
+## Customize buttons with footer slot
 
 <vuep template="#customslots"></vuep>
 
@@ -325,9 +324,16 @@ Other demos:
        Yuhuuu! This seems pretty damn simple
      </tab-content>
      
-     <button slot="prev">Back</button>
-     <button slot="next">Next</button>
-     <button slot="finish">Finish</button>
+     <template slot="footer" scope="props">
+       <div class=wizard-footer-left>
+           <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" :style="props.fillButtonStyle">Previous</wizard-button>
+        </div>
+        <div class="wizard-footer-right">
+          <wizard-button v-if="!props.isLastStep"@click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
+          
+          <wizard-button v-else @click.native="alert('Done')" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
+        </div>
+      </template>
  </form-wizard>
  
 </template>
