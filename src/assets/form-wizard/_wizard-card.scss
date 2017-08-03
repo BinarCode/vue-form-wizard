@@ -54,7 +54,6 @@
     padding: 15px 15px 15px 15px;
     position: relative;
     border-radius: 3px 3px 0 0;
-    z-index: 3;
     text-align: center;
   }
 
@@ -77,7 +76,6 @@
     .wizard-progress-with-circle {
       position: relative;
       top: 40px;
-      z-index: 50;
       height: 4px;
 
       .wizard-progress-bar {
