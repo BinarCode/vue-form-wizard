@@ -362,9 +362,11 @@
       activateTab (index) {
         this.deactivateTabs()
         let tab = this.tabs[index]
-        tab.active = true
-        tab.checked = true
-        this.tryChangeRoute(tab)
+        if (tab) {
+          tab.active = true
+          tab.checked = true
+          this.tryChangeRoute(tab)
+        }
       },
       activateTabAndCheckStep (index) {
         this.activateTab(index)
