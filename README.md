@@ -1,5 +1,12 @@
+
 # vue-form-wizard
-A dynamic form wizard to split your forms easier
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/vue-form-wizard"><img src="https://img.shields.io/npm/v/vue-form-wizard.svg"></a>
+  <a href="https://www.npmjs.com/package/vue-form-wizard"><img src="https://img.shields.io/npm/dt/vue-form-wizard.svg"></a>
+</p>
+
+A dynamic wizard to split your forms easier
 
 Vue-form-wizard is a vue based component with no external depenendcies which simplifies tab wizard management.
 
