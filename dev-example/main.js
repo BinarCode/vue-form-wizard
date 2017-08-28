@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import FormWizard from '../src/index'
 import WizardRoute from './WizardRoute.vue'
+import FormGeneratorRoute from './FormGeneratorRoute.vue'
 import TestRoute from './TestRoute.vue'
 
 const First = {template: '<div>First page</div>'}
@@ -23,6 +24,7 @@ const router = new VueRouter({
       ]
     },
     {path: '/test', component: TestRoute},
+    {path: '/form-generator', component: FormGeneratorRoute},
 
   ]
 })
