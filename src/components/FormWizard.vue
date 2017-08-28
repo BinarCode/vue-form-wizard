@@ -51,7 +51,7 @@
 
         <template>
          <span @click="finish" class="wizard-footer-right" v-if="isLastStep">
-           <slot name="finish">
+           <slot name="nextTab">
              <wizard-button :style="fillButtonStyle">
               {{finishButtonText}}
             </wizard-button>
@@ -242,7 +242,7 @@
             this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
           } else {
             this.isLastStep = true
-            this.$emit('finished')
+            this.$emit('on-complete')
           }
         }
         this.beforeTabChange(this.activeTabIndex, cb)
@@ -261,12 +261,6 @@
         } else {
           cb()
         }
-      },
-      finish () {
-        let cb = () => {
-          this.$emit('on-complete')
-        }
-        this.beforeTabChange(this.activeTabIndex, cb)
       },
       setLoading (value) {
         this.loading = value
