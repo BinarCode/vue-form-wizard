@@ -32,43 +32,38 @@
 
     <div class="wizard-card-footer clearfix" v-if="!hideButtons">
       <slot name="footer"
-            :next-tab="nextTab"
-            :prev-tab="prevTab"
-            :active-tab-index="activeTabIndex"
-            :is-last-step="isLastStep"
-            :fill-button-style="fillButtonStyle">
+            v-bind="slotProps">
+        <div class="wizard-footer-left">
+          <span @click="prevTab" v-if="displayPrevButton">
+            <slot name="prev" v-bind="slotProps">
+              <wizard-button :style="fillButtonStyle"
+                             :disabled="loading">
+                {{backButtonText}}
+              </wizard-button>
+            </slot>
+          </span>
+          <slot name="custom-buttons-left" v-bind="slotProps"></slot>
+        </div>
 
-        <template>
-        <span @click="prevTab" v-if="displayPrevButton" class="wizard-footer-left">
-          <slot name="prev">
-            <wizard-button :style="fillButtonStyle"
-                    :disabled="loading">
-              {{backButtonText}}
-            </wizard-button>
-          </slot>
-        </span>
-        </template>
+        <div class="wizard-footer-right">
+           <slot name="custom-buttons-right" v-bind="slotProps"></slot>
+            <span @click="nextTab" v-if="isLastStep">
+              <slot name="finish" v-bind="slotProps">
+               <wizard-button :style="fillButtonStyle">
+                {{finishButtonText}}
+              </wizard-button>
+            </slot>
+          </span>
+          <span @click="nextTab" v-else>
+           <slot name="next" v-bind="slotProps">
+             <wizard-button :style="fillButtonStyle"
+                            :disabled="loading">
+              {{nextButtonText}}
+             </wizard-button>
+           </slot>
+         </span>
+          </div>
 
-        <template>
-         <span @click="finish" class="wizard-footer-right" v-if="isLastStep">
-           <slot name="nextTab">
-             <wizard-button :style="fillButtonStyle">
-              {{finishButtonText}}
-            </wizard-button>
-          </slot>
-        </span>
-        </template>
-
-        <template>
-        <span @click="nextTab" class="wizard-footer-right" v-if="!isLastStep">
-         <slot name="next">
-           <wizard-button :style="fillButtonStyle"
-                   :disabled="loading">
-            {{nextButtonText}}
-           </wizard-button>
-         </slot>
-       </span>
-        </template>
       </slot>
     </div>
   </div>
@@ -153,6 +148,15 @@
       }
     },
     computed: {
+      slotProps () {
+        return {
+          nextTab: this.nextTab,
+          prevTab: this.prevTab,
+          activeTabIndex: this.activeTabIndex,
+          isLastStep: this.isLastStep,
+          fillButtonStyle: this.fillButtonStyle
+        }
+      },
       tabCount () {
         return this.tabs.length
       },

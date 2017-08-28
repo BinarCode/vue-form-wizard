@@ -148,12 +148,32 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
 * **finish** - Finish button content
+* **custom-buttons-left** - Appears on right of "Back" button
+* **custom-buttons-right** - Appears on the left of "Next/Finish" button
 
 ## Scoped slots
-Form-wizard exposes 2 scoped slots which can be used to customize some parts of the wizard. Usage example and implementation details are presented in [0.6.2 release](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.2)
+
+Form-wizard exposes multiple scoped slots which can be used to customize some parts of the wizard. Usage example and implementation details are presented in [0.6.2 release](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.2)
+Since [0.6.3](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.3), button slots can be also used as scoped slots and have the following methods/properties exposed
+
+* **prev** - Previous button content (no need to worry about handling the button functionality)
+* **next** - Next button content
+* **finish** - Finish button content
+* **custom-buttons-left** - Appears on right of "Back" button
+* **custom-buttons-right** - Appears on the left of "Next/Finish" button
+
+- nextTab // will go to the next tab/step when called 
+- prevTab //will got to the prev tab/step when called
+- activeTabIndex // current active tab index 
+- isLastStep // boolean to tell whether it's the last step or not
+- fillButtonStyle // object with styles for wizard-buttons (contains background and color passed through wizard props)
+
+These properties apply to the following slots: prev, next, finish ,custom-buttons-left, custom-buttons-right, footer
 
 ### Footer slot
-Has the buttons (back, next, finish) as default. When using this slot, those buttons are replaced with the content of your slot. You can achieve the same default functionallity and event tweak it with the help of the exposed methods/properties from `props`
+The footer slot would be usually used to replace the whole content of your footer. By default it contains the wizard buttons (back, next, finish). When using this slot, those buttons are replaced with the content of your slot. You can achieve the same default functionallity and event tweak it with the help of the exposed methods/properties from `props`
+Note that using this slot, means that you have to handle some of the wizard logic through the exposed methods/properties defined above and your template might get more verbose. If you need very fine customizations and more control over the wizard button actions 
+then you could use this slot. Otherwise, you could stick with the buttons slots.
 One potential usage can be that you want to have a different button when completing the wizard. Maybe you want to position it in the center, give it a different color and click event
 ```html
 <template slot="footer" scope="props">
@@ -170,13 +190,6 @@ One potential usage can be that you want to have a different button when complet
 This is just one example. You can add more buttons, hide or display conditionally based on the exposed properties.
 Working fiddle for the [example above](https://jsfiddle.net/bt5dhqtf/717/)
 
-#### Exposed props for `footer` slot:
-- nextTab // will go to the next tab/step when called 
-- prevTab //will got to the prev tab/step when called
-- activeTabIndex // current active tab index 
-- isLastStep // boolean to tell whether it's the last step or not
-- fillButtonStyle // object with styles for wizard-buttons (contains background and color passed through wizard props)
-
 ### Step slot
 This slot can be used to disable the click event on the step or to customize the UI of each step
 One possible usage:
@@ -189,7 +202,7 @@ One possible usage:
 </template>
 ```
 #### Exposed props for the `step` slot
- - tab (the tab object which contains the tab-content component corresponding to the step) This object contains several fields such as `active, checked, shape, color` and so on. You can check how these are used [here](https://github.com/cristijora/vue-form-wizard/blob/master/src/components/WizardStep.vue): 
+- tab (the tab object which contains the tab-content component corresponding to the step) This object contains several fields such as `active, checked, shape, color` and so on. You can check how these are used [here](https://github.com/cristijora/vue-form-wizard/blob/master/src/components/WizardStep.vue): 
 - index (The index of the step)
 - transition (Transition prop passed from form-wizard)
 
