@@ -219,7 +219,13 @@
         let validate = index > this.activeTabIndex
         if (index <= this.maxStep) {
           let cb = () => {
-            this.changeTab(this.activeTabIndex, index)
+            if (validate && index - this.activeTabIndex > 1) {
+              // validate all steps recursively until destination index
+              this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
+              this.beforeTabChange(this.activeTabIndex, cb)
+            } else {
+              this.changeTab(this.activeTabIndex, index)
+            }
           }
           if (validate) {
             this.beforeTabChange(this.activeTabIndex, cb)
