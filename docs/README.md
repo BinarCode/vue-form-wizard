@@ -154,7 +154,16 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 ## Scoped slots
 
 Form-wizard exposes multiple scoped slots which can be used to customize some parts of the wizard. Usage example and implementation details are presented in [0.6.2 release](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.2)
-Since [0.6.3](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.3), button slots can be also used as scoped slots and have the following methods/properties exposed
+
+Since [0.6.4](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.4), button slots can be also used as scoped slots and have the following methods/properties exposed
+
+* **nextTab** // will go to the next tab/step when called 
+* **prevTab** //will got to the prev tab/step when called
+* **activeTabIndex** // current active tab index 
+* **isLastStep** // boolean to tell whether it's the last step or not
+* **fillButtonStyle** // object with styles for wizard-buttons (contains background and color passed through wizard props)
+
+These properties apply to the following slots: 
 
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
@@ -162,19 +171,15 @@ Since [0.6.3](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.3)
 * **custom-buttons-left** - Appears on right of "Back" button
 * **custom-buttons-right** - Appears on the left of "Next/Finish" button
 
-- nextTab // will go to the next tab/step when called 
-- prevTab //will got to the prev tab/step when called
-- activeTabIndex // current active tab index 
-- isLastStep // boolean to tell whether it's the last step or not
-- fillButtonStyle // object with styles for wizard-buttons (contains background and color passed through wizard props)
-
-These properties apply to the following slots: prev, next, finish ,custom-buttons-left, custom-buttons-right, footer
-
 ### Footer slot
-The footer slot would be usually used to replace the whole content of your footer. By default it contains the wizard buttons (back, next, finish). When using this slot, those buttons are replaced with the content of your slot. You can achieve the same default functionallity and event tweak it with the help of the exposed methods/properties from `props`
-Note that using this slot, means that you have to handle some of the wizard logic through the exposed methods/properties defined above and your template might get more verbose. If you need very fine customizations and more control over the wizard button actions 
-then you could use this slot. Otherwise, you could stick with the buttons slots.
+The footer slot would be usually used to replace the whole content of your footer. By default it contains the wizard buttons (back, next, finish).
+When using this slot, those buttons are replaced with your own content. You can achieve the same default wizard functionality and event tweak it with the help of the exposed methods/properties from slot `props`
+
+Note that using this slot, means that you have to handle some of the wizard logic through the exposed methods/properties defined above and your template might get more verbose. 
+If you need very fine customizations and more control over the wizard button actions,
+then you could use this slot. Otherwise, you could stick with the buttons slots as they can be used as scoped slots as well.
 One potential usage can be that you want to have a different button when completing the wizard. Maybe you want to position it in the center, give it a different color and click event
+
 ```html
 <template slot="footer" scope="props">
        <div class=wizard-footer-left>
