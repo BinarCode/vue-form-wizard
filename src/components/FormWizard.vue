@@ -224,12 +224,12 @@
           if (index < this.activeTabIndex) {
             this.maxStep = this.activeTabIndex - 1
             this.activeTabIndex = this.activeTabIndex - 1
+            this.$emit('on-change', this.activeTabIndex + 1, this.activeTabIndex)
           }
           tabs.splice(index, 1)
         }
       },
       navigateToTab (index) {
-        this.$emit('on-change', this.activeTabIndex, index)
         let validate = index > this.activeTabIndex
         if (index <= this.maxStep) {
           let cb = () => {
@@ -250,7 +250,6 @@
         }
       },
       nextTab () {
-        this.$emit('on-change', this.activeTabIndex, this.activeTabIndex + 1)
         let cb = () => {
           if (this.activeTabIndex < this.tabCount - 1) {
             this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
@@ -262,7 +261,6 @@
         this.beforeTabChange(this.activeTabIndex, cb)
       },
       prevTab () {
-        this.$emit('on-change', this.activeTabIndex, this.activeTabIndex - 1)
         let cb = () => {
           if (this.activeTabIndex > 0) {
             this.setValidationError(null)
@@ -323,7 +321,7 @@
           callback()
         }
       },
-      changeTab (oldIndex, newIndex) {
+      changeTab (oldIndex, newIndex, emitChangeEvent = true) {
         let oldTab = this.tabs[oldIndex]
         let newTab = this.tabs[newIndex]
         if (oldTab) {
@@ -331,6 +329,9 @@
         }
         if (newTab) {
           newTab.active = true
+        }
+        if (emitChangeEvent && this.activeTabIndex !== newIndex) {
+          this.$emit('on-change', oldIndex, newIndex)
         }
         this.activeTabIndex = newIndex
         this.activateTabAndCheckStep(this.activeTabIndex)
