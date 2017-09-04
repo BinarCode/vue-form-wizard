@@ -1,7 +1,7 @@
 <template>
   <li :class="{active:tab.active}">
     <a>
-      <div class="wizard-icon-circle"
+      <div class="wizard-icon-circle md"
            :class="{checked: tab.checked,square_shape:isStepSquare, tab_shape:isTabShape}"
            :style="[tab.checked ? stepCheckedStyle : {}, tab.validationError ? errorStyle : {}]">
 

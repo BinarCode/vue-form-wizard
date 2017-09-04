@@ -1,3 +1,6 @@
+@import "mixins/wizard-size";
+@import "variables";
+
 .vue-form-wizard {
   padding-bottom: 20px;
   .is_error {
@@ -6,6 +9,11 @@
       background: $danger-states-color !important;
     }
   }
+  @include wizard-size('xs', 40px, 16px);
+  @include wizard-size('sm', 50px, 20px);
+  @include wizard-size('md', 70px, 24px);
+  @include wizard-size('lg', 90px, 28px);
+
   .wizard-icon-circle {
     font-size: 18px;
     border: 3px solid $gray-input-bg;

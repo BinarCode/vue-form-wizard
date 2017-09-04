@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-form-wizard">
+  <div class="vue-form-wizard" :class="stepSize">
     <div class="wizard-header">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
@@ -16,8 +16,10 @@
               :tab="tab"
               :index="index"
               :navigate-to-tab="navigateToTab"
+              :step-size="stepSize"
               :transition="transition">
           <wizard-step :tab="tab"
+                       :step-size="stepSize"
                        @click.native="navigateToTab(index)"
                        :transition="transition"
                        :index="index">
@@ -25,7 +27,7 @@
         </slot>
       </ul>
       <div class="wizard-tab-content">
-        <slot>
+        <slot v-bind="slotProps">
         </slot>
       </div>
     </div>
@@ -117,6 +119,14 @@
       shape: {
         type: String,
         default: 'circle'
+      },
+      stepSize: {
+        type: String,
+        default: 'md',
+        validator: (value) => {
+          let acceptedValues = ['xs', 'sm', 'md', 'lg']
+          return acceptedValues.indexOf(value) !== -1
+        }
       },
       /**
        * Name of the transition when transition between steps
