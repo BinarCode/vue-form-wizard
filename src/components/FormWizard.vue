@@ -203,6 +203,10 @@
       }
     },
     methods: {
+      emitTabChange (prevIndex, nextIndex) {
+        this.$emit('on-change', prevIndex, nextIndex)
+        this.$emit('update:startIndex', nextIndex)
+      },
       addTab (item) {
         const index = this.$slots.default.indexOf(item.$vnode)
         this.tabs.splice(index, 0, item)
@@ -224,7 +228,7 @@
           if (index < this.activeTabIndex) {
             this.maxStep = this.activeTabIndex - 1
             this.activeTabIndex = this.activeTabIndex - 1
-            this.$emit('on-change', this.activeTabIndex + 1, this.activeTabIndex)
+            this.emitTabChange(this.activeTabIndex + 1, this.activeTabIndex)
           }
           tabs.splice(index, 1)
         }
@@ -331,7 +335,7 @@
           newTab.active = true
         }
         if (emitChangeEvent && this.activeTabIndex !== newIndex) {
-          this.$emit('on-change', oldIndex, newIndex)
+          this.emitTabChange(oldIndex, newIndex)
         }
         this.activeTabIndex = newIndex
         this.activateTabAndCheckStep(this.activeTabIndex)
