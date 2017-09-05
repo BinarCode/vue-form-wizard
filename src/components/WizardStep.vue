@@ -34,6 +34,7 @@
 </template>
 <script>
   export default {
+    name: 'wizard-step',
     props: {
       tab: {
         type: Object,

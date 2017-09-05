@@ -5,24 +5,14 @@
     <button @click="tabs.unshift('new start')">Add one at start</button>
     <router-link to="/test">Go to a different route</router-link>
     <form-wizard @on-complete="onComplete"
-                 shape="circle"
+                 @on-change="handleChange"
+                 :start-index.sync="activeIndex"
+                 shape="tab"
                  color="#e74c3c">
-      <tab-content title="Personal details"
-                   route="/first"
-                   icon="ti-user">
-      </tab-content>
-      <tab-content title="Additional Info"
-                   route="/second"
-                   icon="ti-settings">
-      </tab-content>
-      <tab-content title="Last step"
-                   route="/third"
-                   icon="ti-check">
-      </tab-content>
-      <transition name="fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
-
+       <tab-content v-for="tab in tabs" :title="tab" :key="tab">{{tab}}</tab-content>
+        <transition name="fade" mode="out-in">
+          <router-view></router-view>
+        </transition>
     </form-wizard>
   </div>
 </template>
@@ -36,7 +26,8 @@
         loadingWizard: false,
         error: null,
         count: 0,
-        tabs: ['test', 'test2', 'test3']
+        tabs: ['test', 'test2', 'test3'],
+        activeIndex: 0
       }
     },
     methods: {
@@ -45,6 +36,9 @@
       },
       setLoading (value) {
         this.loadingWizard = value
+      },
+      handleChange(prevIndex, nextIndex){
+          console.log(`Changing from ${prevIndex} to ${nextIndex}`)
       },
       setError (error) {
         this.error = error
