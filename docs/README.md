@@ -70,6 +70,14 @@ props: {
     type: String,
     default: 'Finish'
   },
+  stepSize: {
+    type: String,
+    default: 'md',
+    validator: (value) => {
+      let acceptedValues = ['xs', 'sm', 'md', 'lg']
+      return acceptedValues.indexOf(value) !== -1
+    }
+  },
   /***
   *  Sets validation (on/off) for back button. By default back button ignores validation
   */
@@ -142,6 +150,8 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 * **on-loading** Called whenever an async `before-change` is executed. This event is emitted before executing `before-change` and after finishing execution of `before-change` method. `on-loading` is emitted together with a Boolean value. `this.$emit('on-loading', value)`
 * **on-validate** Called whenever the execution of a `before-change` method is completed. The event sends along a Boolean which represents the validation result as well as an int with te tab index. `this.$emit('on-validate', validationResult, this.activeTabIndex)`
 * **on-error** Called when `before-change` is a promised and is rejected with a message. The message is passed along `this.$emit('on-error', error)` See async validation fiddle
+* **on-change**  Called upon step changes. Has prevIndex and nextIndes as params. `this.$emit('on-change', prevIndex, nextIndex)`
+
 ## Slots
 * **Default** - Used for tab-contents
 * **title** - Upper title section including sub-title

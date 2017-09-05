@@ -16,6 +16,7 @@ Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
 Other demos:
 * [Squared steps](https://jsfiddle.net/bt5dhqtf/98/)
 * [Tabbed steps](https://jsfiddle.net/bt5dhqtf/99/)
+* [Sizing](https://jsfiddle.net/CristiJ/bt5dhqtf/924/)
 * [Step index](https://jsfiddle.net/bt5dhqtf/100/) Start at any step. Note: start-index is zero-based and the count starts at 0
 * [Custom button and title text](https://jsfiddle.net/bt5dhqtf/101/)
 * [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
