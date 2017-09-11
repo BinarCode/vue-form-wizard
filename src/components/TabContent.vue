@@ -1,6 +1,6 @@
 <template>
   <div v-show="active" class="wizard-tab-container">
-    <slot>
+    <slot :active="active">
     </slot>
   </div>
 </template>
