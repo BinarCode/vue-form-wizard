@@ -1,6 +1,6 @@
 {
   "name": "vue-form-wizard",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "A vue based tab/form wizard",
   "main": "dist/vue-form-wizard.js",
   "files": [
