@@ -1,7 +1,14 @@
 <template>
-  <li :class="{active:tab.active}">
+  <li :class="{active:tab.active}"
+      >
     <a>
       <div class="wizard-icon-circle md"
+           role="tab"
+           tabindex="0"
+           :id="tab.tabId"
+           :aria-controls="tab.title"
+           :aria-disabled="tab.active"
+           :aria-selected="tab.active"
            :class="{checked: tab.checked,square_shape:isStepSquare, tab_shape:isTabShape}"
            :style="[tab.checked ? stepCheckedStyle : {}, tab.validationError ? errorStyle : {}]">
 

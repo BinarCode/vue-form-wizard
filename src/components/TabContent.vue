@@ -1,5 +1,9 @@
 <template>
-  <div v-show="active" class="wizard-tab-container">
+  <div v-show="active" class="wizard-tab-container"
+       role="tabpanel"
+       :id="title"
+       :aria-hidden="!active"
+       :aria-labelledby="title">
     <slot :active="active">
     </slot>
   </div>

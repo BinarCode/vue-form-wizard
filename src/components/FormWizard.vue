@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-form-wizard" :class="stepSize">
+  <div class="vue-form-wizard" :class="stepSize" @keyup.right="focusNextTab" @keyup.left="focusPrevTab">
     <div class="wizard-header">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
@@ -11,7 +11,7 @@
         <div class="wizard-progress-bar"
              :style="progressBarStyle"></div>
       </div>
-      <ul class="wizard-nav wizard-nav-pills">
+      <ul class="wizard-nav wizard-nav-pills" role="tablist">
         <slot name="step" v-for="(tab, index) in tabs"
               :tab="tab"
               :index="index"
@@ -21,6 +21,7 @@
           <wizard-step :tab="tab"
                        :step-size="stepSize"
                        @click.native="navigateToTab(index)"
+                       @keyup.enter.native="navigateOrGoToNext(index)"
                        :transition="transition"
                        :index="index">
           </wizard-step>
@@ -36,7 +37,7 @@
       <slot name="footer"
             v-bind="slotProps">
         <div class="wizard-footer-left">
-          <span @click="prevTab" v-if="displayPrevButton">
+          <span @click="prevTab" @keyup.enter="prevTab" v-if="displayPrevButton" role="button" tabindex="0">
             <slot name="prev" v-bind="slotProps">
               <wizard-button :style="fillButtonStyle"
                              :disabled="loading">
@@ -49,15 +50,15 @@
 
         <div class="wizard-footer-right">
            <slot name="custom-buttons-right" v-bind="slotProps"></slot>
-            <span @click="nextTab" v-if="isLastStep">
+            <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
               <slot name="finish" v-bind="slotProps">
                <wizard-button :style="fillButtonStyle">
                 {{finishButtonText}}
               </wizard-button>
             </slot>
           </span>
-          <span @click="nextTab" v-else>
-           <slot name="next" v-bind="slotProps">
+          <span @click="nextTab" @keyup.enter="nextTab" role="button" tabindex="0" v-else>
+           <slot name="next" v-bind="slotProps" >
              <wizard-button :style="fillButtonStyle"
                             :disabled="loading">
               {{nextButtonText}}
@@ -209,6 +210,7 @@
       },
       addTab (item) {
         const index = this.$slots.default.indexOf(item.$vnode)
+        item.tabId = `t-${item.title}${index}`
         this.tabs.splice(index, 0, item)
         // if a step is added before the current one, go to it
         if (index < this.activeTabIndex + 1) {
@@ -252,6 +254,14 @@
             cb()
           }
         }
+        return index <= this.maxStep
+      },
+      navigateOrGoToNext (index) {
+        if (!this.navigateToTab(index)) {
+          for (let i = this.activeTabIndex; i < index; i++) {
+            this.nextTab()
+          }
+        }
       },
       nextTab () {
         let cb = () => {
@@ -263,6 +273,27 @@
           }
         }
         this.beforeTabChange(this.activeTabIndex, cb)
+      },
+      getActiveElementId () {
+        return document.activeElement.id
+      },
+      focusNextTab () {
+        let activeId = this.getActiveElementId()
+        let tabIndex = this.tabs.findIndex(tab => tab.tabId === activeId)
+        if (tabIndex !== -1 && tabIndex < this.tabs.length - 1) {
+          let toFocus = this.tabs[tabIndex + 1].tabId
+          let elem = document.getElementById(toFocus)
+          elem.focus()
+        }
+      },
+      focusPrevTab () {
+        let activeId = this.getActiveElementId()
+        let tabIndex = this.tabs.findIndex(tab => tab.tabId === activeId)
+        if (tabIndex !== -1 && tabIndex > 0) {
+          let toFocus = this.tabs[tabIndex - 1].tabId
+          let elem = document.getElementById(toFocus)
+          elem.focus()
+        }
       },
       prevTab () {
         let cb = () => {

@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="wizard-btn btn-fill wizard-btn-wd">
+  <button class="wizard-btn btn-fill wizard-btn-wd" tabindex="-1">
     <slot></slot>
   </button>
 </template>
