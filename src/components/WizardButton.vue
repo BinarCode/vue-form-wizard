@@ -1,10 +1,10 @@
 <template>
-  <button class="wizard-btn btn-fill wizard-btn-wd" tabindex="-1">
+  <button class="wizard-btn" tabindex="-1">
     <slot></slot>
   </button>
 </template>
 <script>
-    export default {}
+  export default {}
 </script>
 <style>
 </style>

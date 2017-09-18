@@ -74,6 +74,7 @@
 <script>
   import WizardButton from './WizardButton.vue'
   import WizardStep from './WizardStep.vue'
+  import {isPromise, findElementAndFocus, getFocusedTabIndex} from './helpers'
   export default{
     name: 'form-wizard',
     components: {
@@ -151,7 +152,6 @@
     data () {
       return {
         activeTabIndex: 0,
-        isLastStep: false,
         currentPercentage: 0,
         maxStep: 0,
         loading: false,
@@ -170,6 +170,9 @@
       },
       tabCount () {
         return this.tabs.length
+      },
+      isLastStep () {
+        return this.activeTabIndex === this.tabCount - 1
       },
       displayPrevButton () {
         return this.activeTabIndex !== 0
@@ -268,45 +271,36 @@
           if (this.activeTabIndex < this.tabCount - 1) {
             this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
           } else {
-            this.isLastStep = true
             this.$emit('on-complete')
           }
         }
         this.beforeTabChange(this.activeTabIndex, cb)
-      },
-      getActiveElementId () {
-        return document.activeElement.id
-      },
-      focusNextTab () {
-        let activeId = this.getActiveElementId()
-        let tabIndex = this.tabs.findIndex(tab => tab.tabId === activeId)
-        if (tabIndex !== -1 && tabIndex < this.tabs.length - 1) {
-          let toFocus = this.tabs[tabIndex + 1].tabId
-          let elem = document.getElementById(toFocus)
-          elem.focus()
-        }
-      },
-      focusPrevTab () {
-        let activeId = this.getActiveElementId()
-        let tabIndex = this.tabs.findIndex(tab => tab.tabId === activeId)
-        if (tabIndex !== -1 && tabIndex > 0) {
-          let toFocus = this.tabs[tabIndex - 1].tabId
-          let elem = document.getElementById(toFocus)
-          elem.focus()
-        }
       },
       prevTab () {
         let cb = () => {
           if (this.activeTabIndex > 0) {
             this.setValidationError(null)
             this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
-            this.isLastStep = false
           }
         }
         if (this.validateOnBack) {
           this.beforeTabChange(this.activeTabIndex, cb)
         } else {
           cb()
+        }
+      },
+      focusNextTab () {
+        let tabIndex = getFocusedTabIndex(this.tabs)
+        if (tabIndex !== -1 && tabIndex < this.tabs.length - 1) {
+          let toFocusId = this.tabs[tabIndex + 1].tabId
+          findElementAndFocus(toFocusId)
+        }
+      },
+      focusPrevTab () {
+        let tabIndex = getFocusedTabIndex(this.tabs)
+        if (tabIndex !== -1 && tabIndex > 0) {
+          let toFocusId = this.tabs[tabIndex - 1].tabId
+          findElementAndFocus(toFocusId)
         }
       },
       setLoading (value) {
@@ -320,7 +314,7 @@
       validateBeforeChange (promiseFn, callback) {
         this.setValidationError(null)
         // we have a promise
-        if (promiseFn.then && typeof promiseFn.then === 'function') {
+        if (isPromise(promiseFn)) {
           this.setLoading(true)
           promiseFn.then((res) => {
             this.setLoading(false)
@@ -377,18 +371,6 @@
           this.$router.push(tab.route)
         }
       },
-      checkStep () {
-        if (this.activeTabIndex === this.tabCount - 1) {
-          this.isLastStep = true
-        } else {
-          this.isLastStep = false
-        }
-      },
-      increaseMaxStep () {
-        if (this.activeTabIndex > this.maxStep) {
-          this.maxStep = this.activeTabIndex
-        }
-      },
       checkRouteChange (route) {
         let matchingTabIndex = -1
         let matchingTab = this.tabs.find((tab, index) => {
@@ -420,7 +402,6 @@
       },
       activateTabAndCheckStep (index) {
         this.activateTab(index)
-        this.checkStep()
         if (index > this.maxStep) {
           this.maxStep = index
         }
@@ -441,7 +422,7 @@
       this.initializeTabs()
     },
     watch: {
-      '$route.path': function (newRoute) {
+      '$route.path' (newRoute) {
         this.checkRouteChange(newRoute)
       }
     }
