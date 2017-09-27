@@ -4,7 +4,7 @@
     <a>
       <div class="wizard-icon-circle md"
            role="tab"
-           :tabindex="tab.checked ? 0 : -1"
+           :tabindex="tab.checked ? 0 : ''"
            :id="tab.tabId"
            :aria-controls="tab.title"
            :aria-disabled="tab.active"
