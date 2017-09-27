@@ -21,7 +21,7 @@
           <wizard-step :tab="tab"
                        :step-size="stepSize"
                        @click.native="navigateToTab(index)"
-                       @keyup.enter.native="navigateOrGoToNext(index)"
+                       @keyup.enter.native="navigateToTab(index)"
                        :transition="transition"
                        :index="index">
           </wizard-step>
@@ -213,7 +213,7 @@
       },
       addTab (item) {
         const index = this.$slots.default.indexOf(item.$vnode)
-        item.tabId = `t-${item.title}${index}`
+        item.tabId = `t-${item.title.replace(/ /g, '')}${index}`
         this.tabs.splice(index, 0, item)
         // if a step is added before the current one, go to it
         if (index < this.activeTabIndex + 1) {
@@ -259,13 +259,6 @@
         }
         return index <= this.maxStep
       },
-      navigateOrGoToNext (index) {
-        if (!this.navigateToTab(index)) {
-          for (let i = this.activeTabIndex; i < index; i++) {
-            this.nextTab()
-          }
-        }
-      },
       nextTab () {
         let cb = () => {
           if (this.activeTabIndex < this.tabCount - 1) {
@@ -292,8 +285,10 @@
       focusNextTab () {
         let tabIndex = getFocusedTabIndex(this.tabs)
         if (tabIndex !== -1 && tabIndex < this.tabs.length - 1) {
-          let toFocusId = this.tabs[tabIndex + 1].tabId
-          findElementAndFocus(toFocusId)
+          let tabToFocus = this.tabs[tabIndex + 1]
+          if (tabToFocus.checked) {
+            findElementAndFocus(tabToFocus.tabId)
+          }
         }
       },
       focusPrevTab () {
