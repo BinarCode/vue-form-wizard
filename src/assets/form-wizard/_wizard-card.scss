@@ -125,4 +125,21 @@
       }
     }
   }
+
+  &.vertical {
+    .wizard-card-footer {
+      display: block;
+    }
+    .wizard-nav-pills {
+      flex-direction: column;
+    }
+    .wizard-navigation {
+      display: flex;
+      flex-direction: row;
+    }
+    .wizard-card-footer {
+      padding-top: 30px;
+
+    }
+  }
 }

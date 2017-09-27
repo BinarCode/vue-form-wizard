@@ -7,7 +7,8 @@
     <form-wizard @on-complete="onComplete"
                  @on-change="handleChange"
                  :start-index.sync="activeIndex"
-                 shape="tab"
+                 layout="vertical"
+                 steps-classes="steps-size"
                  color="#e74c3c">
        <tab-content v-for="tab in tabs" :title="tab" :key="tab">{{tab}}</tab-content>
         <transition name="fade" mode="out-in">
@@ -66,6 +67,10 @@
   @import "loader.css";
 </style>
 <style lang="scss">
+  .steps-size{
+    width: 200px;
+    height: 400px;
+  }
   $border-radius-extreme: 6px !default;
   $white-color: white;
   $gray-input-bg: #F3F2EE !default;

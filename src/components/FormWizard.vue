@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-form-wizard" :class="stepSize" @keyup.right="focusNextTab" @keyup.left="focusPrevTab">
+  <div class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab" @keyup.left="focusPrevTab">
     <div class="wizard-header">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
@@ -7,11 +7,11 @@
       </slot>
     </div>
     <div class="wizard-navigation">
-      <div class="wizard-progress-with-circle">
+      <div class="wizard-progress-with-circle" v-if="!isVertical">
         <div class="wizard-progress-bar"
              :style="progressBarStyle"></div>
       </div>
-      <ul class="wizard-nav wizard-nav-pills" role="tablist">
+      <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
         <slot name="step" v-for="(tab, index) in tabs"
               :tab="tab"
               :index="index"
@@ -122,6 +122,14 @@
         type: String,
         default: 'circle'
       },
+      layout: {
+        type: String,
+        default: 'horizontal'
+      },
+      stepsClasses: {
+        type: [String, Array],
+        default: ''
+      },
       stepSize: {
         type: String,
         default: 'md',
@@ -173,6 +181,9 @@
       },
       isLastStep () {
         return this.activeTabIndex === this.tabCount - 1
+      },
+      isVertical () {
+        return this.layout === 'vertical'
       },
       displayPrevButton () {
         return this.activeTabIndex !== 0
