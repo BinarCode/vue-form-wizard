@@ -26,8 +26,11 @@
             background-color: transparent;
             color: $form-placeholder-color;
             outline: 0 !important;
-            cursor: pointer;
         }
+      &.disabled {
+        pointer-events: none;
+        cursor: default;
+      }
     }
 
     > li.active > a,

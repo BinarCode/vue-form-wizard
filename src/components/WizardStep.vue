@@ -1,7 +1,6 @@
 <template>
-  <li :class="{active:tab.active}"
-      >
-    <a>
+  <li :class="{active:tab.active}">
+    <a href="javascript:void(0)" :class="{disabled: !tab.checked}">
       <div class="wizard-icon-circle md"
            role="tab"
            :tabindex="tab.checked ? 0 : ''"
