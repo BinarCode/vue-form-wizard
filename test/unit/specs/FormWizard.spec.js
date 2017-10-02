@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueFormWizard from './../../../src/index'
 import {TabContent as WizardTab, WizardStep, FormWizard} from './../../../src/index'
-import {mount} from 'avoriaz'
+import {mount} from 'vue-test-utils'
 import sinon from 'sinon'
 
 Vue.use(VueFormWizard)
@@ -35,11 +35,11 @@ describe('FormWizard.vue', () => {
   it('renders steps', (done) => {
     const wizard = mount(twoStepWizard)
     Vue.nextTick(() => {
-      const steps = wizard.find(WizardStep)
-      const firsStep = steps[0]
+      const steps = wizard.findAll(WizardStep)
+      const firsStep = steps.at(0)
       expect(steps.length).to.equal(3)
       expect(firsStep.hasClass('active'))
-      const stepTitle = firsStep.find('.stepTitle')[0]
+      const stepTitle = firsStep.find('.stepTitle')
       expect(stepTitle.is('span')).to.equal(true)
       const stepText = stepTitle.text().trim()
       expect(stepText).to.equal('Personal details')
@@ -49,7 +49,7 @@ describe('FormWizard.vue', () => {
   it('renders tabs', (done) => {
     const wizard = mount(twoStepWizard)
     Vue.nextTick(() => {
-      const tabs = wizard.find(WizardTab)
+      const tabs = wizard.findAll(WizardTab)
       expect(tabs.length).to.equal(3)
       done()
     })
@@ -57,9 +57,9 @@ describe('FormWizard.vue', () => {
   it('displays only one tab', (done) => {
     const wizard = mount(twoStepWizard)
     Vue.nextTick(() => {
-      const tabs = wizard.find(WizardTab)
-      const activeTabs = tabs.filter((tab) => tab.data().active)
-      const inactiveTabs = tabs.filter((tab) => !tab.data().active)
+      const tabs = wizard.findAll(WizardTab).wrappers
+      const activeTabs = tabs.filter((tab) => tab.vm.active)
+      const inactiveTabs = tabs.filter((tab) => !tab.vm.active)
       expect(activeTabs.length).to.equal(1)
 
       inactiveTabs.forEach((tab) => {
@@ -71,21 +71,21 @@ describe('FormWizard.vue', () => {
   it('starts at a given index', (done) => {
     const wizard = mount(twoStepWizard)
     Vue.nextTick(() => {
-      const tabs = wizard.find(WizardTab)
-      const activeTab = tabs[startIndex]
-      expect(activeTab.data().active).to.equal(true)
-      const formWizard = wizard.find(FormWizard)[0]
-      expect(formWizard.data().activeTabIndex).to.equal(startIndex)
+      const tabs = wizard.findAll(WizardTab)
+      const activeTab = tabs.at(startIndex)
+      expect(activeTab.vm.active).to.equal(true)
+      const formWizard = wizard.find(FormWizard)
+      expect(formWizard.vm.activeTabIndex).to.equal(startIndex)
       done()
     })
   })
   it('next tab is called', (done) => {
     const wizard = mount(twoStepWizard)
     const nextTabHandler = sinon.stub()
-    const formWizard = wizard.find(FormWizard)[0]
+    const formWizard = wizard.find(FormWizard)
     formWizard.setMethods({nextTab: nextTabHandler})
     Vue.nextTick(() => {
-      const nextButton = wizard.find('.wizard-footer-right span')[0]
+      const nextButton = wizard.find('.wizard-footer-right span')
       nextButton.trigger('click')
       expect(nextTabHandler.called).to.equal(true)
       done()
