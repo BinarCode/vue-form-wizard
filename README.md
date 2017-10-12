@@ -1,5 +1,5 @@
 
-# vue-form-wizard
+<h1 align="center">Vue form wizard</h1>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/vue-form-wizard"><img src="https://img.shields.io/npm/v/vue-form-wizard.svg"></a>
