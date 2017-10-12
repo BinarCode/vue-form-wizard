@@ -5,6 +5,9 @@
   <a href="https://www.npmjs.com/package/vue-form-wizard"><img src="https://img.shields.io/npm/v/vue-form-wizard.svg"></a>
   <a href="https://www.npmjs.com/package/vue-form-wizard"><img src="https://img.shields.io/npm/dt/vue-form-wizard.svg"></a>
   <a href="https://github.com/cristijora/vue-form-wizard/blob/master/LICENCE.md"><img src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
+  <a href="http://img.badgesize.io/cristijora/vue-form-wizard/master/dist/vue-form-wizard.js.svg?compression=gzip&style=flat-square">
+    <img src="http://img.badgesize.io/cristijora/vue-form-wizard/master/dist/vue-form-wizard.js.svg?compression=gzip&style=flat-square">
+  </a>
 </p>
 
 A dynamic wizard to split your forms easier
