@@ -1,17 +1,17 @@
 <template>
-  <div v-show="active" class="wizard-tab-container"
-       role="tabpanel"
-       :id="title"
-       :aria-hidden="!active"
-       :aria-labelledby="title">
-    <slot :active="active">
-    </slot>
-  </div>
+    <div class="wizard-tab-container"
+         role="tabpanel"
+         :id="title"
+         :aria-hidden="!active"
+         :aria-labelledby="title">
+      <slot :active="active">
+      </slot>
+    </div>
 </template>
 <script>
   export default{
     name: 'tab-content',
-    inject: ['addTab', 'removeTab'],
+    inject: ['addTab', 'removeTab', 'reRegisterTabs'],
     props: {
       title: {
         type: String,
@@ -44,13 +44,14 @@
       }
     },
     mounted () {
-      this.addTab(this)
-    },
-    destroyed () {
-      if (this.$el && this.$el.parentNode) {
-        this.$el.parentNode.removeChild(this.$el)
-      }
-      this.removeTab(this)
     }
   }
 </script>
+<style>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0
+  }
+</style>

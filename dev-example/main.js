@@ -7,6 +7,7 @@ import FormWizard from '../src/index'
 import WizardRoute from './WizardRoute.vue'
 import FormGeneratorRoute from './FormGeneratorRoute.vue'
 import TestRoute from './TestRoute.vue'
+import '../dist/vue-form-wizard.min.css'
 
 const First = {template: '<div>First page</div>'}
 const Second = {template: '<div>Second page</div>'}
