@@ -35,7 +35,7 @@ describe('FormWizard.vue', () => {
   })
   it('renders steps', () => {
     const wizard = mount(twoStepWizard, {localVue})
-    Vue.nextTick(()=>{
+    Vue.nextTick(() => {
       const steps = wizard.findAll(WizardStep)
       const firsStep = steps.at(0)
       expect(steps.length).to.equal(3)
@@ -84,7 +84,7 @@ describe('FormWizard.vue', () => {
   it('styles step with background color', (done) => {
     const wizard = mount(twoStepWizard, {localVue})
     const formWizard = wizard.find(FormWizard)
-    Vue.nextTick(()=>{
+    Vue.nextTick(() => {
       const steps = wizard.findAll(WizardStep)
       console.log(steps)
       var stepContainer = steps.at(0).find('.wizard-icon-container')
