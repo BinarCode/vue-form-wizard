@@ -81,4 +81,15 @@ describe('FormWizard.vue', () => {
     expect(nextTabHandler.called).to.equal(true)
   })
 
+  it('styles step with background color', (done) => {
+    const wizard = mount(twoStepWizard, {localVue})
+    const formWizard = wizard.find(FormWizard)
+    Vue.nextTick(()=>{
+      const steps = wizard.findAll(WizardStep)
+      console.log(steps)
+      var stepContainer = steps.at(0).find('.wizard-icon-container')
+      expect(stepContainer.hasStyle('background-color', formWizard.vm.color))
+      done()
+    })
+  })
 })

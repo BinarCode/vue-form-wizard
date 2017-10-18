@@ -1,6 +1,9 @@
 <template>
   <div>
     <form-wizard @on-complete="onComplete"
+                 shape="tab"
+                 layout="vertical"
+                 steps-classes="steps-size"
                  color="gray"
                  error-color="#a94442">
       <tab-content title="Personal details"
@@ -159,4 +162,8 @@
   }
 </script>
 <style>
+  .steps-size{
+    width: 100vw;
+    height: 400px;
+  }
 </style>

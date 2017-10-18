@@ -7,13 +7,10 @@
     <form-wizard @on-complete="onComplete"
                  @on-change="handleChange"
                  :start-index.sync="activeIndex"
-                 layout="vertical"
+                 shape="square"
                  steps-classes="steps-size"
                  color="#e74c3c">
-       <tab-content v-for="tab in tabs" :title="tab" :key="tab">{{tab}}</tab-content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
+        <tab-content v-for="tab in tabs" :title="tab" :key="tab">{{tab}}</tab-content>
     </form-wizard>
   </div>
 </template>
@@ -68,7 +65,7 @@
 </style>
 <style lang="scss">
   .steps-size{
-    width: 200px;
+    width: 100vw;
     height: 400px;
   }
   $border-radius-extreme: 6px !default;
@@ -100,5 +97,17 @@
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
     opacity: 0
+  }
+
+  .list-item {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .list-enter-active, .list-leave-active {
+    transition: all 1s;
+  }
+  .list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
   }
 </style>

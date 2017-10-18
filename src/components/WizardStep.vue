@@ -41,6 +41,7 @@
 <script>
   export default {
     name: 'wizard-step',
+    inject: ['color', 'shape', 'errorColor'],
     props: {
       tab: {
         type: Object,
@@ -60,31 +61,31 @@
     computed: {
       iconActiveStyle () {
         return {
-          backgroundColor: this.tab.color
+          backgroundColor: this.color
         }
       },
       stepCheckedStyle () {
         return {
-          borderColor: this.tab.color
+          borderColor: this.color
         }
       },
       errorStyle () {
         return {
-          borderColor: this.tab.errorColor,
-          backgroundColor: this.tab.errorColor
+          borderColor: this.errorColor,
+          backgroundColor: this.errorColor
         }
       },
       stepTitleStyle () {
         let isError = this.tab.validationError
         return {
-          color: isError ? this.tab.errorColor : this.tab.color
+          color: isError ? this.errorColor : this.color
         }
       },
       isStepSquare () {
-        return this.tab.shape === 'square'
+        return this.shape === 'square'
       },
       isTabShape () {
-        return this.tab.shape === 'tab'
+        return this.shape === 'tab'
       }
     }
   }

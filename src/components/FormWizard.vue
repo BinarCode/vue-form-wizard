@@ -1,5 +1,8 @@
 <template>
-  <div class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab" @keyup.left="focusPrevTab">
+  <div class="vue-form-wizard"
+       :class="[stepSize, {vertical: isVertical}]"
+       @keyup.right="focusNextTab"
+       @keyup.left="focusPrevTab">
     <div class="wizard-header">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
@@ -7,11 +10,14 @@
       </slot>
     </div>
     <div class="wizard-navigation">
-      <div class="wizard-progress-with-circle" v-if="!isVertical">
+      <div v-if="!isVertical"
+           class="wizard-progress-with-circle">
         <div class="wizard-progress-bar"
              :style="progressBarStyle"></div>
       </div>
-      <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
+      <ul class="wizard-nav wizard-nav-pills"
+          :class="stepsClasses"
+          role="tablist">
         <slot name="step" v-for="(tab, index) in tabs"
               :tab="tab"
               :index="index"
@@ -33,11 +39,15 @@
       </div>
     </div>
 
-    <div class="wizard-card-footer clearfix" v-if="!hideButtons">
+    <div  v-if="!hideButtons" class="wizard-card-footer clearfix">
       <slot name="footer"
             v-bind="slotProps">
         <div class="wizard-footer-left">
-          <span @click="prevTab" @keyup.enter="prevTab" v-if="displayPrevButton" role="button" tabindex="0">
+          <span @click="prevTab"
+                @keyup.enter="prevTab"
+                v-if="displayPrevButton"
+                role="button"
+                tabindex="0">
             <slot name="prev" v-bind="slotProps">
               <wizard-button :style="fillButtonStyle"
                              :disabled="loading">
@@ -50,14 +60,22 @@
 
         <div class="wizard-footer-right">
            <slot name="custom-buttons-right" v-bind="slotProps"></slot>
-            <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
+            <span v-if="isLastStep"
+                  @click="nextTab"
+                  @keyup.enter="nextTab"
+                  role="button"
+                  tabindex="0">
               <slot name="finish" v-bind="slotProps">
                <wizard-button :style="fillButtonStyle">
                 {{finishButtonText}}
               </wizard-button>
             </slot>
           </span>
-          <span @click="nextTab" @keyup.enter="nextTab" role="button" tabindex="0" v-else>
+          <span v-else
+                @click="nextTab"
+                @keyup.enter="nextTab"
+                role="button"
+                tabindex="0">
            <slot name="next" v-bind="slotProps" >
              <wizard-button :style="fillButtonStyle"
                             :disabled="loading">
@@ -80,6 +98,15 @@
     components: {
       WizardButton,
       WizardStep
+    },
+    provide () {
+      return {
+        addTab: this.addTab,
+        removeTab: this.removeTab,
+        shape: this.shape,
+        color: this.color,
+        errorColor: this.errorColor
+      }
     },
     props: {
       title: {

@@ -11,6 +11,7 @@
 <script>
   export default{
     name: 'tab-content',
+    inject: ['addTab', 'removeTab'],
     props: {
       title: {
         type: String,
@@ -42,25 +43,14 @@
         checked: false
       }
     },
-    computed: {
-      shape () {
-        return this.$parent.shape
-      },
-      color () {
-        return this.$parent.color
-      },
-      errorColor () {
-        return this.$parent.errorColor
-      }
-    },
     mounted () {
-      this.$parent.addTab(this)
+      this.addTab(this)
     },
     destroyed () {
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el)
       }
-      this.$parent.removeTab(this)
+      this.removeTab(this)
     }
   }
 </script>
