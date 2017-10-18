@@ -8,6 +8,10 @@
   <a href="http://img.badgesize.io/cristijora/vue-form-wizard/master/dist/vue-form-wizard.js.svg?compression=gzip&style=flat-square">
     <img src="http://img.badgesize.io/cristijora/vue-form-wizard/master/dist/vue-form-wizard.js.svg?compression=gzip&style=flat-square">
   </a>
+  <a href="https://api.travis-ci.org/cristijora/vue-form-wizard.svg?branch=master">
+      <img src="https://api.travis-ci.org/cristijora/vue-form-wizard.svg?branch=master">
+    </a>
+  
 </p>
 
 A dynamic wizard to split your forms easier
