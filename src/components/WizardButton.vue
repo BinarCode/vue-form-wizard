@@ -1,5 +1,5 @@
 <template>
-  <button class="wizard-btn" tabindex="-1">
+  <button class="wizard-btn" tabindex="-1" type="button">
     <slot></slot>
   </button>
 </template>
