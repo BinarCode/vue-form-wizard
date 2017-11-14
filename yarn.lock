@@ -260,13 +260,6 @@ autoprefixer@^6.3.1, autoprefixer@^6.7.2:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-avoriaz@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/avoriaz/-/avoriaz-4.1.0.tgz#db49a282f3758dff83578d7536c51a3cefc07615"
-  dependencies:
-    lodash "^4.17.4"
-    vue-add-globals "^2.0.0"
-
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -5209,9 +5202,9 @@ scss-tokenizer@^0.2.3:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
 
-selenium-server@^3.0.1:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/selenium-server/-/selenium-server-3.5.3.tgz#278c0af61ac2961476a59c6ff951216d67f2095c"
+selenium-server@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/selenium-server/-/selenium-server-3.7.1.tgz#cb3d4f444a6ba04357eb49b3f79bca990f279dd2"
 
 "semver@2 || 3 || 4 || 5", semver@^5.1.0, semver@^5.3.0:
   version "5.4.1"
@@ -5926,10 +5919,6 @@ vm-browserify@0.0.4:
 void-elements@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
-
-vue-add-globals@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/vue-add-globals/-/vue-add-globals-2.0.1.tgz#c9fba6faac44f679ec15d5a9637f518b181fc44d"
 
 vue-form-generator@^2.0.0:
   version "2.0.0"
