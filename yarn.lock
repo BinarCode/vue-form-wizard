@@ -260,13 +260,6 @@ autoprefixer@^6.3.1, autoprefixer@^6.7.2:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-avoriaz@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/avoriaz/-/avoriaz-4.1.0.tgz#db49a282f3758dff83578d7536c51a3cefc07615"
-  dependencies:
-    lodash "^4.17.4"
-    vue-add-globals "^2.0.0"
-
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -2355,11 +2348,12 @@ file-entry-cache@^2.0.0:
     flat-cache "^1.2.1"
     object-assign "^4.0.1"
 
-file-loader@^0.10.0:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.10.1.tgz#815034119891fc6441fb5a64c11bc93c22ddd842"
+file-loader@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-1.1.5.tgz#91c25b6b6fbe56dae99f10a425fd64933b5c9daa"
   dependencies:
     loader-utils "^1.0.2"
+    schema-utils "^0.3.0"
 
 file-uri-to-path@1:
   version "1.0.0"
@@ -5926,10 +5920,6 @@ vm-browserify@0.0.4:
 void-elements@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
-
-vue-add-globals@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/vue-add-globals/-/vue-add-globals-2.0.1.tgz#c9fba6faac44f679ec15d5a9637f518b181fc44d"
 
 vue-form-generator@^2.0.0:
   version "2.0.0"
