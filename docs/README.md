@@ -46,6 +46,12 @@ components: {
    </tab-content>
 </form-wizard>
 ```
+## Compatibility
+
+Vue-form-wizard works with Vue > 2.2, but the examples in the docs follow the latest Vue > 2.5 changes especially on the `slot` parts.
+If you use vue < 2.5.x, use `scope="props"` instead of `slot-scope="props"` for scoped slots. See [Vue 2.5 simplified scoped slots](https://gist.github.com/yyx990803/9bdff05e5468a60ced06c29c39114c6b#simplified-scoped-slots-usage)
+
+
 ## Props
 ### Form Wizard props
 ```js
@@ -191,8 +197,8 @@ then you could use this slot. Otherwise, you could stick with the buttons slots 
 One potential usage can be that you want to have a different button when completing the wizard. Maybe you want to position it in the center, give it a different color and click event
 
 ```html
-<template slot="footer" scope="props">
-       <div class=wizard-footer-left>
+<template slot="footer" slot-scope="props">
+       <div class="wizard-footer-left">
            <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" :style="props.fillButtonStyle">Previous</wizard-button>
         </div>
         <div class="wizard-footer-right">
@@ -209,12 +215,13 @@ Working fiddle for the [example above](https://jsfiddle.net/bt5dhqtf/717/)
 This slot can be used to disable the click event on the step or to customize the UI of each step
 One possible usage:
 ```html
-<template slot="step" scope="props">
-        <wizard-step :tab="props.tab"
-        :transition="props.transition"
-        :index="props.index">
-        </wizard-step>
-</template>
+<wizard-step 
+    slot-scope="props"
+    slot="step"
+    :tab="props.tab"
+    :transition="props.transition"
+    :index="props.index">
+</wizard-step>
 ```
 #### Exposed props for the `step` slot
 - tab (the tab object which contains the tab-content component corresponding to the step) This object contains several fields such as `active, checked, shape, color` and so on. You can check how these are used [here](https://github.com/cristijora/vue-form-wizard/blob/master/src/components/WizardStep.vue): 
@@ -456,7 +463,7 @@ Other demos:
        Yuhuuu! This seems pretty damn simple
      </tab-content>
      
-     <template slot="footer" scope="props">
+     <template slot="footer" slot-scope="props">
        <div class=wizard-footer-left>
            <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Previous</wizard-button>
         </div>
