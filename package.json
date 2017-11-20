@@ -89,7 +89,7 @@
     "stats-webpack-plugin": "^0.6.0",
     "url-loader": "^0.5.8",
     "vue": "^2.4.2",
-    "vue-form-generator": "^2.0.0",
+    "vue-form-generator": "^2.1.1",
     "vue-loader": "^11.1.4",
     "vue-router": "^2.5.1",
     "vue-style-loader": "^3.0.3",
