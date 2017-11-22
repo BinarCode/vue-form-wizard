@@ -18,7 +18,6 @@
       },
       /***
        * Icon name for the upper circle corresponding to the tab
-       * Supports themify icons only for now.
        */
       icon: {
         type: String,
@@ -33,6 +32,10 @@
       },
       route: {
         type: [String, Object]
+      },
+      additionalInfo: {
+        type: Object,
+        default: () => {}
       }
     },
     data () {
