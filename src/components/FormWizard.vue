@@ -157,6 +157,12 @@
         }
       }
     },
+    provide () {
+      return {
+        addTab: this.addTab,
+        removeTab: this.removeTab
+      }
+    },
     data () {
       return {
         activeTabIndex: 0,

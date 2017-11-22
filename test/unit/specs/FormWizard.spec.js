@@ -1,8 +1,7 @@
-import VueFormWizard from './../../../src/index'
-import {TabContent as WizardTab, WizardStep, FormWizard} from './../../../src/index'
+import VueFormWizard, {TabContent as WizardTab, WizardStep, FormWizard} from './../../../src/index'
 import {mount, createLocalVue} from 'vue-test-utils'
 import sinon from 'sinon'
-import Vue from "vue";
+import Vue from 'vue'
 
 const localVue = createLocalVue()
 localVue.use(VueFormWizard)
@@ -28,14 +27,30 @@ const twoStepWizard = {
     }
   }
 }
+
+const divSlot = `<div>
+                    <tab-content title="Personal details"
+                                 icon="ti-user">
+                      First
+                    </tab-content>
+                    <tab-content title="Additional Info"
+                                 icon="ti-settings">
+                      Second
+                    </tab-content>
+                    <tab-content title="Last step"
+                                 icon="ti-settings">
+                      Third
+                    </tab-content>
+                  </div>`
+
 describe('FormWizard.vue', () => {
   it('contains wizard class', () => {
     const wizard = mount(twoStepWizard, {localVue})
     wizard.hasClass('vue-form-wizard')
   })
-  it('renders steps', () => {
+  it('renders steps', (done) => {
     const wizard = mount(twoStepWizard, {localVue})
-    Vue.nextTick(()=>{
+    Vue.nextTick(() => {
       const steps = wizard.findAll(WizardStep)
       const firsStep = steps.at(0)
       expect(steps.length).to.equal(3)
@@ -44,8 +59,8 @@ describe('FormWizard.vue', () => {
       expect(stepTitle.is('span')).to.equal(true)
       const stepText = stepTitle.text().trim()
       expect(stepText).to.equal('Personal details')
+      done()
     })
-
   })
   it('renders tabs', () => {
     const wizard = mount(twoStepWizard, {localVue})
@@ -81,4 +96,17 @@ describe('FormWizard.vue', () => {
     expect(nextTabHandler.called).to.equal(true)
   })
 
+  it('renders tab wrapped in another element', done => {
+    const wizard = mount(FormWizard, {
+      localVue,
+      slots: {
+        default: divSlot
+      }
+    })
+    Vue.nextTick(() => {
+      const tabs = wizard.findAll(WizardTab)
+      expect(tabs.length).to.equal(3)
+      done()
+    })
+  })
 })

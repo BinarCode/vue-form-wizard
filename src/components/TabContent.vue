@@ -38,6 +38,7 @@
         default: () => {}
       }
     },
+    inject: ['addTab', 'removeTab'],
     data () {
       return {
         active: false,
@@ -57,13 +58,13 @@
       }
     },
     mounted () {
-      this.$parent.addTab(this)
+      this.addTab(this)
     },
     destroyed () {
       if (this.$el && this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el)
       }
-      this.$parent.removeTab(this)
+      this.removeTab(this)
     }
   }
 </script>

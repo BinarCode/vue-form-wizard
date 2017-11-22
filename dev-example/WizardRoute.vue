@@ -7,8 +7,6 @@
     <form-wizard @on-complete="onComplete"
                  @on-change="handleChange"
                  :start-index.sync="activeIndex"
-                 layout="vertical"
-                 steps-classes="steps-size"
                  color="#e74c3c">
        <tab-content v-for="tab in tabs" :title="tab" :key="tab">{{tab}}</tab-content>
         <transition name="fade" mode="out-in">
