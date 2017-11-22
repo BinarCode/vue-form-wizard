@@ -87,7 +87,7 @@
     "sinon": "^4.1.2",
     "sinon-chai": "^2.14.0",
     "stats-webpack-plugin": "^0.6.0",
-    "url-loader": "^0.5.8",
+    "url-loader": "^0.6.2",
     "vue": "^2.4.2",
     "vue-form-generator": "^2.1.1",
     "vue-loader": "^11.1.4",
