@@ -4,8 +4,11 @@
   "description": "A vue based tab/form wizard",
   "main": "dist/vue-form-wizard.js",
   "files": [
-    "dist"
+    "dist",
+    "types",
+    "src"
   ],
+  "typings": "types/index.d.ts",
   "homepage": "https://github.com/cristijora/vue-form-wizard",
   "scripts": {
     "dev": "node build/dev-server.js",
@@ -88,12 +91,12 @@
     "sinon-chai": "^2.14.0",
     "stats-webpack-plugin": "^0.6.0",
     "url-loader": "^0.6.2",
-    "vue": "^2.4.2",
+    "vue": "^2.5.8",
     "vue-form-generator": "^2.1.1",
     "vue-loader": "^11.1.4",
     "vue-router": "^2.5.1",
     "vue-style-loader": "^3.0.3",
-    "vue-template-compiler": "^2.4.2",
+    "vue-template-compiler": "^2.5.8",
     "vue-test-utils": "^1.0.0-beta.1",
     "webpack": "^2.2.1",
     "webpack-bundle-analyzer": "^2.9.1",
