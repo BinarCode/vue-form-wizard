@@ -86,14 +86,31 @@ describe('FormWizard.vue', () => {
     const formWizard = wizard.find(FormWizard)
     expect(formWizard.vm.activeTabIndex).to.equal(startIndex)
   })
+  it('resets wizard', () => {
+    const wizard = mount(twoStepWizard, {localVue})
+    const wizardInstance = wizard.find(FormWizard)
+    let tabs = wizard.findAll(WizardTab)
+    expect(tabs.length).to.equal(3)
+    wizardInstance.vm.nextTab()
+    wizardInstance.vm.nextTab()
+    const lastTab = tabs.at(2)
+    expect(lastTab.vm.active).to.equal(true)
+    expect(wizardInstance.vm.maxStep).to.equal(tabs.length - 1)
+    expect(wizardInstance.vm.activeTabIndex).to.equal(tabs.length - 1)
+    wizardInstance.vm.reset()
+    const firstTab = tabs.at(0)
+    expect(firstTab.vm.active).to.equal(true)
+    expect(wizardInstance.vm.maxStep).to.equal(0)
+    expect(wizardInstance.vm.activeTabIndex).to.equal(0)
+  })
+
   it('next tab is called', () => {
     const wizard = mount(twoStepWizard, {localVue})
-    const nextTabHandler = sinon.stub()
-    const formWizard = wizard.find(FormWizard)
-    formWizard.setMethods({nextTab: nextTabHandler})
     const nextButton = wizard.find('.wizard-footer-right span')
     nextButton.trigger('click')
-    expect(nextTabHandler.called).to.equal(true)
+    let tabs = wizard.findAll(WizardTab)
+    const secondTab = tabs.at(1)
+    expect(secondTab.vm.active).to.equal(true)
   })
 
   it('renders tab wrapped in another element', done => {
@@ -109,4 +126,5 @@ describe('FormWizard.vue', () => {
       done()
     })
   })
+
 })
