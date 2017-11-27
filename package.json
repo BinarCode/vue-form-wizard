@@ -95,18 +95,18 @@
     "sinon-chai": "^2.14.0",
     "stats-webpack-plugin": "^0.6.0",
     "url-loader": "^0.6.2",
-    "vue": "^2.5.8",
+    "vue": "^2.5.9",
     "vue-form-generator": "^2.1.1",
-    "vue-loader": "^11.1.4",
-    "vue-router": "^2.5.1",
+    "vue-loader": "^13.5.0",
+    "vue-router": "^3.0.1",
     "vue-style-loader": "^3.0.3",
-    "vue-template-compiler": "^2.5.8",
+    "vue-template-compiler": "^2.5.9",
     "vue-test-utils": "^1.0.0-beta.1",
-    "webpack": "^2.2.1",
+    "webpack": "^3.8.1",
     "webpack-bundle-analyzer": "^2.9.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1",
-    "webpack-merge": "^2.6.1"
+    "webpack-merge": "^4.1.1"
   },
   "engines": {
     "node": ">= 4.0.0",
@@ -117,7 +117,5 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "dependencies": {
-    "karma-polyfill": "^1.0.0"
-  }
+  "dependencies": {}
 }
