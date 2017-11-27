@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import 'phantomjs-polyfill'
 
 Vue.config.productionTip = false
 

@@ -12,9 +12,10 @@ module.exports = function (config) {
     //    http://karma-runner.github.io/0.13/config/browsers.html
     // 2. add it to the `browsers` array below.
     browsers: ['PhantomJS'],
-    frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim'],
+    frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim', 'polyfill'],
+    polyfill: ['findIndex'],
     reporters: ['spec','progress', 'coverage'],
-    files: ['./index.js'],
+    files: ['./index.js', './../../node_modules/phantomjs-polyfill-find-index/findIndex-polyfill.js',],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
     },
