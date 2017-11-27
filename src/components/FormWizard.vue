@@ -1,5 +1,6 @@
 <template>
-  <div class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab" @keyup.left="focusPrevTab">
+  <div class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
+       @keyup.left="focusPrevTab">
     <div class="wizard-header">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
@@ -49,8 +50,8 @@
         </div>
 
         <div class="wizard-footer-right">
-           <slot name="custom-buttons-right" v-bind="slotProps"></slot>
-            <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
+          <slot name="custom-buttons-right" v-bind="slotProps"></slot>
+          <span @click="nextTab" @keyup.enter="nextTab" v-if="isLastStep" role="button" tabindex="0">
               <slot name="finish" v-bind="slotProps">
                <wizard-button :style="fillButtonStyle">
                 {{finishButtonText}}
@@ -58,14 +59,14 @@
             </slot>
           </span>
           <span @click="nextTab" @keyup.enter="nextTab" role="button" tabindex="0" v-else>
-           <slot name="next" v-bind="slotProps" >
+           <slot name="next" v-bind="slotProps">
              <wizard-button :style="fillButtonStyle"
                             :disabled="loading">
               {{nextButtonText}}
              </wizard-button>
            </slot>
          </span>
-          </div>
+        </div>
 
       </slot>
     </div>
@@ -75,7 +76,8 @@
   import WizardButton from './WizardButton.vue'
   import WizardStep from './WizardStep.vue'
   import {isPromise, findElementAndFocus, getFocusedTabIndex} from './helpers'
-  export default{
+
+  export default {
     name: 'form-wizard',
     components: {
       WizardButton,
@@ -254,6 +256,13 @@
           }
           tabs.splice(index, 1)
         }
+      },
+      reset () {
+        this.maxStep = 0
+        this.tabs.forEach((tab) => {
+          tab.checked = false
+        })
+        this.navigateToTab(0)
       },
       navigateToTab (index) {
         let validate = index > this.activeTabIndex
