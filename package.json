@@ -93,7 +93,7 @@
     "url-loader": "^0.6.2",
     "vue": "^2.5.8",
     "vue-form-generator": "^2.1.1",
-    "vue-loader": "^11.1.4",
+    "vue-loader": "^13.5.0",
     "vue-router": "^2.5.1",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.8",
