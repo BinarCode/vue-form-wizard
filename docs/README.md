@@ -177,7 +177,7 @@ Some of them are intended for internal usage while others can be used for genera
 * **prevTab** - navigates to the prev tab. The same method is used when clicking prev button
 * **changeTab(oldIndex, newIndex)** - Navigates from one tab to another. Note that this method does not trigger validation methods. Use it with caution!
 
-!> It's advised to used only the methods above, since the methods which are not listed here are internal and might change or get removed.
+!> It's advised to use only the methods above, since the methods which are not listed here are internal and might change or get removed over time.
 
 ## Scoped slots
 
