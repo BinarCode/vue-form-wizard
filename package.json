@@ -51,7 +51,7 @@
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.1",
     "cross-spawn": "^5.0.1",
-    "css-loader": "^0.26.1",
+    "css-loader": "^0.28.7",
     "eslint": "^3.14.1",
     "eslint-config-standard": "^6.2.1",
     "eslint-friendly-formatter": "^3.0.0",
