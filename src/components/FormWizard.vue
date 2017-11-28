@@ -232,7 +232,7 @@
       },
       addTab (item) {
         const index = this.$slots.default.indexOf(item.$vnode)
-        item.tabId = `t-${item.title.replace(/ /g, '')}${index}`
+        item.tabId = `${item.title.replace(/ /g, '')}${index}`
         this.tabs.splice(index, 0, item)
         // if a step is added before the current one, go to it
         if (index < this.activeTabIndex + 1) {

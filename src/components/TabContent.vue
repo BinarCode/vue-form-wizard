@@ -1,9 +1,9 @@
 <template>
   <div v-show="active" class="wizard-tab-container"
        role="tabpanel"
-       :id="title"
+       :id="tabId"
        :aria-hidden="!active"
-       :aria-labelledby="title">
+       :aria-labelledby="`step-${tabId}`">
     <slot :active="active">
     </slot>
   </div>
@@ -43,7 +43,8 @@
       return {
         active: false,
         validationError: null,
-        checked: false
+        checked: false,
+        tabId: ''
       }
     },
     computed: {
