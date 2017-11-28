@@ -167,6 +167,18 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 * **custom-buttons-left** - Appears on right of "Back" button
 * **custom-buttons-right** - Appears on the left of "Next/Finish" button
 
+## Methods
+By using [refs](https://vuejs.org/v2/api/#ref) on the `form-wizard` component, you can access some internal wizard properties and methods.
+Some of them are intended for internal usage while others can be used for general purpose operations.
+
+* **reset** - will reset the wizard to the initial state
+* **activateAll** - will activate all steps as if the user went through all 
+* **nextTab** - navigates to the next tab. The same method is used when clicking next button
+* **prevTab** - navigates to the prev tab. The same method is used when clicking prev button
+* **changeTab(oldIndex, newIndex)** - Navigates from one tab to another. Note that this method does not trigger validation methods. Use it with caution!
+
+!> It's advised to used only the methods above, since the methods which are not listed here are internal and might change or get removed.
+
 ## Scoped slots
 
 Form-wizard exposes multiple scoped slots which can be used to customize some parts of the wizard. Usage example and implementation details are presented in [0.6.2 release](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.2)
