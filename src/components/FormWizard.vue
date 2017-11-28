@@ -264,6 +264,12 @@
         })
         this.navigateToTab(0)
       },
+      activateAll () {
+        this.maxStep = this.tabs.length - 1
+        this.tabs.forEach((tab) => {
+          tab.checked = true
+        })
+      },
       navigateToTab (index) {
         let validate = index > this.activeTabIndex
         if (index <= this.maxStep) {

@@ -85,6 +85,7 @@
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.1.0",
     "phantomjs-polyfill": "^0.0.2",
+    "phantomjs-polyfill-find": "^0.0.1",
     "phantomjs-polyfill-find-index": "^1.0.1",
     "phantomjs-prebuilt": "^2.1.16",
     "rimraf": "^2.6.0",

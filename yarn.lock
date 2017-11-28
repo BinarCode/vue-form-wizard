@@ -4783,6 +4783,10 @@ phantomjs-polyfill-find-index@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/phantomjs-polyfill-find-index/-/phantomjs-polyfill-find-index-1.0.1.tgz#ffd8d636abc27e87fec57d47033b687967810c37"
 
+phantomjs-polyfill-find@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/phantomjs-polyfill-find/-/phantomjs-polyfill-find-0.0.1.tgz#e5ba611361ecb4a969ffd5137638c811c9797be2"
+
 phantomjs-polyfill@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/phantomjs-polyfill/-/phantomjs-polyfill-0.0.2.tgz#8c6a7163e9bc8fd9ffdbe7d605cb5352f9fb891e"

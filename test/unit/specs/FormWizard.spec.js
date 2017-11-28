@@ -2,9 +2,25 @@ import VueFormWizard, {TabContent as WizardTab, WizardStep, FormWizard} from './
 import {mount, createLocalVue} from 'vue-test-utils'
 import sinon from 'sinon'
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 
 const localVue = createLocalVue()
 localVue.use(VueFormWizard)
+localVue.use(VueRouter)
+
+const First = {template: '<div>First page</div>'}
+const Second = {template: '<div>Second page</div>'}
+const Third = {template: '<div>Third page</div>'}
+
+const router = new VueRouter({
+  routes: [
+    {path: '/first', component: First},
+    {path: '/second', component: Second},
+    {path: '/third', component: Third}
+  ]
+})
+
+
 const startIndex = 0
 let validationMethod = sinon.stub()
 validationMethod.returns(true)
@@ -16,6 +32,7 @@ let initialWizard = {
                 My first tab content
               </tab-content>
               <tab-content title="Additional Info"
+                           v-if="showSecondStep" 
                            icon="ti-settings">
                 My second tab content
               </tab-content>
@@ -27,11 +44,30 @@ let initialWizard = {
   data () {
     return {
       startIndex: startIndex,
-      showLastStep: true
+      showLastStep: true,
+      showSecondStep: true
     }
   }
 }
 let threeStepWizard = initialWizard
+
+let routerWizard = {
+  template: `<form-wizard>
+                <tab-content title="Personal details"
+                             route="/first"
+                             icon="ti-user">
+                </tab-content>
+                <tab-content title="Additional Info"
+                             route="/second"
+                             icon="ti-settings">
+                </tab-content>
+                <tab-content title="Last step"
+                             route="/third"
+                             icon="ti-check">
+                </tab-content>
+                 <router-view></router-view>
+              </form-wizard>`
+}
 
 const divSlot = `<div>
                     <tab-content title="Personal details"
@@ -108,6 +144,25 @@ describe('FormWizard.vue', () => {
         done()
       })
     })
+    it('tabs in the same order when a tab before the active tab is removed', (done) => {
+      const wizard = mount(threeStepWizard, {localVue})
+      const wizardInstance = wizard.find(FormWizard)
+      const tabs = wizard.findAll(WizardTab)
+      expect(tabs.length).to.equal(3)
+      // navigate to last step
+      wizardInstance.vm.nextTab()
+      wizardInstance.vm.nextTab()
+      // remove second step
+      wizard.setData({showSecondStep: false})
+      Vue.nextTick(() => {
+        const newTabs = wizard.findAll(WizardTab)
+        expect(newTabs.length).to.equal(2)
+        const lastTab = newTabs.at(1)
+        expect(lastTab.vm.active).to.equal(true)
+        expect(lastTab.vm.title).to.equal('Last step')
+        done()
+      })
+    })
   })
 
   it('warns when start index is incorrect', () => {
@@ -135,6 +190,25 @@ describe('FormWizard.vue', () => {
     expect(firstTab.vm.active).to.equal(true)
     expect(wizardInstance.vm.maxStep).to.equal(0)
     expect(wizardInstance.vm.activeTabIndex).to.equal(0)
+  })
+
+  it('activates all steps', (done) => {
+    const wizard = mount(threeStepWizard, {localVue})
+    const wizardInstance = wizard.find(FormWizard)
+    let tabs = wizard.findAll(WizardTab)
+    let maxStepIndex = tabs.length - 1
+    wizardInstance.vm.activateAll()
+
+    Vue.nextTick(() => {
+      expect(wizardInstance.vm.activeTabIndex).to.equal(0)
+      expect(wizardInstance.vm.maxStep).to.equal(maxStepIndex)
+      // direct navigation should be available
+      wizardInstance.vm.navigateToTab(maxStepIndex)
+      expect(wizardInstance.vm.activeTabIndex).to.equal(maxStepIndex)
+      let steps = wizardInstance.findAll('.wizard-icon-circle')
+      expect(steps.hasClass('checked')).to.equal(true)
+      done()
+    })
   })
 
   describe('navigation', () => {
@@ -194,7 +268,7 @@ describe('FormWizard.vue', () => {
     it('active tab is prev when current active tab is removed', (done) => {
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      //navigate to last tab
+      // navigate to last tab
       wizardInstance.vm.nextTab()
       wizardInstance.vm.nextTab()
       const tabs = wizard.findAll(WizardTab)
@@ -218,8 +292,8 @@ describe('FormWizard.vue', () => {
       wizard.trigger('keyup.left')
       expect(wizardInstance.vm.activeTabIndex).to.equal(2)
     })
-
   })
+
   describe('emits', () => {
     it('on-complete upon last step', () => {
       const wizard = mount(threeStepWizard, {localVue})
@@ -232,8 +306,6 @@ describe('FormWizard.vue', () => {
       expect(wizardInstance.emitted()['on-complete'].length).to.equal(1)
     })
   })
-
-
   describe('validation with', () => {
     beforeEach(() => {
       threeStepWizard = {
@@ -314,6 +386,30 @@ describe('FormWizard.vue', () => {
       })
     })
   })
+  describe('with vue-router', ()=> {
+    it('renders correct tab contents', () => {
+      const wizard = mount(routerWizard, {localVue, router})
+      const wizardInstance = wizard.find(FormWizard)
+      let tabs = wizardInstance.findAll(WizardTab)
+      let firstTab  = tabs.at(0)
+      expect(tabs.length).to.equal(3)
+      expect(firstTab.vm.route).to.equal(wizardInstance.vm.$route.path)
+    })
+
+    it('adapts to valid route changes when steps are visited', (done) => {
+      const wizard = mount(routerWizard, {localVue, router})
+      const wizardInstance = wizard.find(FormWizard)
+      let tabs = wizardInstance.findAll(WizardTab)
+      wizardInstance.vm.activateAll()
+      wizardInstance.vm.$router.push('/second')
+      Vue.nextTick(()=> {
+        let secondTab = tabs.at(1)
+        expect(secondTab.vm.route).to.equal(wizardInstance.vm.$route.path)
+        expect(secondTab.vm.active).to.equal(true)
+        done()
+      })
 
 
+    })
+  })
 })

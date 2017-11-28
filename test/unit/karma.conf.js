@@ -15,7 +15,9 @@ module.exports = function (config) {
     frameworks: ['mocha', 'sinon-chai', 'phantomjs-shim', 'polyfill'],
     polyfill: ['findIndex'],
     reporters: ['spec','progress', 'coverage'],
-    files: ['./index.js', './../../node_modules/phantomjs-polyfill-find-index/findIndex-polyfill.js',],
+    files: ['./index.js',
+      './../../node_modules/phantomjs-polyfill-find-index/findIndex-polyfill.js',
+      './../../node_modules/phantomjs-polyfill-find/find-polyfill.js'],
     preprocessors: {
       './index.js': ['webpack', 'sourcemap']
     },
