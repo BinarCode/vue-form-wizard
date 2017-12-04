@@ -90,7 +90,7 @@
     "phantomjs-prebuilt": "^2.1.16",
     "rimraf": "^2.6.0",
     "sass-loader": "^6.0.3",
-    "selenium-server": "^3.7.1",
+    "selenium-server": "^3.8.1",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
     "sinon": "^4.1.2",
