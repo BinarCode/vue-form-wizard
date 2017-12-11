@@ -33,7 +33,7 @@
     "url": "https://github.com/cristijora/vue-form-wizard"
   },
   "devDependencies": {
-    "autoprefixer": "^7.2.1",
+    "autoprefixer": "^7.2.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.0.3",
     "babel-loader": "^6.2.10",
