@@ -6481,9 +6481,9 @@ vue-test-utils@^1.0.0-beta.1:
   dependencies:
     lodash "^4.17.4"
 
-vue@^2.5.9:
-  version "2.5.9"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.9.tgz#b2380cd040915dca69881dafd121d760952e65f7"
+vue@^2.5.11:
+  version "2.5.11"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.11.tgz#80ca2657aa81f03545cd8dd5a2f55454641e6405"
 
 watchpack@^1.4.0:
   version "1.4.0"
