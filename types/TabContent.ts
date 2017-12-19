@@ -7,7 +7,7 @@ export declare class Tab {
    * Function to execute before tab switch. Return value must be boolean
    * If the return result is false, tab switch is restricted
    */
-  beforeChange (): boolean | Promise
+  beforeChange (): boolean | Promise<boolean>
   /** Vue router route object */
   route: string | object
   additionalInfo: object
