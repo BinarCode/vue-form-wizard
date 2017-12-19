@@ -102,7 +102,7 @@
     "vue-loader": "^13.6.0",
     "vue-router": "^3.0.1",
     "vue-style-loader": "^3.0.3",
-    "vue-template-compiler": "^2.5.9",
+    "vue-template-compiler": "^2.5.11",
     "vue-test-utils": "^1.0.0-beta.1",
     "webpack": "^3.9.1",
     "webpack-bundle-analyzer": "^2.9.1",
