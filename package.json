@@ -52,7 +52,7 @@
     "cross-env": "^5.1.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.7",
-    "eslint": "^3.14.1",
+    "eslint": "^4.14.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-loader": "^1.6.1",
