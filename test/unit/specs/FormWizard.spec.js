@@ -417,7 +417,7 @@ describe('FormWizard.vue', () => {
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
       wizardInstance.vm.nextTab()
-      expect(threeStepWizard.methods.validationMethod).to.have.been.called()
+      expect(threeStepWizard.methods.validationMethod.should.have.been.called)
       expect(wizardInstance.vm.activeTabIndex).to.equal(1)
     })
     it('simple method on back navigation after change', () => {
@@ -427,7 +427,7 @@ describe('FormWizard.vue', () => {
       const wizardInstance = wizard.find(FormWizard)
       wizardInstance.vm.nextTab()
       wizardInstance.vm.prevTab()
-      expect(threeStepWizard.methods.validationMethod.called)
+      expect(threeStepWizard.methods.validationMethod.should.have.been.called)
     }) 
   })
   describe('with vue-router', ()=> {

@@ -384,8 +384,8 @@
           return
         }
         let newTab = this.tabs[index]
-        if (newTab && newTab.afterTabChange !== undefined) {
-          newTab.afterTabChange()
+        if (newTab && newTab.afterChange !== undefined) {
+          newTab.afterChange()
         }
       },
       changeTab (oldIndex, newIndex, emitChangeEvent = true) {
