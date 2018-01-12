@@ -30,6 +30,13 @@
       beforeChange: {
         type: Function
       },
+       /***
+       * Function to execute after tab switch. Return void for now.
+       * Safe to assume necessary validation has already occured
+       */
+      afterChange: {
+        type: Function
+      },
       route: {
         type: [String, Object]
       },
