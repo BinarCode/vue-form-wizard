@@ -380,7 +380,6 @@
         }
       },
       afterTabChange (index) {
-        console.log('aftertabchange')
         if (this.loading) {
           return
         }
