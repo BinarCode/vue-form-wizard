@@ -280,6 +280,7 @@
               this.beforeTabChange(this.activeTabIndex, cb)
             } else {
               this.changeTab(this.activeTabIndex, index)
+              this.afterTabChange(this.activeTabIndex)
             }
           }
           if (validate) {
@@ -295,6 +296,7 @@
         let cb = () => {
           if (this.activeTabIndex < this.tabCount - 1) {
             this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
+            this.afterTabChange(this.activeTabIndex)
           } else {
             this.$emit('on-complete')
           }
@@ -375,6 +377,15 @@
           this.validateBeforeChange(tabChangeRes, callback)
         } else {
           callback()
+        }
+      },
+      afterTabChange (index) {
+        if (this.loading) {
+          return
+        }
+        let newTab = this.tabs[index]
+        if (newTab && newTab.afterChange !== undefined) {
+          newTab.afterChange()
         }
       },
       changeTab (oldIndex, newIndex, emitChangeEvent = true) {

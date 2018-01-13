@@ -386,6 +386,50 @@ describe('FormWizard.vue', () => {
       })
     })
   })
+  describe('after change', () => {
+    beforeEach(() => {
+      threeStepWizard = {
+        template: `<form-wizard>
+              <tab-content title="Personal details"
+                           
+                           :after-change="validationMethod"
+                           icon="ti-user">
+                My first tab content
+              </tab-content>
+              <tab-content title="Additional Info"
+                           :after-change="validationMethod"
+                           icon="ti-settings">
+                My second tab content
+              </tab-content>
+              <tab-content title="Last step"
+                           icon="ti-settings">
+                My third tab content
+              </tab-content>
+          </form-wizard>`,
+        methods: {
+          validationMethod,
+        }
+      }
+    })
+    it('simple method on after change', () => {
+      threeStepWizard.methods.validationMethod = sinon.stub()
+      threeStepWizard.methods.validationMethod.returns(null)
+      const wizard = mount(threeStepWizard, {localVue})
+      const wizardInstance = wizard.find(FormWizard)
+      wizardInstance.vm.nextTab()
+      expect(threeStepWizard.methods.validationMethod.should.have.been.called)
+      expect(wizardInstance.vm.activeTabIndex).to.equal(1)
+    })
+    it('simple method on back navigation after change', () => {
+      threeStepWizard.methods.validationMethod = sinon.stub()
+      threeStepWizard.methods.validationMethod.returns(null)
+      const wizard = mount(threeStepWizard, {localVue})
+      const wizardInstance = wizard.find(FormWizard)
+      wizardInstance.vm.nextTab()
+      wizardInstance.vm.prevTab()
+      expect(threeStepWizard.methods.validationMethod.should.have.been.called)
+    }) 
+  })
   describe('with vue-router', ()=> {
     it('renders correct tab contents', () => {
       const wizard = mount(routerWizard, {localVue, router})
