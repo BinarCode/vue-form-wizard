@@ -8,7 +8,12 @@
                  @on-change="handleChange"
                  :start-index.sync="activeIndex"
                  color="#e74c3c">
-       <tab-content v-for="tab in tabs" :title="tab" :key="tab">{{tab}}</tab-content>
+       <tab-content v-for="(tab, index) in tabs"
+                    :beforeChange="validateAsync"
+                    :title="tab"
+                    :key="tab">
+         {{tab}}
+       </tab-content>
         <transition name="fade" mode="out-in">
           <router-view></router-view>
         </transition>

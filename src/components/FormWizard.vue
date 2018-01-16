@@ -75,7 +75,7 @@
 <script>
   import WizardButton from './WizardButton.vue'
   import WizardStep from './WizardStep.vue'
-  import {isPromise, findElementAndFocus, getFocusedTabIndex} from './helpers'
+  import {findElementAndFocus, getFocusedTabIndex, isPromiseLike} from './helpers'
 
   export default {
     name: 'form-wizard',
@@ -270,30 +270,34 @@
           tab.checked = true
         })
       },
-      navigateToTab (index) {
+      async navigateToTab (index) {
         let validate = index > this.activeTabIndex
         if (index <= this.maxStep) {
-          let cb = () => {
+          let navigateFunction = () => {
             if (validate && index - this.activeTabIndex > 1) {
               // validate all steps recursively until destination index
               this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
-              this.beforeTabChange(this.activeTabIndex, cb)
+              this.beforeTabChange(this.activeTabIndex)
             } else {
               this.changeTab(this.activeTabIndex, index)
               this.afterTabChange(this.activeTabIndex)
             }
           }
           if (validate) {
-            this.beforeTabChange(this.activeTabIndex, cb)
+            let validationResult = await this.beforeTabChange(this.activeTabIndex)
+            if (validationResult === true) {
+              navigateFunction()
+            }
           } else {
             this.setValidationError(null)
-            cb()
+            navigateFunction()
           }
         }
         return index <= this.maxStep
       },
-      nextTab () {
-        let cb = () => {
+      async nextTab () {
+        let validationResult = await this.beforeTabChange(this.activeTabIndex)
+        if (validationResult === true) {
           if (this.activeTabIndex < this.tabCount - 1) {
             this.changeTab(this.activeTabIndex, this.activeTabIndex + 1)
             this.afterTabChange(this.activeTabIndex)
@@ -301,19 +305,21 @@
             this.$emit('on-complete')
           }
         }
-        this.beforeTabChange(this.activeTabIndex, cb)
       },
-      prevTab () {
-        let cb = () => {
+      async prevTab () {
+        let navigateFunction = () => {
           if (this.activeTabIndex > 0) {
             this.setValidationError(null)
             this.changeTab(this.activeTabIndex, this.activeTabIndex - 1)
           }
         }
         if (this.validateOnBack) {
-          this.beforeTabChange(this.activeTabIndex, cb)
+          let validationResult = await this.beforeTabChange(this.activeTabIndex)
+          if (validationResult === true) {
+            navigateFunction()
+          }
         } else {
-          cb()
+          navigateFunction()
         }
       },
       focusNextTab () {
@@ -340,44 +346,47 @@
         this.tabs[this.activeTabIndex].validationError = error
         this.$emit('on-error', error)
       },
-      validateBeforeChange (promiseFn, callback) {
+      async validateBeforeChange (promiseFn) {
         this.setValidationError(null)
         // we have a promise
-        if (isPromise(promiseFn)) {
-          this.setLoading(true)
-          promiseFn.then((res) => {
-            this.setLoading(false)
-            let validationResult = res === true
-            this.executeBeforeChange(validationResult, callback)
-          }).catch((error) => {
-            this.setLoading(false)
-            this.setValidationError(error)
-          })
-          // we have a simple function
-        } else {
-          let validationResult = promiseFn === true
-          this.executeBeforeChange(validationResult, callback)
-        }
+        this.setLoading(true)
+        return promiseFn.then(result => {
+          this.setLoading(false)
+          let validationResult = result === true
+          return this.executeBeforeChange(validationResult)
+        }).catch(error => {
+          this.setLoading(false)
+          this.setValidationError(error)
+          return Promise.resolve(false)
+        })
       },
-      executeBeforeChange (validationResult, callback) {
-        this.$emit('on-validate', validationResult, this.activeTabIndex)
-        if (validationResult) {
-          callback()
-        } else {
-          this.tabs[this.activeTabIndex].validationError = 'error'
-        }
+      executeBeforeChange (validationResult) {
+        return new Promise((resolve, reject) => {
+          this.$emit('on-validate', validationResult, this.activeTabIndex)
+          if (!validationResult) {
+            this.tabs[this.activeTabIndex].validationError = 'error'
+          }
+          resolve(validationResult)
+        })
       },
-      beforeTabChange (index, callback) {
-        if (this.loading) {
-          return
-        }
-        let oldTab = this.tabs[index]
-        if (oldTab && oldTab.beforeChange !== undefined) {
-          let tabChangeRes = oldTab.beforeChange()
-          this.validateBeforeChange(tabChangeRes, callback)
-        } else {
-          callback()
-        }
+      beforeTabChange (index) {
+        return new Promise((resolve, reject) => {
+          if (this.loading) {
+            resolve(false)
+          }
+          let oldTab = this.tabs[index]
+          if (oldTab && oldTab.beforeChange !== undefined) {
+            let beforeChangePromise = oldTab.beforeChange()
+            if (!isPromiseLike(beforeChangePromise)) {
+              beforeChangePromise = Promise.resolve(beforeChangePromise)
+            }
+            this.validateBeforeChange(beforeChangePromise).then((res) => {
+              resolve(res)
+            })
+          } else {
+            resolve(true)
+          }
+        })
       },
       afterTabChange (index) {
         if (this.loading) {

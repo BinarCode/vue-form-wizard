@@ -174,13 +174,13 @@ describe('FormWizard.vue', () => {
     window.console = originalConsole
   })
 
-  it('resets wizard', () => {
+  it('resets wizard', async () => {
     const wizard = mount(threeStepWizard, {localVue})
     const wizardInstance = wizard.find(FormWizard)
     let tabs = wizard.findAll(WizardTab)
     expect(tabs.length).to.equal(3)
-    wizardInstance.vm.nextTab()
-    wizardInstance.vm.nextTab()
+    await wizardInstance.vm.nextTab()
+    await wizardInstance.vm.nextTab()
     const lastTab = tabs.at(2)
     expect(lastTab.vm.active).to.equal(true)
     expect(wizardInstance.vm.maxStep).to.equal(tabs.length - 1)
@@ -248,29 +248,29 @@ describe('FormWizard.vue', () => {
       expect(formWizard.vm.activeTabIndex).to.equal(startIndex)
     })
 
-    it('navigates to a visited tab', () => {
+    it('navigates to a visited tab', async () => {
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
       let tabs = wizard.findAll(WizardTab)
-      wizardInstance.vm.nextTab()
-      wizardInstance.vm.nextTab()
-      wizardInstance.vm.navigateToTab(0)
+      await wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
+      await wizardInstance.vm.navigateToTab(0)
       const firstTab = tabs.at(0)
       expect(firstTab.vm.active).to.equal(true)
       expect(wizardInstance.vm.activeTabIndex).to.equal(0)
       expect(wizardInstance.vm.maxStep).to.equal(tabs.length - 1)
 
-      wizardInstance.vm.navigateToTab(2)
+      await wizardInstance.vm.navigateToTab(2)
       expect(wizardInstance.vm.activeTabIndex).to.equal(2)
       expect(wizardInstance.vm.maxStep).to.equal(tabs.length - 1)
     })
 
-    it('active tab is prev when current active tab is removed', (done) => {
+    it('active tab is prev when current active tab is removed', async (done) => {
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
       // navigate to last tab
-      wizardInstance.vm.nextTab()
-      wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
       const tabs = wizard.findAll(WizardTab)
       expect(tabs.length).to.equal(3)
       wizard.setData({showLastStep: false})
@@ -282,11 +282,11 @@ describe('FormWizard.vue', () => {
       })
     })
 
-    it('with arrow keys on visited tabs', () => {
+    it('with arrow keys on visited tabs', async () => {
       const wizard = mount(threeStepWizard, {localVue, attachToDocument: true})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
-      wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
       wizard.trigger('tab')
       wizard.trigger('keyup.right')
       wizard.trigger('keyup.left')
@@ -333,57 +333,56 @@ describe('FormWizard.vue', () => {
       }
     })
 
-    it('simple method', () => {
+    it('simple method', async () => {
       threeStepWizard.methods.validationMethod = sinon.stub()
       threeStepWizard.methods.validationMethod.returns(true)
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
       expect(threeStepWizard.methods.validationMethod.called).to.equal(true)
       expect(wizardInstance.vm.activeTabIndex).to.equal(1)
     })
-    it('simple method on back navigation', () => {
+    it('simple method on back navigation', async () => {
       threeStepWizard.methods.secondValidationMethod = sinon.stub()
       threeStepWizard.methods.secondValidationMethod.returns(true)
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
-      wizardInstance.vm.prevTab()
+      await wizardInstance.vm.nextTab()
+      await wizardInstance.vm.prevTab()
       expect(threeStepWizard.methods.secondValidationMethod.called).to.equal(true)
     })
-    it('falsy method', () => {
+    it('falsy method', async() => {
       threeStepWizard.methods.validationMethod = sinon.stub()
       threeStepWizard.methods.validationMethod.returns(false)
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
       expect(threeStepWizard.methods.validationMethod.called).to.equal(true)
       expect(wizardInstance.vm.activeTabIndex).to.equal(0)
     })
-    it('promise', (done) => {
+    it('promise', async() => {
       threeStepWizard.methods.validationMethod = sinon.stub()
       threeStepWizard.methods.validationMethod.returns(Promise.resolve(true))
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
       expect(threeStepWizard.methods.validationMethod.called).to.equal(true)
-      Vue.nextTick(() => {
-        expect(wizardInstance.vm.activeTabIndex).to.equal(1)
-        done()
-      })
+      expect(wizardInstance.vm.activeTabIndex).to.equal(1)
     })
 
-    it('failing promise', (done) => {
+    it('failing promise', async() => {
       threeStepWizard.methods.validationMethod = sinon.stub()
       threeStepWizard.methods.validationMethod.returns(Promise.reject(false))
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
-      expect(threeStepWizard.methods.validationMethod.called).to.equal(true)
-      Vue.nextTick(() => {
-        expect(wizardInstance.vm.activeTabIndex).to.equal(0)
-        done()
-      })
+      try {
+        await wizardInstance.vm.nextTab()
+      } catch(e) {
+        expect(threeStepWizard.methods.validationMethod.called).to.equal(true)
+        Vue.nextTick(() => {
+          expect(wizardInstance.vm.activeTabIndex).to.equal(0)
+        })
+      }
     })
   })
   describe('after change', () => {
@@ -411,24 +410,24 @@ describe('FormWizard.vue', () => {
         }
       }
     })
-    it('simple method on after change', () => {
+    it('simple method on after change', async() => {
       threeStepWizard.methods.validationMethod = sinon.stub()
       threeStepWizard.methods.validationMethod.returns(null)
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
+      await wizardInstance.vm.nextTab()
       expect(threeStepWizard.methods.validationMethod.should.have.been.called)
       expect(wizardInstance.vm.activeTabIndex).to.equal(1)
     })
-    it('simple method on back navigation after change', () => {
+    it('simple method on back navigation after change', async () => {
       threeStepWizard.methods.validationMethod = sinon.stub()
       threeStepWizard.methods.validationMethod.returns(null)
       const wizard = mount(threeStepWizard, {localVue})
       const wizardInstance = wizard.find(FormWizard)
-      wizardInstance.vm.nextTab()
-      wizardInstance.vm.prevTab()
+      await wizardInstance.vm.nextTab()
+      await wizardInstance.vm.prevTab()
       expect(threeStepWizard.methods.validationMethod.should.have.been.called)
-    }) 
+    })
   })
   describe('with vue-router', ()=> {
     it('renders correct tab contents', () => {
