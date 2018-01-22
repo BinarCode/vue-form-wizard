@@ -6686,9 +6686,9 @@ void-elements@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
-vue-form-generator@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/vue-form-generator/-/vue-form-generator-2.1.1.tgz#0f57452005c2d310fbe545ca2bf30153562f4f28"
+vue-form-generator@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vue-form-generator/-/vue-form-generator-2.2.0.tgz#240b93c9489b7355ae708f7d8379776686182f2f"
 
 vue-hot-reload-api@^2.2.0:
   version "2.2.4"
