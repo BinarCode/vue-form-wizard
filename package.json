@@ -50,7 +50,7 @@
     "copy-webpack-plugin": "^4.3.1",
     "coveralls": "^3.0.0",
     "cross-env": "^5.1.1",
-    "cross-spawn": "^5.0.1",
+    "cross-spawn": "^6.0.3",
     "css-loader": "^0.28.8",
     "eslint": "^3.14.1",
     "eslint-config-standard": "^6.2.1",
