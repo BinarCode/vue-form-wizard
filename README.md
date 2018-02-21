@@ -32,7 +32,7 @@ Other demos:
 * [Vuelidate integration](https://jsfiddle.net/CristiJ/bt5dhqtf/1119/)
 * [Dynamic components for tabs](https://jsfiddle.net/bt5dhqtf/973/)
 * [Vue router integration](https://jsfiddle.net/bt5dhqtf/267/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
-* [Async validation with error message](https://jsfiddle.net/CristiJ/bt5dhqtf/298/) `before-change` prop can accept a promise that is resolved with `true` which will execute the promise before switching to another step/tab (NOTE: This feature is not present in the npm package yet)
+* [Async validation with error message](https://jsfiddle.net/CristiJ/bt5dhqtf/298/) `before-change` prop can accept a promise that is resolved with `true` which will execute the promise before switching to another step/tab
 * [Animations with animate.css](https://jsfiddle.net/bt5dhqtf/1478/)
 * [Fancy step animations with lottie](https://codesandbox.io/s/3y0voo2oxp)
 
