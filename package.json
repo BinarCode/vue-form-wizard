@@ -83,7 +83,7 @@
     "node-sass": "^4.7.2",
     "opn": "^5.2.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
-    "ora": "^1.1.0",
+    "ora": "^2.0.0",
     "phantomjs-polyfill": "^0.0.2",
     "phantomjs-polyfill-find": "^0.0.1",
     "phantomjs-polyfill-find-index": "^1.0.1",
