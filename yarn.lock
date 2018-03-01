@@ -5759,8 +5759,8 @@ scss-tokenizer@^0.2.3:
     source-map "^0.4.2"
 
 selenium-server@^3.8.1:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/selenium-server/-/selenium-server-3.8.1.tgz#61c53afd8614ef4c61bc0823cdd9a6fd0f3f21d7"
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/selenium-server/-/selenium-server-3.9.1.tgz#e582eee011aed9fca5d71735ea18d0d23a30bb56"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.5.0:
   version "5.5.0"
