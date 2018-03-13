@@ -1,7 +1,7 @@
 <template>
   <div class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
        @keyup.left="focusPrevTab">
-    <div class="wizard-header">
+    <div class="wizard-header" v-if="$slots['title']">
       <slot name="title">
         <h4 class="wizard-title">{{title}}</h4>
         <p class="category">{{subtitle}}</p>
