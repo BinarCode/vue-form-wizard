@@ -1,82 +1,12 @@
 <template>
   <div>
-    <button @click="tabs.shift()">Remove one at start</button>
-    <button @click="tabs.push('testt')">Add at the end</button>
-    <button @click="tabs.unshift('new start')">Add one at start</button>
-    <form-wizard @on-complete="onComplete"
-                 :hide-buttons="false"
-                 shape="square"
-                 color="gray"
-                 @on-loading="setLoading"
-                 @on-error="setError"
-                 class="card" ref="wizard">
-       <tab-content title="Personal details" icon="ti-user">
-         My first tab
-       </tab-content>
-        <tab-content v-for="tab in tabs" :title="tab" :key="tab" icon="ti-settings">
-          {{tab}}
-        </tab-content>
-        <tab-content title="Additional Info"
-                     :before-change="validateAsync"
-                     icon="ti-settings">
-          Additional info
-        </tab-content>
-        <tab-content title="Last step"
-                     icon="ti-check">
-        </tab-content>
-        <transition name="fade" mode="out-in">
-          <router-view></router-view>
-        </transition>
-        <div class="loader" v-if="loadingWizard"></div>
-        <div v-if="error">
-          {{error}}
-        </div>
-    </form-wizard>
+
+     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import TabContent from "../src/components/TabContent";
-
-  export default {
-    components: {TabContent},
-    name: 'app',
-    data () {
-      return {
-        loadingWizard: false,
-        error: null,
-        count: 0,
-        tabs: ['test', 'test2', 'test3']
-      }
-    },
-    methods: {
-      onComplete () {
-        alert('Yay!')
-      },
-      setLoading (value) {
-        this.loadingWizard = value
-      },
-      setError (error) {
-        this.error = error
-      },
-      validateAsync () {
-        //simulating an error for the first time and a success for the second time
-        return new Promise((resolve, reject) => {
-          setTimeout(() => {
-            if (this.count % 2 === 0) {
-              reject('Some custom error')
-            } else {
-              resolve(true)
-            }
-            this.count++
-          }, 100)
-        })
-      },
-      validate () {
-        return true
-      }
-    }
-  }
+  export default {}
 </script>
 <style>
   @import "loader.css";
@@ -106,5 +36,10 @@
     position: relative;
     z-index: 1;
   }
-
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .2s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+    opacity: 0
+  }
 </style>

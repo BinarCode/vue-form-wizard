@@ -4,16 +4,28 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import FormWizard from '../src/index'
-const First = { template: '<div>First page</div>' }
-const Second = { template: '<div>Second page</div>' }
-const Third = { template: '<div>Third page</div>' }
+import WizardRoute from './WizardRoute.vue'
+import FormGeneratorRoute from './FormGeneratorRoute.vue'
+import TestRoute from './TestRoute.vue'
+
+const First = {template: '<div>First page</div>'}
+const Second = {template: '<div>Second page</div>'}
+const Third = {template: '<div>Third page</div>'}
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
-    { path: '/first', component: First },
-    { path: '/second', component: Second },
-    { path: '/third', component: Third }
+    {
+      path: '/', component: WizardRoute,
+      children: [
+        {path: '/first', component: First},
+        {path: '/second', component: Second},
+        {path: '/third', component: Third}
+      ]
+    },
+    {path: '/test', component: TestRoute},
+    {path: '/form-generator', component: FormGeneratorRoute},
+
   ]
 })
 Vue.use(VueRouter)
@@ -25,6 +37,5 @@ Vue.config.productionTip = false
 new Vue({
   router,
   el: '#app',
-  template: '<App/>',
-  components: {App}
+  render: h => h(App)
 })

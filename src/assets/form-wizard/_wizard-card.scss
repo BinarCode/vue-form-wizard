@@ -1,3 +1,6 @@
+@import "mixins/wizard-size";
+@import "variables";
+
 .vue-form-wizard {
   padding-bottom: 20px;
   .is_error {
@@ -6,6 +9,11 @@
       background: $danger-states-color !important;
     }
   }
+  @include wizard-size('xs', 40px, 16px);
+  @include wizard-size('sm', 50px, 20px);
+  @include wizard-size('md', 70px, 24px);
+  @include wizard-size('lg', 90px, 28px);
+
   .wizard-icon-circle {
     font-size: 18px;
     border: 3px solid $gray-input-bg;
@@ -54,7 +62,6 @@
     padding: 15px 15px 15px 15px;
     position: relative;
     border-radius: 3px 3px 0 0;
-    z-index: 3;
     text-align: center;
   }
 
@@ -77,7 +84,6 @@
     .wizard-progress-with-circle {
       position: relative;
       top: 40px;
-      z-index: 50;
       height: 4px;
 
       .wizard-progress-bar {
@@ -117,6 +123,23 @@
       .wizard-footer-right button{
         margin-top:10px;
       }
+    }
+  }
+
+  &.vertical {
+    .wizard-card-footer {
+      display: block;
+    }
+    .wizard-nav-pills {
+      flex-direction: column;
+    }
+    .wizard-navigation {
+      display: flex;
+      flex-direction: row;
+    }
+    .wizard-card-footer {
+      padding-top: 30px;
+
     }
   }
 }

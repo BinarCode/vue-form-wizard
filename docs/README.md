@@ -1,26 +1,9 @@
-# vue-form-wizard
 A dynamic form wizard to split your forms easier
 
 Vue-form-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
-# Demos
-Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
 
-Other demos:
-* [Squared steps](https://jsfiddle.net/bt5dhqtf/98/)
-* [Tabbed steps](https://jsfiddle.net/bt5dhqtf/99/)
-* [Step index](https://jsfiddle.net/bt5dhqtf/100/) Start at any step. Note: start-index is zero-based and the count starts at 0
-* [Custom button and title text](https://jsfiddle.net/bt5dhqtf/101/)
-* [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
-* [Customized buttons with slots](https://jsfiddle.net/bt5dhqtf/103/) Replace stuff you don't like
-* [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
-* [Complete form example](https://jsfiddle.net/CristiJ/bt5dhqtf/286/) integrated with [vue-form-generator](https://github.com/icebob/vue-form-generator)
-* [Element UI form integration](https://jsfiddle.net/bt5dhqtf/409/)
-* [Vue router integration](https://jsfiddle.net/bt5dhqtf/267/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
-* [Async validation with error message](https://jsfiddle.net/CristiJ/bt5dhqtf/298/) `before-change` prop can accept a promise that is resolved with `true` which will execute the promise before switching to another step/tab (NOTE: This feature is not present in the npm package yet)
-
-There is also a [Playground](?id=playground) where you can test stuff out right here in the browser!
 # Usage
 
 ## NPM
@@ -41,7 +24,7 @@ Vue.use(VueFormWizard)
 
 //local registration
 import {FormWizard, TabContent} from 'vue-form-wizard'
-import 'vue-formwizard/dist/vue-form-wizard.min.css'
+import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 //component code
 components: {
   FormWizard,
@@ -63,9 +46,14 @@ components: {
    </tab-content>
 </form-wizard>
 ```
+## Compatibility
 
-# Props
-## Form Wizard props
+Vue-form-wizard works with Vue > 2.2, but the examples in the docs follow the latest Vue > 2.5 changes especially on the `slot` parts.
+If you use vue < 2.5.x, use `scope="props"` instead of `slot-scope="props"` for scoped slots. See [Vue 2.5 simplified scoped slots](https://gist.github.com/yyx990803/9bdff05e5468a60ced06c29c39114c6b#simplified-scoped-slots-usage)
+
+
+## Props
+### Form Wizard props
 ```js
 props: {
   title: {
@@ -87,6 +75,14 @@ props: {
   finishButtonText: {
     type: String,
     default: 'Finish'
+  },
+  stepSize: {
+    type: String,
+    default: 'md',
+    validator: (value) => {
+      let acceptedValues = ['xs', 'sm', 'md', 'lg']
+      return acceptedValues.indexOf(value) !== -1
+    }
   },
   /***
   *  Sets validation (on/off) for back button. By default back button ignores validation
@@ -130,7 +126,7 @@ props: {
 }
 ```
 
-## Tab content props
+### Tab content props
 ```js
 props: {
   title: {
@@ -154,28 +150,114 @@ props: {
   }
 }
 ```
-## Events
+### Events
 Vue-form-wizard emits certain events when certain actions happen inside the component. The events can be noticed in some of the demos and especially in the [async validation demo](https://jsfiddle.net/bt5dhqtf/272/)
 * **on-complete** Called when the finish button is clicked and the `before-change` for the last step (if present) was executed. No params are sent together with this event. `this.$emit('on-complete')`
 * **on-loading** Called whenever an async `before-change` is executed. This event is emitted before executing `before-change` and after finishing execution of `before-change` method. `on-loading` is emitted together with a Boolean value. `this.$emit('on-loading', value)`
 * **on-validate** Called whenever the execution of a `before-change` method is completed. The event sends along a Boolean which represents the validation result as well as an int with te tab index. `this.$emit('on-validate', validationResult, this.activeTabIndex)`
 * **on-error** Called when `before-change` is a promised and is rejected with a message. The message is passed along `this.$emit('on-error', error)` See async validation fiddle
+* **on-change**  Called upon step changes. Has prevIndex and nextIndes as params. `this.$emit('on-change', prevIndex, nextIndex)`
+
 ## Slots
 * **Default** - Used for tab-contents
 * **title** - Upper title section including sub-title
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
 * **finish** - Finish button content
+* **custom-buttons-left** - Appears on right of "Back" button
+* **custom-buttons-right** - Appears on the left of "Next/Finish" button
 
-## Contribution
-1. Fork the repo
-2. run `npm install`
-3. `npm run dev` for launching the dev example
-4. After making your changes make sure to pull the changes from the source repo to avoid conflicts
-5. `npm run build` to generate the new js and css bundles 
-6. Commit your changes + the js and css bundles so it's easy to test them right away in fiddles, codepen etc
-7. Open a Pull Request. For more information refer to [github forking workflow](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
+## Methods
+By using [refs](https://vuejs.org/v2/api/#ref) on the `form-wizard` component, you can access some internal wizard properties and methods.
+Some of them are intended for internal usage while others can be used for general purpose operations.
 
+* **reset** - will reset the wizard to the initial state
+* **activateAll** - will activate all steps as if the user went through all 
+* **nextTab** - navigates to the next tab. The same method is used when clicking next button
+* **prevTab** - navigates to the prev tab. The same method is used when clicking prev button
+* **changeTab(oldIndex, newIndex)** - Navigates from one tab to another. Note that this method does not trigger validation methods. Use it with caution!
+
+!> It's advised to use only the methods above, since the methods which are not listed here are internal and might change or get removed over time.
+
+## Scoped slots
+
+Form-wizard exposes multiple scoped slots which can be used to customize some parts of the wizard. Usage example and implementation details are presented in [0.6.2 release](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.2)
+
+Since [0.6.4](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.4), button slots can be also used as scoped slots and have the following methods/properties exposed
+
+* **nextTab** // will go to the next tab/step when called 
+* **prevTab** //will got to the prev tab/step when called
+* **activeTabIndex** // current active tab index 
+* **isLastStep** // boolean to tell whether it's the last step or not
+* **fillButtonStyle** // object with styles for wizard-buttons (contains background and color passed through wizard props)
+
+These properties apply to the following slots: 
+
+* **prev** - Previous button content (no need to worry about handling the button functionality)
+* **next** - Next button content
+* **finish** - Finish button content
+* **custom-buttons-left** - Appears on right of "Back" button
+* **custom-buttons-right** - Appears on the left of "Next/Finish" button
+
+### Footer slot
+The footer slot would be usually used to replace the whole content of your footer. By default it contains the wizard buttons (back, next, finish).
+When using this slot, those buttons are replaced with your own content. You can achieve the same default wizard functionality and event tweak it with the help of the exposed methods/properties from slot `props`
+
+Note that using this slot, means that you have to handle some of the wizard logic through the exposed methods/properties defined above and your template might get more verbose. 
+If you need very fine customizations and more control over the wizard button actions,
+then you could use this slot. Otherwise, you could stick with the buttons slots as they can be used as scoped slots as well.
+One potential usage can be that you want to have a different button when completing the wizard. Maybe you want to position it in the center, give it a different color and click event
+
+```html
+<template slot="footer" slot-scope="props">
+       <div class="wizard-footer-left">
+           <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Previous</wizard-button>
+        </div>
+        <div class="wizard-footer-right">
+          <wizard-button v-if="!props.isLastStep"@click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
+          
+          <wizard-button v-else @click.native="alert('Done')" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">  {{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
+        </div>
+</template>
+```
+This is just one example. You can add more buttons, hide or display conditionally based on the exposed properties.
+Working fiddle for the [example above](https://jsfiddle.net/bt5dhqtf/717/)
+
+### Step slot
+This slot can be used to disable the click event on the step or to customize the UI of each step
+One possible usage:
+```html
+<wizard-step 
+    slot-scope="props"
+    slot="step"
+    :tab="props.tab"
+    :transition="props.transition"
+    :index="props.index">
+</wizard-step>
+```
+#### Exposed props for the `step` slot
+- tab (the tab object which contains the tab-content component corresponding to the step) This object contains several fields such as `active, checked, shape, color` and so on. You can check how these are used [here](https://github.com/cristijora/vue-form-wizard/blob/master/src/components/WizardStep.vue): 
+- index (The index of the step)
+- transition (Transition prop passed from form-wizard)
+
+[Fiddle example](https://jsfiddle.net/bt5dhqtf/705/) You can notice that steps are not longer clickable.
+# Demos
+Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
+
+Other demos:
+* [Squared steps](https://jsfiddle.net/bt5dhqtf/98/)
+* [Tabbed steps](https://jsfiddle.net/bt5dhqtf/99/)
+* [Step index](https://jsfiddle.net/bt5dhqtf/100/) Start at any step. Note: start-index is zero-based and the count starts at 0
+* [Custom button and title text](https://jsfiddle.net/bt5dhqtf/101/)
+* [Custom title slot](https://jsfiddle.net/bt5dhqtf/102/)
+* [Call a function before tab switch](https://jsfiddle.net/bt5dhqtf/105/)
+* [Complete form example](https://jsfiddle.net/CristiJ/bt5dhqtf/286/) integrated with [vue-form-generator](https://github.com/icebob/vue-form-generator)
+* [Element UI form integration](https://jsfiddle.net/bt5dhqtf/409/)
+* [Vuelidate integration](https://jsfiddle.net/CristiJ/bt5dhqtf/1119/)
+* [Dynamic components for tabs](https://jsfiddle.net/bt5dhqtf/973/)
+* [Vue router integration](https://jsfiddle.net/bt5dhqtf/267/) You can place a `router-view` inside the wizard and have a separate page per tab. A `route` prop must be passed to the tabs you want to handle certain tabs
+* [Async validation with error message](https://jsfiddle.net/CristiJ/bt5dhqtf/298/) `before-change` prop can accept a promise that is resolved with `true` which will execute the promise before switching to another step/tab (NOTE: This feature is not present in the npm package yet)
+* [Customized buttons with scoped slot](https://jsfiddle.net/bt5dhqtf/717/)
 
 # Playground
 
@@ -370,7 +452,7 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 </script>
 </script>
 
-## Replace buttons and title with Slots
+## Customize buttons with footer slot
 
 <vuep template="#customslots"></vuep>
 
@@ -393,9 +475,16 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
        Yuhuuu! This seems pretty damn simple
      </tab-content>
      
-     <button slot="prev">Back</button>
-     <button slot="next">Next</button>
-     <button slot="finish">Finish</button>
+     <template slot="footer" slot-scope="props">
+       <div class=wizard-footer-left>
+           <wizard-button  v-if="props.activeTabIndex > 0 && !props.isLastStep" @click.native="props.prevTab()" :style="props.fillButtonStyle">Previous</wizard-button>
+        </div>
+        <div class="wizard-footer-right">
+          <wizard-button v-if="!props.isLastStep"@click.native="props.nextTab()" class="wizard-footer-right" :style="props.fillButtonStyle">Next</wizard-button>
+          
+          <wizard-button v-else @click.native="alert('Done')" class="wizard-footer-right finish-button" :style="props.fillButtonStyle">{{props.isLastStep ? 'Done' : 'Next'}}</wizard-button>
+        </div>
+      </template>
  </form-wizard>
  
 </template>
@@ -617,3 +706,14 @@ span.error{
   }
 </script>
 </script>
+
+## Contribution
+1. Fork the repo
+2. run `npm install`
+3. `npm run dev` for launching the dev example
+4. After making your changes make sure to pull the changes from the source repo to avoid conflicts
+5. `npm run build` to generate the new js and css bundles 
+6. Commit your changes + the js and css bundles so it's easy to test them right away in fiddles, codepen etc
+7. Open a Pull Request. For more information refer to [github forking workflow](https://gist.github.com/Chaser324/ce0505fbed06b947d962)
+
+

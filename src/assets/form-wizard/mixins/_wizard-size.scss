@@ -1,0 +1,22 @@
+@mixin wizard-size($name, $size, $font-size){
+  $computed-font-size: $size/2 + 5px;
+
+  &.#{$name}{
+    .wizard-icon-circle{
+      width: $size;
+      height: $size;
+      font-size: $font-size;
+      &.tab_shape {
+        height: $computed-font-size;
+      }
+    }
+    .wizard-nav-pills > li.active > a .wizard-icon {
+      font-size: $font-size;
+    }
+    .wizard-navigation .wizard-progress-with-circle {
+      position: relative;
+      top: $computed-font-size;
+      height: 4px;
+    }
+  }
+}
