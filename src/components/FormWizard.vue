@@ -1,5 +1,5 @@
 <template>
-  <div class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
+  <div :id="id ? id : ''" class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
        @keyup.left="focusPrevTab">
     <div class="wizard-header" v-if="$slots['title']">
       <slot name="title">
@@ -84,6 +84,10 @@
       WizardStep
     },
     props: {
+      id: {
+        type: String,
+        default: 'fw_' + (new Date()).valueOf()
+      },
       title: {
         type: String,
         default: 'Awesome Wizard'
