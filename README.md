@@ -38,4 +38,4 @@ Other demos:
 
 In browser [playground](https://cristijora.github.io/vue-form-wizard/#/?id=playground)
 
-# [Documentation](https://cristijora.github.io/vue-form-wizard/#/)
+# [Documentation](https://binarcode.github.io/vue-form-wizard/#/)
