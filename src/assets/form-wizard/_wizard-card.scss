@@ -41,9 +41,14 @@
       display: flex;
       justify-content: center;
       flex: 1;
-      border-radius: 40%;
-      &.square_shape, &.tab_shape {
+      border-radius: 50%;
+      margin: -3px;
+      &.square_shape {
         border-radius: 0;
+      }
+      &.tab_shape {
+        border-radius: 0;
+        margin: 0;
       }
     }
     .wizard-icon {
