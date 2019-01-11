@@ -152,6 +152,7 @@ props: {
   /***
    * Function to execute before tab switch. Return value must be boolean
    * If the return result is false, tab switch is restricted
+   * Note: Function is not invoked on the last tab.
    */
   beforeChange: {
     type: Function
