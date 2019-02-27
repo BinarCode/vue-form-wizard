@@ -1,16 +1,36 @@
 import Vue from 'vue'
 
 export declare class Tab extends Vue {
-  /** Title to be displayed under each step */
-  title?: string
-  /** css class for each step icon */
-  icon?: string
-  /***
-   * Function to execute before tab switch. Return value must be boolean
-   * If the return result is false, tab switch is restricted
+  /**
+   * Title to be displayed under each step.
+   * 
+   * Default value: ''
    */
-  beforeChange (): boolean | Promise<boolean>
-  /** Vue router route object */
+  title: string
+  
+  /** CSS class to be applied to each step icon.
+   * 
+   * Default value: ''
+   */
+  icon: string
+
+  /**
+   * Function to execute before changing tabs. If the return result is false, the tab switch is restricted.
+   */
+  beforeChange: () => boolean | Promise<boolean>
+
+  /**
+   * Function to execute after changing tabs. It is safe to assume that necessary validation has already occurred.
+   */
+  afterChange: () => void
+
+  /**
+   * Vue router route object.
+   */
   route: string | object
+
+  /**
+   * Default value: () => {}
+   */
   additionalInfo: object
 }
