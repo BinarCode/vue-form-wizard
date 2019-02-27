@@ -101,7 +101,6 @@ export declare class Wizard {
    */
   stepSize: StepSizeType
 
-
   /**
    * Name of the transition when transitioning between steps.
    * 
@@ -115,4 +114,29 @@ export declare class Wizard {
    * Default value: 0
    */
   startIndex: number
+
+  /**
+   * Resets the wizard to its initial state.
+   */
+  reset: () => void
+
+  /**
+   * Activates all steps, as if the user has navigated to each of them.
+   */
+  activateAll: () => void
+
+  /**
+   * Navigates to the next tab.
+   */
+  nextTab: () => void
+
+  /**
+   * Navigates to the previous tab.
+   */
+  prevTab: () => void
+
+  /**
+   * Navigates from one tab to another. Note that this method does not trigger validaiton methods.
+   */
+  changeTab: (oldIndex: number, newIndex: number, emitChangeEvent?: boolean) => boolean
 }
