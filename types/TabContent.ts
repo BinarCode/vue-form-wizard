@@ -1,4 +1,6 @@
-export declare class Tab {
+import Vue from 'vue'
+
+export declare class Tab extends Vue {
   /** Title to be displayed under each step */
   title?: string
   /** css class for each step icon */

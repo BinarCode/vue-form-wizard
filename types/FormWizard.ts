@@ -1,8 +1,10 @@
+import Vue from 'vue'
+
 export type ShapeType = 'circle' | 'square' | 'tab'
 export type LayoutType = 'vertical' | 'horizontal'
 export type StepSizeType = 'xs' | 'sm' | 'md' | 'lg'
 
-export declare class Wizard {
+export declare class Wizard extends Vue {
   /**
    * Wizard identifier.
    * 
