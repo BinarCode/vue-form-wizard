@@ -129,6 +129,9 @@ describe('FormWizard.vue', () => {
       Vue.nextTick(() => {
         const tabs = wizard.findAll(WizardTab)
         expect(tabs.length).to.equal(3)
+        expect(wizard.vm.tabs[0].title).to.equal('Personal details')
+        expect(wizard.vm.tabs[1].title).to.equal('Additional Info')
+        expect(wizard.vm.tabs[2].title).to.equal('Last step')
         done()
       })
     })
