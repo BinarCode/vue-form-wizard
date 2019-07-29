@@ -534,7 +534,7 @@ Other demos:
           alert('Yay. Done!');
        },
        beforeTabSwitch: function(){
-          alert("This is called before switchind tabs")
+          alert("This is called before switching tabs")
           return true;
         }
       },
