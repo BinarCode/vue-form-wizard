@@ -160,7 +160,8 @@ Vue-form-wizard emits certain events when certain actions happen inside the comp
 
 ## Slots
 * **Default** - Used for tab-contents
-* **title** - Upper title section including sub-title
+* **header** - Header containing title and subtitle
+* **title** - Upper title section including sub-title ( unused when header slot is present )
 * **navigation** - Navigation and progress bar
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content
@@ -194,6 +195,7 @@ Since [0.6.4](https://github.com/cristijora/vue-form-wizard/releases/tag/v0.6.4)
 
 These properties apply to the following slots:
 
+* **header** - Header containing title and subtitle
 * **navigation** - Navigation and progress bar
 * **prev** - Previous button content (no need to worry about handling the button functionality)
 * **next** - Next button content

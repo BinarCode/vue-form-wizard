@@ -1,14 +1,16 @@
 <template>
   <div :id="id ? id : ''" class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
        @keyup.left="focusPrevTab">
-    <div class="wizard-header" v-if="$slots['title']">
-      <slot name="title" :title="title" :subtitle="subtitle">
-        <h4 class="wizard-title">{{title}}</h4>
-        <p class="category">{{subtitle}}</p>
-      </slot>
-    </div>
+    <slot name="header" :title="title" :subtitle="subtitle" v-bind="slotProps">
+      <div class="wizard-header">
+        <slot name="title" :title="title" :subtitle="subtitle">
+          <h4 class="wizard-title">{{title}}</h4>
+          <p class="category">{{subtitle}}</p>
+        </slot>
+      </div>
+    </slot>
     <div class="wizard-navigation">
-      <slot name="navigation" :tabs="tabs" :navigate-to-tab="navigateToTab" v-bind="slotProps">
+      <slot name="navigation" :tabs="tabs" :navigate-to-tab="navigateToTab" :currentPercentage="progress" v-bind="slotProps">
         <div class="wizard-progress-with-circle" v-if="!isVertical">
           <div class="wizard-progress-bar"
               :style="progressBarStyle"></div>
