@@ -1,144 +1,148 @@
-import Vue from 'vue'
+import Vue from 'vue';
 
-export type ShapeType = 'circle' | 'square' | 'tab'
-export type LayoutType = 'vertical' | 'horizontal'
-export type StepSizeType = 'xs' | 'sm' | 'md' | 'lg'
+export type ShapeType = 'circle' | 'square' | 'tab';
+export type LayoutType = 'vertical' | 'horizontal';
+export type StepSizeType = 'xs' | 'sm' | 'md' | 'lg';
 
 export declare class Wizard extends Vue {
   /**
    * Wizard identifier.
-   * 
+   *
    * Default value: 'fw_<timestamp-in-milliseconds>'
    */
-  id: string
+  id: string;
 
   /**
    * Wizard title.
-   * 
+   *
    * Default value: 'Awesome Wizard'
    */
-  title: string
+  title: string;
 
   /**
    * Wizard subtitle.
-   * 
+   *
    * Default value: 'Split a complicated flow in multiple steps'
    */
-  subtitle: string
+  subtitle: string;
 
   /**
    * Text to display on next button.
-   * 
+   *
    * Default value: 'Next'
    */
-  nextButtonText: string
+  nextButtonText: string;
 
   /**
    * Text to display on back button.
-   * 
+   *
    * Default value: 'Back'
    */
-  backButtonText: string
+  backButtonText: string;
 
   /**
    * Text to display on finish button.
-   * 
+   *
    * Default value: 'Finish'
    */
-  finishButtonText: string
+  finishButtonText: string;
 
   /**
    * Whether or not buttons should be hidden.
-   * 
+   *
    * Default value: false
    */
-  hideButtons: boolean
+  hideButtons: boolean;
 
   /**
    * Whether or not to trigger `beforeChange` function when navigating back.
-   * 
+   *
    * Default value: false
    */
-  validateOnBack: boolean
+  validateOnBack: boolean;
 
   /**
    * Color to apply to text, border and circle.
-   * 
+   *
    * Default value: '#e74c3c'
    */
-  color: string
+  color: string;
 
   /**
    * Step color when the current step is not valid.
-   * 
+   *
    * Default value: '#8b0000'
    */
-  errorColor: string
+  errorColor: string;
 
   /**
    * Shape of steps.
-   * 
+   *
    * Default value: 'circle'
    */
-  shape: ShapeType
+  shape: ShapeType;
 
   /**
    * Layout of wizard.
-   * 
+   *
    * Default value: 'horizontal'
    */
-  layout: LayoutType
+  layout: LayoutType;
 
   /**
    * Additional CSS classes to apply to steps.
-   * 
+   *
    * Default value: ''
    */
-  stepsClasses: string[]
+  stepsClasses: string[];
 
   /**
    * Size of steps.
-   * 
+   *
    * Default value: 'md'
    */
-  stepSize: StepSizeType
+  stepSize: StepSizeType;
 
   /**
    * Name of the transition when transitioning between steps.
-   * 
+   *
    * Default value: ''
    */
-  transition: string
+  transition: string;
 
   /**
    * Zero-based index of the initial tab to be displayed.
-   * 
+   *
    * Default value: 0
    */
-  startIndex: number
+  startIndex: number;
 
   /**
    * Resets the wizard to its initial state.
    */
-  reset: () => void
+  reset: () => void;
 
   /**
    * Activates all steps, as if the user has navigated to each of them.
    */
-  activateAll: () => void
+  activateAll: () => void;
 
   /**
    * Navigates to the next tab.
    */
-  nextTab: () => void
+  nextTab: () => void;
 
   /**
    * Navigates to the previous tab.
    */
-  prevTab: () => void
+  prevTab: () => void;
 
   /**
    * Navigates from one tab to another. Note that this method does not trigger validaiton methods.
    */
-  changeTab: (oldIndex: number, newIndex: number, emitChangeEvent?: boolean) => boolean
+  changeTab: (
+    oldIndex: number,
+    newIndex: number,
+    emitChangeEvent?: boolean
+  ) => boolean;
 }
