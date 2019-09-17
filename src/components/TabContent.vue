@@ -1,5 +1,5 @@
 <template>
-  <div v-show="active" class="wizard-tab-container"
+  <div v-show="active" v-if="!lazy || active" class="wizard-tab-container"
        role="tabpanel"
        :id="tabId"
        :aria-hidden="!active"
@@ -22,6 +22,13 @@
       icon: {
         type: String,
         default: ''
+      },
+      /***
+       * Only render the content when the tab is active
+       */
+      lazy: {
+        type: Boolean,
+        default: false
       },
       /***
        * Function to execute before tab switch. Return value must be boolean

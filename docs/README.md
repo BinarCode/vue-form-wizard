@@ -142,6 +142,13 @@ props: {
     default: ''
   },
   /***
+   * Only render the content when the tab is active
+   */
+  lazy: {
+    type: Boolean,
+    default: false
+  },
+  /***
    * Function to execute before tab switch. Return value must be boolean
    * If the return result is false, tab switch is restricted
    */
