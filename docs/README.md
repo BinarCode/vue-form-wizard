@@ -1,6 +1,6 @@
 A dynamic form wizard to split your forms easier
 
-Vue-form-wizard is a vue based component with **no external depenendcies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
+Vue-form-wizard is a vue based component with **no external dependencies** which simplifies tab wizard management and allows you to focus on the functional part of your app rather than
 wasting time on details. Just forget about id's, external scripts and jQuery dependencies
 
 
