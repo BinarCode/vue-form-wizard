@@ -3,16 +3,22 @@ import Vue from 'vue'
 export declare class Tab extends Vue {
   /**
    * Title to be displayed under each step.
-   * 
+   *
    * Default value: ''
    */
   title: string
-  
+
   /** CSS class to be applied to each step icon.
-   * 
+   *
    * Default value: ''
    */
   icon: string
+
+  /** Icon pack name corresponding.
+   *
+   * Default value: ''
+   */
+  iconPack: string
 
   /**
    * Function to execute before changing tabs. If the return result is false, the tab switch is restricted.

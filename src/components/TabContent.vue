@@ -24,6 +24,13 @@
         default: ''
       },
       /***
+       * Icon pack name corresponding
+       */
+      iconPack: {
+          default: '',
+          type: String
+      },
+      /***
        * Function to execute before tab switch. Return value must be boolean
        * If the return result is false, tab switch is restricted
        */
