@@ -11,9 +11,9 @@
   </a>
 </p>
 
-A dynamic wizard to split your forms easier
+A dynamic wizard to split your forms easier.
 
-Vue-form-wizard is a vue based component with no external depenendcies which simplifies tab wizard management.
+Vue-form-wizard is a vue based component with no external dependencies which simplifies tab wizard management.
 
 ## Demos:
 Basic [demo](https://jsfiddle.net/bt5dhqtf/97/)
