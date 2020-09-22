@@ -175,7 +175,8 @@
         currentPercentage: 0,
         maxStep: 0,
         loading: false,
-        tabs: []
+        tabs: [],
+        removingWizard: false
       }
     },
     computed: {
@@ -245,6 +246,11 @@
         }
       },
       removeTab (item) {
+        if (this.removingWizard) {
+          // If removing entire wizard, prevent from emitting tab change events
+          return
+        }
+
         const tabs = this.tabs
         const index = tabs.indexOf(item)
         if (index > -1) {
@@ -462,6 +468,9 @@
     },
     mounted () {
       this.initializeTabs()
+    },
+    beforeDestroy () {
+      this.removingWizard = true
     },
     watch: {
       '$route.path' (newRoute) {
