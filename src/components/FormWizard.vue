@@ -1,33 +1,37 @@
 <template>
   <div :id="id ? id : ''" class="vue-form-wizard" :class="[stepSize, {vertical: isVertical}]" @keyup.right="focusNextTab"
        @keyup.left="focusPrevTab">
-    <div class="wizard-header" v-if="$slots['title']">
-      <slot name="title">
-        <h4 class="wizard-title">{{title}}</h4>
-        <p class="category">{{subtitle}}</p>
-      </slot>
-    </div>
-    <div class="wizard-navigation">
-      <div class="wizard-progress-with-circle" v-if="!isVertical">
-        <div class="wizard-progress-bar"
-             :style="progressBarStyle"></div>
-      </div>
-      <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
-        <slot name="step" v-for="(tab, index) in tabs"
-              :tab="tab"
-              :index="index"
-              :navigate-to-tab="navigateToTab"
-              :step-size="stepSize"
-              :transition="transition">
-          <wizard-step :tab="tab"
-                       :step-size="stepSize"
-                       @click.native="navigateToTab(index)"
-                       @keyup.enter.native="navigateToTab(index)"
-                       :transition="transition"
-                       :index="index">
-          </wizard-step>
+    <slot name="header" :title="title" :subtitle="subtitle" v-bind="slotProps">
+      <div class="wizard-header">
+        <slot name="title" :title="title" :subtitle="subtitle">
+          <h4 class="wizard-title">{{title}}</h4>
+          <p class="category">{{subtitle}}</p>
         </slot>
-      </ul>
+      </div>
+    </slot>
+    <div class="wizard-navigation">
+      <slot name="navigation" :tabs="tabs" :navigate-to-tab="navigateToTab" :currentPercentage="progress" v-bind="slotProps">
+        <div class="wizard-progress-with-circle" v-if="!isVertical">
+          <div class="wizard-progress-bar"
+              :style="progressBarStyle"></div>
+        </div>
+        <ul class="wizard-nav wizard-nav-pills" role="tablist" :class="stepsClasses">
+          <slot name="step" v-for="(tab, index) in tabs"
+                :tab="tab"
+                :index="index"
+                :navigate-to-tab="navigateToTab"
+                :step-size="stepSize"
+                :transition="transition">
+            <wizard-step :tab="tab"
+                        :step-size="stepSize"
+                        @click.native="navigateToTab(index)"
+                        @keyup.enter.native="navigateToTab(index)"
+                        :transition="transition"
+                        :index="index">
+            </wizard-step>
+          </slot>
+        </ul>
+      </slot>
       <div class="wizard-tab-content">
         <slot v-bind="slotProps">
         </slot>
