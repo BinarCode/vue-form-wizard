@@ -72,7 +72,7 @@
         return this.$parent.errorColor
       }
     },
-    mounted () {
+    created () {
       this.addTab(this)
     },
     destroyed () {

@@ -20,7 +20,6 @@ const router = new VueRouter({
   ]
 })
 
-
 const startIndex = 0
 let validationMethod = sinon.stub()
 validationMethod.returns(true)
@@ -130,6 +129,9 @@ describe('FormWizard.vue', () => {
       Vue.nextTick(() => {
         const tabs = wizard.findAll(WizardTab)
         expect(tabs.length).to.equal(3)
+        expect(wizard.vm.tabs[0].title).to.equal('Personal details')
+        expect(wizard.vm.tabs[1].title).to.equal('Additional Info')
+        expect(wizard.vm.tabs[2].title).to.equal('Last step')
         done()
       })
     })
@@ -407,7 +409,7 @@ describe('FormWizard.vue', () => {
               </tab-content>
           </form-wizard>`,
         methods: {
-          validationMethod,
+          validationMethod
         }
       }
     })
@@ -428,14 +430,14 @@ describe('FormWizard.vue', () => {
       wizardInstance.vm.nextTab()
       wizardInstance.vm.prevTab()
       expect(threeStepWizard.methods.validationMethod.should.have.been.called)
-    }) 
+    })
   })
-  describe('with vue-router', ()=> {
+  describe('with vue-router', () => {
     it('renders correct tab contents', () => {
       const wizard = mount(routerWizard, {localVue, router})
       const wizardInstance = wizard.find(FormWizard)
       let tabs = wizardInstance.findAll(WizardTab)
-      let firstTab  = tabs.at(0)
+      let firstTab = tabs.at(0)
       expect(tabs.length).to.equal(3)
       expect(firstTab.vm.route).to.equal(wizardInstance.vm.$route.path)
     })
@@ -446,14 +448,12 @@ describe('FormWizard.vue', () => {
       let tabs = wizardInstance.findAll(WizardTab)
       wizardInstance.vm.activateAll()
       wizardInstance.vm.$router.push('/second')
-      Vue.nextTick(()=> {
+      Vue.nextTick(() => {
         let secondTab = tabs.at(1)
         expect(secondTab.vm.route).to.equal(wizardInstance.vm.$route.path)
         expect(secondTab.vm.active).to.equal(true)
         done()
       })
-
-
     })
   })
 })
