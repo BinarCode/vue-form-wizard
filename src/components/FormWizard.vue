@@ -235,7 +235,8 @@
         this.$emit('update:startIndex', nextIndex)
       },
       addTab (item) {
-        const index = this.$slots.default.indexOf(item.$vnode)
+        // Index should only be relative to TabContent
+        const index = this.$slots.default.filter((slotItem) => slotItem.elm.classList && slotItem.elm.classList.contains('wizard-tab-container')).indexOf(item.$vnode)
         item.tabId = `${item.title.replace(/ /g, '')}${index}`
         this.tabs.splice(index, 0, item)
         // if a step is added before the current one, go to it
