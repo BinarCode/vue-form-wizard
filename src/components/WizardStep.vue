@@ -11,7 +11,7 @@
            :class="{checked: tab.checked,square_shape:isStepSquare, tab_shape:isTabShape}"
            :style="[tab.checked ? stepCheckedStyle : {}, tab.validationError ? errorStyle : {}]">
 
-        <transition :name="transition" mode="out-in">
+        <transition-group :name="transition" mode="out-in">
 
             <div v-if="tab.active" class="wizard-icon-container"
                  :class="{square_shape:isStepSquare, tab_shape:isTabShape}"
@@ -25,7 +25,7 @@
               <i v-if="!tab.active && tab.icon" :class="tab.icon" class="wizard-icon"></i>
               <i v-if="!tab.active && !tab.icon" class="wizard-icon">{{index + 1}}</i>
             </slot>
-        </transition>
+        </transition-group>
 
       </div>
       <slot name="title">

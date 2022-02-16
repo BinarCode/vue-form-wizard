@@ -16,7 +16,7 @@ const VueFormWizard = {
 }
 // Automatic installation if Vue has been added to the global scope.
 if (typeof window !== 'undefined' && window.Vue) {
-  window.app.use(VueFormWizard)
+  window.Vue.use(VueFormWizard)
 }
 
 export default VueFormWizard
