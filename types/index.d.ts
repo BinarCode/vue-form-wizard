@@ -1,7 +1,5 @@
-import Vue from 'vue'
-import { PluginFunction } from "vue";
-
-export function install (vue: typeof Vue): void
+import { createApp } from 'vue'
+const app = createApp({})
 
 export {
   Wizard as FormWizard,
@@ -16,12 +14,20 @@ import { Wizard as FormWizard } from "./FormWizard"
 import { Tab as TabContent } from "./TabContent"
 import { Step as WizardStep } from "./WizardStep"
 
-declare class VueFormWizard {
-  static install: PluginFunction<never>;
+app.use(FormWizard, {
+  /* optional options */
+})
 
-  FormWizard: FormWizard;
-  TabContent: TabContent;
-  WizardStep: WizardStep;
+app.use(TabContent, {
+  /* optional options */
+})
+
+app.use(WizardStep, {
+  /* optional options */
+})
+
+export default VueFormWizard {
+  install: (app, options) => {
+    
+  }
 }
-
-export default VueFormWizard;

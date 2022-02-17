@@ -1,0 +1,20 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "errno": 1,
+    "code": "ELIFECYCLE",
+    "pkgid": "vue-form-wizard@0.8.4",
+    "stage": "start",
+    "script": "node build/dev-server.js",
+    "pkgname": "vue-form-wizard",
+    "err": {
+      "name": "pnpm",
+      "message": "vue-form-wizard@0.8.4 start: `node build/dev-server.js`\nExit status 1",
+      "code": "ELIFECYCLE",
+      "stack": "pnpm: vue-form-wizard@0.8.4 start: `node build/dev-server.js`\nExit status 1\n    at EventEmitter.<anonymous> (C:\\Users\\MrAlicard\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.31.0\\node_modules\\pnpm\\dist\\pnpm.cjs:105664:20)\n    at EventEmitter.emit (node:events:390:28)\n    at ChildProcess.<anonymous> (C:\\Users\\MrAlicard\\AppData\\Roaming\\npm\\pnpm-global\\5\\node_modules\\.pnpm\\pnpm@6.31.0\\node_modules\\pnpm\\dist\\pnpm.cjs:92211:18)\n    at ChildProcess.emit (node:events:390:28)\n    at maybeClose (node:internal/child_process:1064:16)\n    at Process.ChildProcess._handle.onexit (node:internal/child_process:301:5)"
+    }
+  },
+  "2 warn pnpm:global": " Local package.json exists, but node_modules missing, did you mean to install?"
+}
